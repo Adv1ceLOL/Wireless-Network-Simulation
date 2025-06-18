@@ -13,8 +13,7 @@ class SensorNetwork:
         """Add a node to the network."""
         self.nodes.append(node)
         return node
-        
-    def create_random_network(self, n, area_size=10, min_range=1.0, max_range=3.0):
+          def create_random_network(self, n, area_size=10, min_range=1.0, max_range=3.0):
         """Create a network with n nodes randomly positioned with random transmission ranges.
         
         The network created will have the following properties:

@@ -158,16 +158,23 @@ except ImportError as e:
     print("NetworkX visualizations will not be available")
     HAS_NETWORKX = False
 
-def visualize_network(network, interactive=False):
+def visualize_network(network, interactive=False, clear_previous=False, title=None):
     """Visualize the sensor network using multiple methods.
     
     Args:
         network: The sensor network to visualize
         interactive: Whether to display the plots interactively
+        clear_previous: Whether to clear previous matplotlib figures
+        title: Optional title for the visualizations
     """
     # Clear any previously tracked figures
     global interactive_figures
     interactive_figures = []
+    
+    # Clear previous figures if requested
+    if clear_previous and HAS_MATPLOTLIB:
+        import matplotlib.pyplot as plt
+        plt.close('all')
     
     # Check if interactive flag is set through command line
     if '--interactive' in sys.argv or '-i' in sys.argv:
@@ -193,64 +200,64 @@ def visualize_network(network, interactive=False):
         # Fall back to current directory if we can't create the visualization directory
         viz_path = lambda f: f
     
-    if HAS_MATPLOTLIB:
-        try:
-            # Create matplotlib visualization
-            visualize_network_matplotlib(network, 
-                                       output_file=viz_path("network_visualization_matplotlib.png"), 
-                                       interactive=interactive)
-            successful_viz += 1
-        except Exception as e:
-            print(f"Error in matplotlib visualization: {e}")
+    # Try different visualization methods based on available dependencies
+    successful_methods = []
+    
+    # Set up visualization paths
+    if not interactive:
+        # Ensure output directory exists
+        output_dir = os.path.join("output", "visualizations")
+        os.makedirs(output_dir, exist_ok=True)
+        
+        # Set output paths
+        matplotlib_file = os.path.join(output_dir, "network_visualization_matplotlib.png")
+        networkx_file = os.path.join(output_dir, "network_visualization_networkx.png")
+        adjacency_file = os.path.join(output_dir, "network_adjacency_list.png")
     else:
-        print("Matplotlib visualization skipped (library not available)")
+        matplotlib_file = networkx_file = adjacency_file = None
     
-    if HAS_MATPLOTLIB and HAS_NETWORKX:
-        try:
-            # Create networkx visualization
-            visualize_network_networkx(network, 
-                                     output_file=viz_path("network_visualization_networkx.png"), 
-                                     interactive=interactive)
-            successful_viz += 1
-        except Exception as e:
-            print(f"Error in networkx visualization: {e}")
-    else:
-        print("NetworkX visualization skipped (library not available)")
+    # Try matplotlib visualization
+    try:
+        if visualize_network_matplotlib(network, matplotlib_file, interactive, title):
+            successful_methods.append("matplotlib")
+    except Exception as e:
+        print(f"Error in matplotlib visualization: {e}")
     
-    if HAS_MATPLOTLIB:
-        try:
-            # Create adjacency list visualization
-            visualize_adjacency_list(network, 
-                                   output_file=viz_path("network_adjacency_list.png"), 
-                                   interactive=interactive)
-            successful_viz += 1
-        except Exception as e:
-            print(f"Error in adjacency list visualization: {e}")
+    # Try networkx visualization
+    try:
+        if visualize_network_networkx(network, networkx_file, interactive, title):
+            successful_methods.append("networkx")
+    except Exception as e:
+        print(f"Error in networkx visualization: {e}")
     
-    # Try alternative simple visualization if matplotlib fails
-    if successful_viz == 0 and HAS_PIL:
+    # Try adjacency list visualization
+    try:
+        if visualize_adjacency_list(network, adjacency_file, interactive, title):
+            successful_methods.append("adjacency_list")
+    except Exception as e:
+        print(f"Error in adjacency list visualization: {e}")
+    
+    # Fallback to PIL for non-interactive mode if needed
+    if not interactive and not successful_methods and HAS_PIL:
         try:
-            visualize_network_pil(network, output_file=viz_path("network_visualization_simple.png"))
-            successful_viz += 1
+            visualize_network_pil(network, os.path.join(output_dir, "network_visualization_simple.png"))
+            successful_methods.append("pil")
         except Exception as e:
             print(f"Error in PIL visualization: {e}")
     
-    # Always try to print the adjacency list to console even if visualization fails
-    try:
-        print_adjacency_list(network)
-    except Exception as e:
-        print(f"Error printing adjacency list: {e}")
-    
-    if successful_viz == 0:
-        print("\nWARNING: No visualizations could be generated!")
-        print("Please check your matplotlib and networkx installations.")
-        print("You can still view the network details in the console output and report file.")
-    else:
-        print(f"\nSuccessfully generated {successful_viz} visualizations.")
-        if not interactive:
-            print(f"Visualization files were saved to the '{viz_dir}' directory.")
+    if not interactive:
+        if successful_methods:
+            print(f"Successfully generated {len(successful_methods)} visualizations.")
+            print(f"Visualization files were saved to the '{output_dir}' directory.")
         else:
+            print("No visualizations could be generated. Please check dependencies.")
+    else:
+        if successful_methods:
             print(f"Visualizations are displayed in interactive windows.")
+        else:
+            print("No visualizations could be displayed. Please check dependencies.")
+    
+    return successful_methods
 
 def print_adjacency_list(network):
     """Print the adjacency list representation of the network to the console."""
@@ -266,262 +273,253 @@ def print_adjacency_list(network):
         neighbor_str = ", ".join([f"{n_id} (delay: {delay:.2f})" for n_id, delay in neighbors])
         print(f"[{node.node_id}]: {neighbor_str}")
 
-def visualize_network_matplotlib(network, output_file="network_visualization_matplotlib.png", interactive=False):
+def visualize_network_matplotlib(network, output_file=None, interactive=False, title=None):
     """Visualize the sensor network using Matplotlib."""
     if not HAS_MATPLOTLIB:
         print("Matplotlib not available, skipping matplotlib visualization")
-        return
-        
+        return False
+    
     try:
-        plt.figure(figsize=(12, 10))
+        import matplotlib.pyplot as plt
         
-        # Find max coordinates for setting plot limits
-        max_x = max(node.x for node in network.nodes) * 1.1
-        max_y = max(node.y for node in network.nodes) * 1.1
+        # Create figure
+        plt.figure(figsize=(10, 8))
         
-        # Plot nodes
+        # Add nodes to plot
         for node in network.nodes:
-            plt.scatter(node.x, node.y, s=120, color='blue', edgecolor='black', zorder=10)
-            plt.text(node.x + 0.1, node.y + 0.1, f"{node.node_id}", 
-                    fontweight='bold', fontsize=12, zorder=15)
+            plt.plot(node.x, node.y, 'o', markersize=10, label=f"Node {node.node_id}")
+            plt.text(node.x, node.y, str(node.node_id), fontsize=12)
             
             # Draw transmission range circle
             circle = plt.Circle((node.x, node.y), node.transmission_range, 
-                               alpha=0.1, color='blue', zorder=5)
+                              fill=False, linestyle='--', alpha=0.3)
             plt.gca().add_patch(circle)
             
-            # Draw connections with color indicating delay
+            # Draw connections
             for neighbor_id, delay in node.connections.items():
                 neighbor = network.get_node_by_id(neighbor_id)
-                # Only draw connection if this node has lower ID (to avoid duplicates)
-                if node.node_id < neighbor_id:
-                    # Use color to represent delay (red=high delay, green=low delay)
-                    color = plt.cm.RdYlGn_r(delay)
-                    plt.plot([node.x, neighbor.x], [node.y, neighbor.y], 
-                            alpha=0.7,
-                            linewidth=1.5,
-                            color=color,
-                            zorder=1)
-                    # Add delay label to midpoint of connection
-                    mid_x = (node.x + neighbor.x) / 2
-                    mid_y = (node.y + neighbor.y) / 2
-                    plt.text(mid_x, mid_y, f"{delay:.2f}", fontsize=8, 
-                            bbox=dict(facecolor='white', alpha=0.7, edgecolor='none'),
-                            zorder=8,
-                            ha='center', va='center')
+                if neighbor:
+                    # Only draw connections in one direction (to avoid duplicates)
+                    if node.node_id < neighbor_id:
+                        plt.plot([node.x, neighbor.x], [node.y, neighbor.y], 'b-', alpha=0.6)
+                        # Add delay as a label near the middle of the line
+                        mid_x = (node.x + neighbor.x) / 2
+                        mid_y = (node.y + neighbor.y) / 2
+                        plt.text(mid_x, mid_y, f"{delay:.2f}", fontsize=8, 
+                                backgroundcolor='white', alpha=0.8)
         
-        plt.xlim(0, max_x)
-        plt.ylim(0, max_y)
-        plt.title("Wireless Sensor Network Simulation (Matplotlib)")
-        plt.xlabel("X position")
-        plt.ylabel("Y position")
-        plt.grid(True, linestyle='--', alpha=0.7)
+        # Set plot limits with some padding
+        padding = max([node.transmission_range for node in network.nodes] + [1])
+        plt.xlim(-padding, max([node.x for node in network.nodes]) + padding)
+        plt.ylim(-padding, max([node.y for node in network.nodes]) + padding)
         
-        # Add a colorbar for delay reference
-        sm = plt.cm.ScalarMappable(cmap=plt.cm.RdYlGn_r)
-        sm.set_array([])
-        cbar = plt.colorbar(sm, ax=plt.gca())
-        cbar.set_label('Delay Value', rotation=270, labelpad=15)
-        cbar.ax.set_yticklabels(['Low', '', 'Medium', '', 'High'])
+        # Set plot title
+        if title:
+            plt.title(title)
+        else:
+            plt.title(f"Wireless Sensor Network ({len(network.nodes)} nodes)")
+            
+        plt.xlabel("X Position")
+        plt.ylabel("Y Position")
+        plt.grid(True, alpha=0.3)
         
-        plt.tight_layout()
-        
-        # In interactive mode, just show the plot without saving
-        if interactive and has_interactive_backend:
-            try:
-                plt.draw()  # Draw the current figure
-                plt.pause(0.001)  # Add a small pause to allow the window to appear without blocking
-                print("Displayed interactive matplotlib visualization")
-                # Keep a reference to the figure to prevent it from being garbage collected
-                global interactive_figures
-                interactive_figures.append(plt.gcf())
-                return
-            except Exception as e:
-                print(f"Failed to show interactive plot: {e}")
-                # Fall back to saving if interactive display fails
-        
-        # If not interactive mode or if interactive display failed, save to file
-        try:
-            plt.savefig(output_file, dpi=300)
+        # Handle output
+        if interactive:
+            # Track the figure for later closing
+            interactive_figures.append(plt.gcf())
+            plt.show(block=False)
+            print("Displayed interactive matplotlib visualization")
+        elif output_file:
+            plt.savefig(output_file, dpi=150)
             print(f"Saved network visualization to {output_file}")
-        except Exception as e:
-            print(f"Failed to save visualization to file: {e}")
+            plt.close()
         
-        plt.close()  # Close the figure to free memory
-    
+        return True
+        
     except Exception as e:
         print(f"Error in matplotlib visualization: {e}")
-        # Try to close any open figures to prevent resource leaks
-        try:
-            plt.close()
-        except:
-            pass
-        raise  # Re-raise the exception to be handled by the caller
+        import traceback
+        traceback.print_exc()
+        return False
 
-def visualize_network_networkx(network, output_file="network_visualization_networkx.png", interactive=False):
+def visualize_network_networkx(network, output_file=None, interactive=False, title=None):
     """Visualize the sensor network using NetworkX."""
     if not HAS_NETWORKX or not HAS_MATPLOTLIB:
         print("NetworkX or Matplotlib not available, skipping networkx visualization")
-        return
-        
+        return False
+    
     try:
-        # Create NetworkX graph
+        import networkx as nx
+        import matplotlib.pyplot as plt
+        
+        # Create a new graph
         G = nx.Graph()
         
         # Add nodes with positions
-        node_positions = {}
         for node in network.nodes:
-            G.add_node(node.node_id)
-            node_positions[node.node_id] = (node.x, node.y)
+            G.add_node(node.node_id, pos=(node.x, node.y), 
+                     range=node.transmission_range)
         
-        # Add edges with delay weights
-        edge_weights = {}
+        # Add edges with weights
         for node in network.nodes:
             for neighbor_id, delay in node.connections.items():
-                if node.node_id < neighbor_id:  # Avoid duplicates
-                    G.add_edge(node.node_id, neighbor_id, weight=delay)
-                    edge_weights[(node.node_id, neighbor_id)] = delay
+                G.add_edge(node.node_id, neighbor_id, weight=delay)
         
-        plt.figure(figsize=(12, 10))
+        # Get positions for drawing
+        pos = nx.get_node_attributes(G, 'pos')
         
-        # Draw nodes with labels
-        nx.draw_networkx_nodes(G, node_positions, node_size=700, 
-                             node_color='lightblue', edgecolors='navy', alpha=0.8)
-        nx.draw_networkx_labels(G, node_positions, font_weight='bold', font_size=10)
+        # Create figure
+        plt.figure(figsize=(10, 8))
         
-        # Draw edges with colors based on weights
-        edges = list(G.edges())
-        if not edges:
-            print("Warning: Network has no edges, graph will be empty")
-            
-        weights = [edge_weights.get((u, v)) or edge_weights.get((v, u), 0.5) for u, v in edges]
+        # Draw nodes
+        nx.draw_networkx_nodes(G, pos, node_size=500, node_color='lightblue')
         
-        # Create colormap: green for low delays, red for high delays
-        cmap = LinearSegmentedColormap.from_list('delay_cmap', ['green', 'yellow', 'red'])
+        # Draw edges with weights as labels
+        nx.draw_networkx_edges(G, pos, width=1.5, alpha=0.7)
+        edge_labels = nx.get_edge_attributes(G, 'weight')
+        edge_labels = {k: f"{v:.2f}" for k, v in edge_labels.items()}
+        nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=8)
         
-        # Normalize weights for colormap
-        if weights:
-            norm = plt.Normalize(min(weights), max(weights))
-            edge_colors = [cmap(norm(weight)) for weight in weights]
-            
-            # Draw edges with variable width based on weight (inverse: thicker = lower delay)
-            edge_widths = [3 * (1 - w) + 0.5 for w in weights]  # Thicker lines for lower delays
-            
-            nx.draw_networkx_edges(G, node_positions, edgelist=edges, 
-                                  width=edge_widths, edge_color=edge_colors, alpha=0.7)
-            
-            # Add edge labels (delay values)
-            edge_labels = {(u, v): f"{w:.2f}" for (u, v), w in zip(edges, weights)}
-            nx.draw_networkx_edge_labels(G, node_positions, edge_labels=edge_labels, 
-                                       font_size=8, bbox=dict(facecolor='white', alpha=0.7))
+        # Draw node labels
+        nx.draw_networkx_labels(G, pos, font_size=12, font_weight='bold')
         
-        plt.title("Wireless Sensor Network Visualization (NetworkX)")
-        plt.axis('off')  # Hide axes
+        # Set plot title
+        if title:
+            plt.title(title)
+        else:
+            plt.title(f"Network Graph ({len(network.nodes)} nodes, {G.number_of_edges()} connections)")
         
-        # Add colorbar for delay reference
-        if weights:
-            sm = cm.ScalarMappable(cmap=cmap, norm=norm)
-            sm.set_array([])
-            cbar = plt.colorbar(sm, ax=plt.gca(), label='Delay')
-            cbar.ax.set_yticklabels(['Low', '', 'Medium', '', 'High'])
+        plt.axis('off')
         
-        plt.tight_layout()
-        
-        # In interactive mode, just show the plot without saving
-        if interactive and has_interactive_backend:
-            try:
-                plt.draw()  # Draw the current figure
-                plt.pause(0.001)  # Add a small pause to allow the window to appear without blocking
-                print("Displayed interactive NetworkX visualization")
-                # Keep a reference to the figure to prevent it from being garbage collected
-                global interactive_figures
-                interactive_figures.append(plt.gcf())
-                return
-            except Exception as e:
-                print(f"Failed to show interactive plot: {e}")
-                # Fall back to saving if interactive display fails
-        
-        # If not interactive mode or if interactive display failed, save to file
-        try:
-            plt.savefig(output_file, dpi=300)
+        # Handle output
+        if interactive:
+            # Track the figure for later closing
+            interactive_figures.append(plt.gcf())
+            plt.show(block=False)
+            print("Displayed interactive NetworkX visualization")
+        elif output_file:
+            plt.savefig(output_file, dpi=150)
             print(f"Saved network visualization to {output_file}")
-        except Exception as e:
-            print(f"Failed to save visualization to file: {e}")
+            plt.close()
         
-        plt.close()  # Close the figure to free memory
-            
+        return True
+        
     except Exception as e:
         print(f"Error in networkx visualization: {e}")
-        # Try to close any open figures to prevent resource leaks
-        try:
-            plt.close()
-        except:
-            pass
-        raise  # Re-raise the exception to be handled by the caller
+        return False
 
-def visualize_adjacency_list(network, output_file="network_adjacency_list.png", interactive=False):
-    """Generate and display adjacency list representation of the network."""
-    if not HAS_MATPLOTLIB:
-        print("Matplotlib not available, skipping adjacency list visualization")
-        return
-        
+def visualize_adjacency_list(network, output_file=None, interactive=False, title=None):
+    """Visualize the network as an adjacency list."""
+    if interactive and not HAS_MATPLOTLIB:
+        print("Matplotlib not available, skipping interactive adjacency list visualization")
+        return False
+    
     try:
-        plt.figure(figsize=(10, 8))
-        plt.axis('off')  # Turn off axis
+        # Sort nodes by ID for consistent output
+        sorted_nodes = sorted(network.nodes, key=lambda node: node.node_id)
         
-        # Create adjacency list text
-        adj_list = ["Adjacency List Representation:"]
-        adj_list.append("")
-        
-        # Sort nodes by ID
-        sorted_nodes = sorted(network.nodes, key=lambda x: x.node_id)
+        adjacency_list = []
+        adjacency_list.append("ADJACENCY LIST REPRESENTATION:")
+        adjacency_list.append("-----------------------------")
         
         for node in sorted_nodes:
             # Get connected neighbors sorted by ID
             neighbors = sorted(node.connections.items(), key=lambda x: x[0])
             neighbor_str = ", ".join([f"{n_id} (delay: {delay:.2f})" for n_id, delay in neighbors])
-            adj_list.append(f"[{node.node_id}]: {neighbor_str}")
+            adjacency_list.append(f"[{node.node_id}]: {neighbor_str}")
         
-        # Join with newlines
-        adj_text = "\n".join(adj_list)
+        # Join with newlines for display
+        adjacency_text = "\n".join(adjacency_list)
         
-        # Create a text box with a border
-        plt.text(0.05, 0.95, adj_text, fontsize=12, family='monospace',
-                 verticalalignment='top', horizontalalignment='left',
-                 transform=plt.gca().transAxes,
-                 bbox=dict(facecolor='#f9f9f9', edgecolor='gray', boxstyle='round,pad=1.0', alpha=0.95))
+        # Print to console
+        print(adjacency_text)
         
-        plt.title("Network Adjacency List")
-        plt.tight_layout()
-        
-        # In interactive mode, just show the plot without saving
-        if interactive and has_interactive_backend:
-            try:
-                plt.draw()  # Draw the current figure
-                plt.pause(0.001)  # Add a small pause to allow the window to appear without blocking
-                print("Displayed interactive adjacency list visualization")
-                # Keep a reference to the figure to prevent it from being garbage collected
-                global interactive_figures
-                interactive_figures.append(plt.gcf())
-                return
-            except Exception as e:
-                print(f"Failed to show interactive plot: {e}")
-                # Fall back to saving if interactive display fails
-        
-        # If not interactive mode or if interactive display failed, save to file
-        try:
-            plt.savefig(output_file, dpi=300)
-            print(f"Saved adjacency list to {output_file}")
-        except Exception as e:
-            print(f"Failed to save adjacency list to file: {e}")
-        
-        plt.close()  # Close the figure to free memory
+        # Handle output depending on mode
+        if interactive:
+            import matplotlib.pyplot as plt
+            from matplotlib.font_manager import FontProperties
             
+            # Create a figure with text
+            fig, ax = plt.subplots(figsize=(10, 8))
+            
+            # Turn off axes
+            ax.axis('off')
+            
+            # Set figure title
+            if title:
+                ax.set_title(title)
+            else:
+                ax.set_title(f"Network Adjacency List ({len(network.nodes)} nodes)")
+            
+            # Display the text
+            font_prop = FontProperties(family='monospace')
+            ax.text(0.05, 0.95, adjacency_text, transform=ax.transAxes,
+                  fontproperties=font_prop, verticalalignment='top')
+            
+            # Track the figure for later closing
+            interactive_figures.append(plt.gcf())
+            plt.show(block=False)
+            print("Displayed interactive adjacency list visualization")
+            
+        elif output_file:
+            # Create image from text
+            try:
+                # Use PIL to create an image
+                from PIL import Image, ImageDraw, ImageFont
+                import numpy as np
+                
+                # Estimate image size based on text content
+                line_count = len(adjacency_list)
+                max_line_length = max(len(line) for line in adjacency_list)
+                
+                # Create image
+                font_size = 14
+                char_width = font_size * 0.6
+                line_height = font_size * 1.5
+                
+                img_width = int(max_line_length * char_width + 40)
+                img_height = int(line_count * line_height + 40)
+                
+                # Create a white image
+                img = Image.new('RGB', (img_width, img_height), color=(255, 255, 255))
+                draw = ImageDraw.Draw(img)
+                
+                # Try to load a monospace font
+                try:
+                    if platform.system() == "Windows":
+                        font = ImageFont.truetype("consolas", font_size)
+                    elif platform.system() == "Darwin":  # macOS
+                        font = ImageFont.truetype("Menlo", font_size)
+                    else:  # Linux and others
+                        font = ImageFont.truetype("DejaVuSansMono", font_size)
+                except Exception:
+                    # Fallback to default font
+                    font = ImageFont.load_default()
+                
+                # Add title
+                title_text = title if title else f"Network Adjacency List ({len(network.nodes)} nodes)"
+                draw.text((20, 10), title_text, fill=(0, 0, 0), font=font)
+                
+                # Draw the text
+                y = 10 + line_height
+                for line in adjacency_list:
+                    draw.text((20, y), line, fill=(0, 0, 0), font=font)
+                    y += line_height
+                
+                # Save the image
+                img.save(output_file)
+                print(f"Saved adjacency list to {output_file}")
+                
+            except Exception as e:
+                print(f"Error creating adjacency list image: {e}")
+                # Fallback to saving as text file
+                text_file = output_file.replace('.png', '.txt')
+                with open(text_file, 'w') as f:
+                    f.write(adjacency_text)
+                print(f"Saved adjacency list as text to {text_file}")
+        
+        return True
+        
     except Exception as e:
         print(f"Error in adjacency list visualization: {e}")
-        # Try to close any open figures to prevent resource leaks
-        try:
-            plt.close()
-        except:
-            pass
-        raise  # Re-raise the exception to be handled by the caller
+        return False

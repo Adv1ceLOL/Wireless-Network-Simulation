@@ -1,4 +1,3 @@
-
 # Wireless Sensor Network Simulator
 
 A robust simulator for wireless sensor networks that models node connectivity, data transmission, and routing protocols with interactive visualization capabilities.
@@ -87,6 +86,24 @@ python simulation.py --detailed-report
 # Help and options
 python simulation.py --help
 ```
+
+### Dynamic Scenario Simulation
+
+Run a dynamic scenario simulation where link failures, new connections, and packet requests occur probabilistically at each time step:
+
+```bash
+python simulation.py --dynamic --nodes=8 --time-steps=5 --p-request=0.6 --p-fail=0.2 --p-new=0.3 --interactive
+```
+
+This example runs a dynamic simulation with:
+- 8 nodes in the network
+- 5 time steps (iterations)
+- 60% probability of packet requests at each step
+- 20% probability of link failures at each step
+- 30% probability of new link formations at each step
+- Interactive mode to visualize network changes
+
+Dynamic scenarios are useful for testing network robustness, routing protocol convergence, and adaptive behavior in changing conditions. The simulator tracks statistics like message delivery success rate, average delay, and network topology changes.
 
 ## Testing
 

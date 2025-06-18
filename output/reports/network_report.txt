@@ -1,13 +1,13 @@
 ================================================================================
-WIRELESS SENSOR NETWORK DETAILED REPORT - Generated: 2025-06-18 11:57:30
+WIRELESS SENSOR NETWORK DETAILED REPORT - Generated: 2025-06-18 12:55:15
 ================================================================================
 
 1. NETWORK OVERVIEW
 -------------------
-Number of nodes: 10
-Total connections: 20
-Average connections per node: 2.00
-Network density: 0.2222 (22.2%)
+Number of nodes: 15
+Total connections: 40
+Average connections per node: 2.67
+Network density: 0.1905 (19.0%)
 
 2. PROACTIVE DISTANCE VECTOR PROTOCOL
 -------------------------------------
@@ -27,369 +27,690 @@ Proactive Features:
 ---------------
 
   Node 0:
-    Position: (8.9760, 7.8790)
-    Transmission range: 1.2871
-    Number of connections: 3
-    Connected to:
-      → Node 4: delay=0.2127, distance=0.9505
-      → Node 6: delay=0.1504, distance=2.2642
-      → Node 9: delay=0.0440, distance=0.6651
-    Routing Table:
-      Dest 0: Next hop 0, Cost 0.0000
-      Dest 1: unreachable
-      Dest 2: unreachable
-      Dest 3: unreachable
-      Dest 4: Next hop 4, Cost 0.2127
-      Dest 5: Next hop 6, Cost 0.5302
-      Dest 6: Next hop 6, Cost 0.1504
-      Dest 7: unreachable
-      Dest 8: unreachable
-      Dest 9: Next hop 9, Cost 0.0440
-    Distance Vector:
-      To Node 0: Cost 0.0000
-      To Node 1: ∞
-      To Node 2: ∞
-      To Node 3: ∞
-      To Node 4: Cost 0.2127
-      To Node 5: Cost 0.5302
-      To Node 6: Cost 0.1504
-      To Node 7: ∞
-      To Node 8: ∞
-      To Node 9: Cost 0.0440
-
-  Node 1:
-    Position: (6.7924, 3.3130)
-    Transmission range: 2.2594
-    Number of connections: 1
-    Connected to:
-      → Node 8: delay=0.6739, distance=1.5479
-    Routing Table:
-      Dest 0: unreachable
-      Dest 1: Next hop 1, Cost 0.0000
-      Dest 2: unreachable
-      Dest 3: unreachable
-      Dest 4: unreachable
-      Dest 5: unreachable
-      Dest 6: unreachable
-      Dest 7: unreachable
-      Dest 8: Next hop 8, Cost 0.6739
-      Dest 9: unreachable
-    Distance Vector:
-      To Node 0: ∞
-      To Node 1: Cost 0.0000
-      To Node 2: ∞
-      To Node 3: ∞
-      To Node 4: ∞
-      To Node 5: ∞
-      To Node 6: ∞
-      To Node 7: ∞
-      To Node 8: Cost 0.6739
-      To Node 9: ∞
-
-  Node 2:
-    Position: (3.4469, 6.3277)
-    Transmission range: 1.1841
-    Number of connections: 0
-    Routing Table:
-      Dest 0: unreachable
-      Dest 1: unreachable
-      Dest 2: Next hop 2, Cost 0.0000
-      Dest 3: unreachable
-      Dest 4: unreachable
-      Dest 5: unreachable
-      Dest 6: unreachable
-      Dest 7: unreachable
-      Dest 8: unreachable
-      Dest 9: unreachable
-    Distance Vector:
-      To Node 0: ∞
-      To Node 1: ∞
-      To Node 2: Cost 0.0000
-      To Node 3: ∞
-      To Node 4: ∞
-      To Node 5: ∞
-      To Node 6: ∞
-      To Node 7: ∞
-      To Node 8: ∞
-      To Node 9: ∞
-
-  Node 3:
-    Position: (1.0897, 8.3558)
-    Transmission range: 1.9890
-    Number of connections: 1
-    Connected to:
-      → Node 7: delay=0.9006, distance=1.4736
-    Routing Table:
-      Dest 0: unreachable
-      Dest 1: unreachable
-      Dest 2: unreachable
-      Dest 3: Next hop 3, Cost 0.0000
-      Dest 4: unreachable
-      Dest 5: unreachable
-      Dest 6: unreachable
-      Dest 7: Next hop 7, Cost 0.9006
-      Dest 8: unreachable
-      Dest 9: unreachable
-    Distance Vector:
-      To Node 0: ∞
-      To Node 1: ∞
-      To Node 2: ∞
-      To Node 3: Cost 0.0000
-      To Node 4: ∞
-      To Node 5: ∞
-      To Node 6: ∞
-      To Node 7: Cost 0.9006
-      To Node 8: ∞
-      To Node 9: ∞
-
-  Node 4:
-    Position: (8.5590, 7.0249)
-    Transmission range: 2.9500
+    Position: (2.4633, 7.5072)
+    Transmission range: 3.4603
     Number of connections: 4
     Connected to:
-      → Node 0: delay=0.2127, distance=0.9505
-      → Node 5: delay=0.5709, distance=0.8869
-      → Node 6: delay=0.5795, distance=1.3389
-      → Node 9: delay=0.5690, distance=1.6142
+      → Node 1: delay=0.3857, distance=2.2976
+      → Node 7: delay=1.5101, distance=0.6740
+      → Node 8: delay=0.3138, distance=3.1457
+      → Node 9: delay=0.5736, distance=2.4847
     Routing Table:
-      Dest 0: Next hop 0, Cost 0.2127
-      Dest 1: unreachable
-      Dest 2: unreachable
-      Dest 3: unreachable
-      Dest 4: Next hop 4, Cost 0.0000
-      Dest 5: Next hop 5, Cost 0.5709
-      Dest 6: Next hop 0, Cost 0.3630
-      Dest 7: unreachable
-      Dest 8: unreachable
-      Dest 9: Next hop 0, Cost 0.2566
+      Dest 0: Next hop 0, Cost 0.0000
+      Dest 1: Next hop 1, Cost 0.3857
+      Dest 2: Next hop 1, Cost 0.7737
+      Dest 3: Next hop 1, Cost 0.7252
+      Dest 4: Next hop 1, Cost 2.3535
+      Dest 5: Next hop 1, Cost 2.9669
+      Dest 6: Next hop 1, Cost 3.3669
+      Dest 7: Next hop 1, Cost 0.4976
+      Dest 8: Next hop 8, Cost 0.3138
+      Dest 9: Next hop 1, Cost 0.4942
+      Dest 10: Next hop 1, Cost 0.7554
+      Dest 11: Next hop 1, Cost 3.6050
+      Dest 12: Next hop 1, Cost 1.3565
+      Dest 13: Next hop 1, Cost 2.2075
+      Dest 14: Next hop 1, Cost 2.1056
     Distance Vector:
-      To Node 0: Cost 0.2127
-      To Node 1: ∞
-      To Node 2: ∞
-      To Node 3: ∞
+      To Node 0: Cost 0.0000
+      To Node 1: Cost 0.3857
+      To Node 2: Cost 0.7737
+      To Node 3: Cost 0.7252
+      To Node 4: Cost 2.3535
+      To Node 5: Cost 2.9669
+      To Node 6: Cost 3.3669
+      To Node 7: Cost 0.4976
+      To Node 8: Cost 0.3138
+      To Node 9: Cost 0.4942
+      To Node 10: Cost 0.7554
+      To Node 11: Cost 3.6050
+      To Node 12: Cost 1.3565
+      To Node 13: Cost 2.2075
+      To Node 14: Cost 2.1056
+
+  Node 1:
+    Position: (3.3689, 9.6188)
+    Transmission range: 2.8026
+    Number of connections: 4
+    Connected to:
+      → Node 0: delay=0.3857, distance=2.2976
+      → Node 2: delay=0.5624, distance=2.1982
+      → Node 7: delay=0.4845, distance=1.8701
+      → Node 9: delay=0.1085, distance=2.3584
+    Routing Table:
+      Dest 0: Next hop 0, Cost 0.3857
+      Dest 1: Next hop 1, Cost 0.0000
+      Dest 2: Next hop 9, Cost 0.3880
+      Dest 3: Next hop 9, Cost 0.3395
+      Dest 4: Next hop 9, Cost 1.9679
+      Dest 5: Next hop 9, Cost 2.5813
+      Dest 6: Next hop 9, Cost 2.9813
+      Dest 7: Next hop 9, Cost 0.1119
+      Dest 8: Next hop 0, Cost 0.6995
+      Dest 9: Next hop 9, Cost 0.1085
+      Dest 10: Next hop 9, Cost 0.3697
+      Dest 11: Next hop 9, Cost 3.2194
+      Dest 12: Next hop 9, Cost 0.9708
+      Dest 13: Next hop 9, Cost 1.8218
+      Dest 14: Next hop 9, Cost 1.7199
+    Distance Vector:
+      To Node 0: Cost 0.3857
+      To Node 1: Cost 0.0000
+      To Node 2: Cost 0.3880
+      To Node 3: Cost 0.3395
+      To Node 4: Cost 1.9679
+      To Node 5: Cost 2.5813
+      To Node 6: Cost 2.9813
+      To Node 7: Cost 0.1119
+      To Node 8: Cost 0.6995
+      To Node 9: Cost 0.1085
+      To Node 10: Cost 0.3697
+      To Node 11: Cost 3.2194
+      To Node 12: Cost 0.9708
+      To Node 13: Cost 1.8218
+      To Node 14: Cost 1.7199
+
+  Node 2:
+    Position: (5.5554, 9.8457)
+    Transmission range: 2.2392
+    Number of connections: 3
+    Connected to:
+      → Node 1: delay=0.5624, distance=2.1982
+      → Node 3: delay=0.4029, distance=2.4485
+      → Node 10: delay=0.0183, distance=2.9488
+    Routing Table:
+      Dest 0: Next hop 10, Cost 0.7737
+      Dest 1: Next hop 10, Cost 0.3880
+      Dest 2: Next hop 2, Cost 0.0000
+      Dest 3: Next hop 10, Cost 0.0485
+      Dest 4: Next hop 10, Cost 1.6768
+      Dest 5: Next hop 10, Cost 2.2902
+      Dest 6: Next hop 10, Cost 2.6902
+      Dest 7: Next hop 10, Cost 0.2761
+      Dest 8: Next hop 10, Cost 1.0875
+      Dest 9: Next hop 10, Cost 0.2795
+      Dest 10: Next hop 10, Cost 0.0183
+      Dest 11: Next hop 10, Cost 2.9283
+      Dest 12: Next hop 10, Cost 0.6798
+      Dest 13: Next hop 10, Cost 1.5308
+      Dest 14: Next hop 10, Cost 1.4288
+    Distance Vector:
+      To Node 0: Cost 0.7737
+      To Node 1: Cost 0.3880
+      To Node 2: Cost 0.0000
+      To Node 3: Cost 0.0485
+      To Node 4: Cost 1.6768
+      To Node 5: Cost 2.2902
+      To Node 6: Cost 2.6902
+      To Node 7: Cost 0.2761
+      To Node 8: Cost 1.0875
+      To Node 9: Cost 0.2795
+      To Node 10: Cost 0.0183
+      To Node 11: Cost 2.9283
+      To Node 12: Cost 0.6798
+      To Node 13: Cost 1.5308
+      To Node 14: Cost 1.4288
+
+  Node 3:
+    Position: (5.8200, 7.4115)
+    Transmission range: 2.9907
+    Number of connections: 4
+    Connected to:
+      → Node 2: delay=0.4029, distance=2.4485
+      → Node 7: delay=0.2276, distance=2.7597
+      → Node 10: delay=0.0302, distance=1.8078
+      → Node 12: delay=0.6313, distance=2.0529
+    Routing Table:
+      Dest 0: Next hop 7, Cost 0.7252
+      Dest 1: Next hop 7, Cost 0.3395
+      Dest 2: Next hop 10, Cost 0.0485
+      Dest 3: Next hop 3, Cost 0.0000
+      Dest 4: Next hop 12, Cost 1.6283
+      Dest 5: Next hop 12, Cost 2.2417
+      Dest 6: Next hop 12, Cost 2.6417
+      Dest 7: Next hop 7, Cost 0.2276
+      Dest 8: Next hop 7, Cost 1.0390
+      Dest 9: Next hop 7, Cost 0.2310
+      Dest 10: Next hop 10, Cost 0.0302
+      Dest 11: Next hop 12, Cost 2.8798
+      Dest 12: Next hop 12, Cost 0.6313
+      Dest 13: Next hop 12, Cost 1.4823
+      Dest 14: Next hop 12, Cost 1.3804
+    Distance Vector:
+      To Node 0: Cost 0.7252
+      To Node 1: Cost 0.3395
+      To Node 2: Cost 0.0485
+      To Node 3: Cost 0.0000
+      To Node 4: Cost 1.6283
+      To Node 5: Cost 2.2417
+      To Node 6: Cost 2.6417
+      To Node 7: Cost 0.2276
+      To Node 8: Cost 1.0390
+      To Node 9: Cost 0.2310
+      To Node 10: Cost 0.0302
+      To Node 11: Cost 2.8798
+      To Node 12: Cost 0.6313
+      To Node 13: Cost 1.4823
+      To Node 14: Cost 1.3804
+
+  Node 4:
+    Position: (0.8477, 2.1969)
+    Transmission range: 3.9246
+    Number of connections: 1
+    Connected to:
+      → Node 14: delay=0.2480, distance=3.5678
+    Routing Table:
+      Dest 0: Next hop 14, Cost 2.3535
+      Dest 1: Next hop 14, Cost 1.9679
+      Dest 2: Next hop 14, Cost 1.6768
+      Dest 3: Next hop 14, Cost 1.6283
+      Dest 4: Next hop 4, Cost 0.0000
+      Dest 5: Next hop 14, Cost 1.1094
+      Dest 6: Next hop 14, Cost 1.5094
+      Dest 7: Next hop 14, Cost 1.8559
+      Dest 8: Next hop 14, Cost 2.6673
+      Dest 9: Next hop 14, Cost 1.8594
+      Dest 10: Next hop 14, Cost 1.6586
+      Dest 11: Next hop 14, Cost 1.7474
+      Dest 12: Next hop 14, Cost 0.9971
+      Dest 13: Next hop 14, Cost 0.3499
+      Dest 14: Next hop 14, Cost 0.2480
+    Distance Vector:
+      To Node 0: Cost 2.3535
+      To Node 1: Cost 1.9679
+      To Node 2: Cost 1.6768
+      To Node 3: Cost 1.6283
       To Node 4: Cost 0.0000
-      To Node 5: Cost 0.5709
-      To Node 6: Cost 0.3630
-      To Node 7: ∞
-      To Node 8: ∞
-      To Node 9: Cost 0.2566
+      To Node 5: Cost 1.1094
+      To Node 6: Cost 1.5094
+      To Node 7: Cost 1.8559
+      To Node 8: Cost 2.6673
+      To Node 9: Cost 1.8594
+      To Node 10: Cost 1.6586
+      To Node 11: Cost 1.7474
+      To Node 12: Cost 0.9971
+      To Node 13: Cost 0.3499
+      To Node 14: Cost 0.2480
 
   Node 5:
-    Position: (9.2150, 6.4279)
-    Transmission range: 1.3001
-    Number of connections: 3
+    Position: (6.9224, 4.4007)
+    Transmission range: 1.8523
+    Number of connections: 2
     Connected to:
-      → Node 4: delay=0.5709, distance=0.8869
-      → Node 6: delay=0.3799, distance=1.6185
-      → Node 9: delay=0.5822, distance=2.0242
+      → Node 6: delay=0.4000, distance=0.9013
+      → Node 13: delay=0.7594, distance=1.8536
     Routing Table:
-      Dest 0: Next hop 6, Cost 0.5302
-      Dest 1: unreachable
-      Dest 2: unreachable
-      Dest 3: unreachable
-      Dest 4: Next hop 4, Cost 0.5709
+      Dest 0: Next hop 13, Cost 2.9669
+      Dest 1: Next hop 13, Cost 2.5813
+      Dest 2: Next hop 13, Cost 2.2902
+      Dest 3: Next hop 13, Cost 2.2417
+      Dest 4: Next hop 13, Cost 1.1094
       Dest 5: Next hop 5, Cost 0.0000
-      Dest 6: Next hop 6, Cost 0.3799
-      Dest 7: unreachable
-      Dest 8: unreachable
-      Dest 9: Next hop 6, Cost 0.5742
+      Dest 6: Next hop 6, Cost 0.4000
+      Dest 7: Next hop 13, Cost 2.4693
+      Dest 8: Next hop 13, Cost 3.2807
+      Dest 9: Next hop 13, Cost 2.4727
+      Dest 10: Next hop 13, Cost 2.2719
+      Dest 11: Next hop 6, Cost 0.6381
+      Dest 12: Next hop 13, Cost 1.6105
+      Dest 13: Next hop 13, Cost 0.7594
+      Dest 14: Next hop 13, Cost 0.8614
     Distance Vector:
-      To Node 0: Cost 0.5302
-      To Node 1: ∞
-      To Node 2: ∞
-      To Node 3: ∞
-      To Node 4: Cost 0.5709
+      To Node 0: Cost 2.9669
+      To Node 1: Cost 2.5813
+      To Node 2: Cost 2.2902
+      To Node 3: Cost 2.2417
+      To Node 4: Cost 1.1094
       To Node 5: Cost 0.0000
-      To Node 6: Cost 0.3799
-      To Node 7: ∞
-      To Node 8: ∞
-      To Node 9: Cost 0.5742
+      To Node 6: Cost 0.4000
+      To Node 7: Cost 2.4693
+      To Node 8: Cost 3.2807
+      To Node 9: Cost 2.4727
+      To Node 10: Cost 2.2719
+      To Node 11: Cost 0.6381
+      To Node 12: Cost 1.6105
+      To Node 13: Cost 0.7594
+      To Node 14: Cost 0.8614
 
   Node 6:
-    Position: (7.6413, 6.0500)
-    Transmission range: 2.4753
-    Number of connections: 3
+    Position: (7.7163, 3.9741)
+    Transmission range: 1.7551
+    Number of connections: 2
     Connected to:
-      → Node 0: delay=0.1504, distance=2.2642
-      → Node 4: delay=0.5795, distance=1.3389
-      → Node 5: delay=0.3799, distance=1.6185
+      → Node 5: delay=0.4000, distance=0.9013
+      → Node 11: delay=0.2381, distance=1.3398
     Routing Table:
-      Dest 0: Next hop 0, Cost 0.1504
-      Dest 1: unreachable
-      Dest 2: unreachable
-      Dest 3: unreachable
-      Dest 4: Next hop 0, Cost 0.3630
-      Dest 5: Next hop 5, Cost 0.3799
+      Dest 0: Next hop 5, Cost 3.3669
+      Dest 1: Next hop 5, Cost 2.9813
+      Dest 2: Next hop 5, Cost 2.6902
+      Dest 3: Next hop 5, Cost 2.6417
+      Dest 4: Next hop 5, Cost 1.5094
+      Dest 5: Next hop 5, Cost 0.4000
       Dest 6: Next hop 6, Cost 0.0000
-      Dest 7: unreachable
-      Dest 8: unreachable
-      Dest 9: Next hop 0, Cost 0.1943
+      Dest 7: Next hop 5, Cost 2.8693
+      Dest 8: Next hop 5, Cost 3.6807
+      Dest 9: Next hop 5, Cost 2.8728
+      Dest 10: Next hop 5, Cost 2.6720
+      Dest 11: Next hop 11, Cost 0.2381
+      Dest 12: Next hop 5, Cost 2.0105
+      Dest 13: Next hop 5, Cost 1.1595
+      Dest 14: Next hop 5, Cost 1.2614
     Distance Vector:
-      To Node 0: Cost 0.1504
-      To Node 1: ∞
-      To Node 2: ∞
-      To Node 3: ∞
-      To Node 4: Cost 0.3630
-      To Node 5: Cost 0.3799
+      To Node 0: Cost 3.3669
+      To Node 1: Cost 2.9813
+      To Node 2: Cost 2.6902
+      To Node 3: Cost 2.6417
+      To Node 4: Cost 1.5094
+      To Node 5: Cost 0.4000
       To Node 6: Cost 0.0000
-      To Node 7: ∞
-      To Node 8: ∞
-      To Node 9: Cost 0.1943
+      To Node 7: Cost 2.8693
+      To Node 8: Cost 3.6807
+      To Node 9: Cost 2.8728
+      To Node 10: Cost 2.6720
+      To Node 11: Cost 0.2381
+      To Node 12: Cost 2.0105
+      To Node 13: Cost 1.1595
+      To Node 14: Cost 1.2614
 
   Node 7:
-    Position: (0.0039, 9.3520)
-    Transmission range: 1.5673
-    Number of connections: 1
+    Position: (3.0837, 7.7706)
+    Transmission range: 2.8737
+    Number of connections: 5
     Connected to:
-      → Node 3: delay=0.9006, distance=1.4736
+      → Node 0: delay=1.5101, distance=0.6740
+      → Node 1: delay=0.4845, distance=1.8701
+      → Node 3: delay=0.2276, distance=2.7597
+      → Node 9: delay=0.0034, distance=2.7140
+      → Node 12: delay=0.8698, distance=2.5198
     Routing Table:
-      Dest 0: unreachable
-      Dest 1: unreachable
-      Dest 2: unreachable
-      Dest 3: Next hop 3, Cost 0.9006
-      Dest 4: unreachable
-      Dest 5: unreachable
-      Dest 6: unreachable
+      Dest 0: Next hop 9, Cost 0.4976
+      Dest 1: Next hop 9, Cost 0.1119
+      Dest 2: Next hop 3, Cost 0.2761
+      Dest 3: Next hop 3, Cost 0.2276
+      Dest 4: Next hop 3, Cost 1.8559
+      Dest 5: Next hop 3, Cost 2.4693
+      Dest 6: Next hop 3, Cost 2.8693
       Dest 7: Next hop 7, Cost 0.0000
-      Dest 8: unreachable
-      Dest 9: unreachable
+      Dest 8: Next hop 9, Cost 0.8114
+      Dest 9: Next hop 9, Cost 0.0034
+      Dest 10: Next hop 3, Cost 0.2578
+      Dest 11: Next hop 3, Cost 3.1074
+      Dest 12: Next hop 3, Cost 0.8589
+      Dest 13: Next hop 3, Cost 1.7099
+      Dest 14: Next hop 3, Cost 1.6080
     Distance Vector:
-      To Node 0: ∞
-      To Node 1: ∞
-      To Node 2: ∞
-      To Node 3: Cost 0.9006
-      To Node 4: ∞
-      To Node 5: ∞
-      To Node 6: ∞
+      To Node 0: Cost 0.4976
+      To Node 1: Cost 0.1119
+      To Node 2: Cost 0.2761
+      To Node 3: Cost 0.2276
+      To Node 4: Cost 1.8559
+      To Node 5: Cost 2.4693
+      To Node 6: Cost 2.8693
       To Node 7: Cost 0.0000
-      To Node 8: ∞
-      To Node 9: ∞
+      To Node 8: Cost 0.8114
+      To Node 9: Cost 0.0034
+      To Node 10: Cost 0.2578
+      To Node 11: Cost 3.1074
+      To Node 12: Cost 0.8589
+      To Node 13: Cost 1.7099
+      To Node 14: Cost 1.6080
 
   Node 8:
-    Position: (5.2504, 3.1783)
-    Transmission range: 2.9962
+    Position: (0.3888, 5.1425)
+    Transmission range: 3.4603
     Number of connections: 1
     Connected to:
-      → Node 1: delay=0.6739, distance=1.5479
+      → Node 0: delay=0.3138, distance=3.1457
     Routing Table:
-      Dest 0: unreachable
-      Dest 1: Next hop 1, Cost 0.6739
-      Dest 2: unreachable
-      Dest 3: unreachable
-      Dest 4: unreachable
-      Dest 5: unreachable
-      Dest 6: unreachable
-      Dest 7: unreachable
+      Dest 0: Next hop 0, Cost 0.3138
+      Dest 1: Next hop 0, Cost 0.6995
+      Dest 2: Next hop 0, Cost 1.0875
+      Dest 3: Next hop 0, Cost 1.0390
+      Dest 4: Next hop 0, Cost 2.6673
+      Dest 5: Next hop 0, Cost 3.2807
+      Dest 6: Next hop 0, Cost 3.6807
+      Dest 7: Next hop 0, Cost 0.8114
       Dest 8: Next hop 8, Cost 0.0000
-      Dest 9: unreachable
+      Dest 9: Next hop 0, Cost 0.8080
+      Dest 10: Next hop 0, Cost 1.0692
+      Dest 11: Next hop 0, Cost 3.9188
+      Dest 12: Next hop 0, Cost 1.6703
+      Dest 13: Next hop 0, Cost 2.5213
+      Dest 14: Next hop 0, Cost 2.4193
     Distance Vector:
-      To Node 0: ∞
-      To Node 1: Cost 0.6739
-      To Node 2: ∞
-      To Node 3: ∞
-      To Node 4: ∞
-      To Node 5: ∞
-      To Node 6: ∞
-      To Node 7: ∞
+      To Node 0: Cost 0.3138
+      To Node 1: Cost 0.6995
+      To Node 2: Cost 1.0875
+      To Node 3: Cost 1.0390
+      To Node 4: Cost 2.6673
+      To Node 5: Cost 3.2807
+      To Node 6: Cost 3.6807
+      To Node 7: Cost 0.8114
       To Node 8: Cost 0.0000
-      To Node 9: ∞
+      To Node 9: Cost 0.8080
+      To Node 10: Cost 1.0692
+      To Node 11: Cost 3.9188
+      To Node 12: Cost 1.6703
+      To Node 13: Cost 2.5213
+      To Node 14: Cost 2.4193
 
   Node 9:
-    Position: (9.3178, 8.4496)
-    Transmission range: 2.2282
+    Position: (1.0125, 9.5243)
+    Transmission range: 2.5393
     Number of connections: 3
     Connected to:
-      → Node 0: delay=0.0440, distance=0.6651
-      → Node 4: delay=0.5690, distance=1.6142
-      → Node 5: delay=0.5822, distance=2.0242
+      → Node 0: delay=0.5736, distance=2.4847
+      → Node 1: delay=0.1085, distance=2.3584
+      → Node 7: delay=0.0034, distance=2.7140
     Routing Table:
-      Dest 0: Next hop 0, Cost 0.0440
-      Dest 1: unreachable
-      Dest 2: unreachable
-      Dest 3: unreachable
-      Dest 4: Next hop 0, Cost 0.2566
-      Dest 5: Next hop 0, Cost 0.5742
-      Dest 6: Next hop 0, Cost 0.1943
-      Dest 7: unreachable
-      Dest 8: unreachable
+      Dest 0: Next hop 1, Cost 0.4942
+      Dest 1: Next hop 1, Cost 0.1085
+      Dest 2: Next hop 7, Cost 0.2795
+      Dest 3: Next hop 7, Cost 0.2310
+      Dest 4: Next hop 7, Cost 1.8594
+      Dest 5: Next hop 7, Cost 2.4727
+      Dest 6: Next hop 7, Cost 2.8728
+      Dest 7: Next hop 7, Cost 0.0034
+      Dest 8: Next hop 1, Cost 0.8080
       Dest 9: Next hop 9, Cost 0.0000
+      Dest 10: Next hop 7, Cost 0.2612
+      Dest 11: Next hop 7, Cost 3.1108
+      Dest 12: Next hop 7, Cost 0.8623
+      Dest 13: Next hop 7, Cost 1.7133
+      Dest 14: Next hop 7, Cost 1.6114
     Distance Vector:
-      To Node 0: Cost 0.0440
-      To Node 1: ∞
-      To Node 2: ∞
-      To Node 3: ∞
-      To Node 4: Cost 0.2566
-      To Node 5: Cost 0.5742
-      To Node 6: Cost 0.1943
-      To Node 7: ∞
-      To Node 8: ∞
+      To Node 0: Cost 0.4942
+      To Node 1: Cost 0.1085
+      To Node 2: Cost 0.2795
+      To Node 3: Cost 0.2310
+      To Node 4: Cost 1.8594
+      To Node 5: Cost 2.4727
+      To Node 6: Cost 2.8728
+      To Node 7: Cost 0.0034
+      To Node 8: Cost 0.8080
       To Node 9: Cost 0.0000
+      To Node 10: Cost 0.2612
+      To Node 11: Cost 3.1108
+      To Node 12: Cost 0.8623
+      To Node 13: Cost 1.7133
+      To Node 14: Cost 1.6114
+
+  Node 10:
+    Position: (7.6009, 7.7218)
+    Transmission range: 2.9584
+    Number of connections: 2
+    Connected to:
+      → Node 2: delay=0.0183, distance=2.9488
+      → Node 3: delay=0.0302, distance=1.8078
+    Routing Table:
+      Dest 0: Next hop 3, Cost 0.7554
+      Dest 1: Next hop 3, Cost 0.3697
+      Dest 2: Next hop 2, Cost 0.0183
+      Dest 3: Next hop 3, Cost 0.0302
+      Dest 4: Next hop 3, Cost 1.6586
+      Dest 5: Next hop 3, Cost 2.2719
+      Dest 6: Next hop 3, Cost 2.6720
+      Dest 7: Next hop 3, Cost 0.2578
+      Dest 8: Next hop 3, Cost 1.0692
+      Dest 9: Next hop 3, Cost 0.2612
+      Dest 10: Next hop 10, Cost 0.0000
+      Dest 11: Next hop 3, Cost 2.9100
+      Dest 12: Next hop 3, Cost 0.6615
+      Dest 13: Next hop 3, Cost 1.5125
+      Dest 14: Next hop 3, Cost 1.4106
+    Distance Vector:
+      To Node 0: Cost 0.7554
+      To Node 1: Cost 0.3697
+      To Node 2: Cost 0.0183
+      To Node 3: Cost 0.0302
+      To Node 4: Cost 1.6586
+      To Node 5: Cost 2.2719
+      To Node 6: Cost 2.6720
+      To Node 7: Cost 0.2578
+      To Node 8: Cost 1.0692
+      To Node 9: Cost 0.2612
+      To Node 10: Cost 0.0000
+      To Node 11: Cost 2.9100
+      To Node 12: Cost 0.6615
+      To Node 13: Cost 1.5125
+      To Node 14: Cost 1.4106
+
+  Node 11:
+    Position: (9.0219, 3.6731)
+    Transmission range: 1.0783
+    Number of connections: 1
+    Connected to:
+      → Node 6: delay=0.2381, distance=1.3398
+    Routing Table:
+      Dest 0: Next hop 6, Cost 3.6050
+      Dest 1: Next hop 6, Cost 3.2194
+      Dest 2: Next hop 6, Cost 2.9283
+      Dest 3: Next hop 6, Cost 2.8798
+      Dest 4: Next hop 6, Cost 1.7474
+      Dest 5: Next hop 6, Cost 0.6381
+      Dest 6: Next hop 6, Cost 0.2381
+      Dest 7: Next hop 6, Cost 3.1074
+      Dest 8: Next hop 6, Cost 3.9188
+      Dest 9: Next hop 6, Cost 3.1108
+      Dest 10: Next hop 6, Cost 2.9100
+      Dest 11: Next hop 11, Cost 0.0000
+      Dest 12: Next hop 6, Cost 2.2485
+      Dest 13: Next hop 6, Cost 1.3975
+      Dest 14: Next hop 6, Cost 1.4995
+    Distance Vector:
+      To Node 0: Cost 3.6050
+      To Node 1: Cost 3.2194
+      To Node 2: Cost 2.9283
+      To Node 3: Cost 2.8798
+      To Node 4: Cost 1.7474
+      To Node 5: Cost 0.6381
+      To Node 6: Cost 0.2381
+      To Node 7: Cost 3.1074
+      To Node 8: Cost 3.9188
+      To Node 9: Cost 3.1108
+      To Node 10: Cost 2.9100
+      To Node 11: Cost 0.0000
+      To Node 12: Cost 2.2485
+      To Node 13: Cost 1.3975
+      To Node 14: Cost 1.4995
+
+  Node 12:
+    Position: (4.6016, 5.7593)
+    Transmission range: 2.3478
+    Number of connections: 3
+    Connected to:
+      → Node 3: delay=0.6313, distance=2.0529
+      → Node 7: delay=0.8698, distance=2.5198
+      → Node 14: delay=0.7491, distance=2.1343
+    Routing Table:
+      Dest 0: Next hop 3, Cost 1.3565
+      Dest 1: Next hop 3, Cost 0.9708
+      Dest 2: Next hop 3, Cost 0.6798
+      Dest 3: Next hop 3, Cost 0.6313
+      Dest 4: Next hop 14, Cost 0.9971
+      Dest 5: Next hop 14, Cost 1.6105
+      Dest 6: Next hop 14, Cost 2.0105
+      Dest 7: Next hop 3, Cost 0.8589
+      Dest 8: Next hop 3, Cost 1.6703
+      Dest 9: Next hop 3, Cost 0.8623
+      Dest 10: Next hop 3, Cost 0.6615
+      Dest 11: Next hop 14, Cost 2.2485
+      Dest 12: Next hop 12, Cost 0.0000
+      Dest 13: Next hop 14, Cost 0.8510
+      Dest 14: Next hop 14, Cost 0.7491
+    Distance Vector:
+      To Node 0: Cost 1.3565
+      To Node 1: Cost 0.9708
+      To Node 2: Cost 0.6798
+      To Node 3: Cost 0.6313
+      To Node 4: Cost 0.9971
+      To Node 5: Cost 1.6105
+      To Node 6: Cost 2.0105
+      To Node 7: Cost 0.8589
+      To Node 8: Cost 1.6703
+      To Node 9: Cost 0.8623
+      To Node 10: Cost 0.6615
+      To Node 11: Cost 2.2485
+      To Node 12: Cost 0.0000
+      To Node 13: Cost 0.8510
+      To Node 14: Cost 0.7491
+
+  Node 13:
+    Position: (5.3962, 3.3487)
+    Transmission range: 2.3156
+    Number of connections: 2
+    Connected to:
+      → Node 5: delay=0.7594, distance=1.8536
+      → Node 14: delay=0.1019, distance=1.3502
+    Routing Table:
+      Dest 0: Next hop 14, Cost 2.2075
+      Dest 1: Next hop 14, Cost 1.8218
+      Dest 2: Next hop 14, Cost 1.5308
+      Dest 3: Next hop 14, Cost 1.4823
+      Dest 4: Next hop 14, Cost 0.3499
+      Dest 5: Next hop 5, Cost 0.7594
+      Dest 6: Next hop 5, Cost 1.1595
+      Dest 7: Next hop 14, Cost 1.7099
+      Dest 8: Next hop 14, Cost 2.5213
+      Dest 9: Next hop 14, Cost 1.7133
+      Dest 10: Next hop 14, Cost 1.5125
+      Dest 11: Next hop 5, Cost 1.3975
+      Dest 12: Next hop 14, Cost 0.8510
+      Dest 13: Next hop 13, Cost 0.0000
+      Dest 14: Next hop 14, Cost 0.1019
+    Distance Vector:
+      To Node 0: Cost 2.2075
+      To Node 1: Cost 1.8218
+      To Node 2: Cost 1.5308
+      To Node 3: Cost 1.4823
+      To Node 4: Cost 0.3499
+      To Node 5: Cost 0.7594
+      To Node 6: Cost 1.1595
+      To Node 7: Cost 1.7099
+      To Node 8: Cost 2.5213
+      To Node 9: Cost 1.7133
+      To Node 10: Cost 1.5125
+      To Node 11: Cost 1.3975
+      To Node 12: Cost 0.8510
+      To Node 13: Cost 0.0000
+      To Node 14: Cost 0.1019
+
+  Node 14:
+    Position: (4.0892, 3.6874)
+    Transmission range: 3.9246
+    Number of connections: 3
+    Connected to:
+      → Node 4: delay=0.2480, distance=3.5678
+      → Node 12: delay=0.7491, distance=2.1343
+      → Node 13: delay=0.1019, distance=1.3502
+    Routing Table:
+      Dest 0: Next hop 12, Cost 2.1056
+      Dest 1: Next hop 12, Cost 1.7199
+      Dest 2: Next hop 12, Cost 1.4288
+      Dest 3: Next hop 12, Cost 1.3804
+      Dest 4: Next hop 4, Cost 0.2480
+      Dest 5: Next hop 13, Cost 0.8614
+      Dest 6: Next hop 13, Cost 1.2614
+      Dest 7: Next hop 12, Cost 1.6080
+      Dest 8: Next hop 12, Cost 2.4193
+      Dest 9: Next hop 12, Cost 1.6114
+      Dest 10: Next hop 12, Cost 1.4106
+      Dest 11: Next hop 13, Cost 1.4995
+      Dest 12: Next hop 12, Cost 0.7491
+      Dest 13: Next hop 13, Cost 0.1019
+      Dest 14: Next hop 14, Cost 0.0000
+    Distance Vector:
+      To Node 0: Cost 2.1056
+      To Node 1: Cost 1.7199
+      To Node 2: Cost 1.4288
+      To Node 3: Cost 1.3804
+      To Node 4: Cost 0.2480
+      To Node 5: Cost 0.8614
+      To Node 6: Cost 1.2614
+      To Node 7: Cost 1.6080
+      To Node 8: Cost 2.4193
+      To Node 9: Cost 1.6114
+      To Node 10: Cost 1.4106
+      To Node 11: Cost 1.4995
+      To Node 12: Cost 0.7491
+      To Node 13: Cost 0.1019
+      To Node 14: Cost 0.0000
 
 4. ADJACENCY MATRIX (DELAY WEIGHTS)
 -----------------------------------
-           0     1     2     3     4     5     6     7     8     9
-    --------------------------------------------------------------
-   0 | 0.000     ∞     ∞     ∞ 0.213     ∞ 0.150     ∞     ∞ 0.044
-   1 |     ∞ 0.000     ∞     ∞     ∞     ∞     ∞     ∞ 0.674     ∞
-   2 |     ∞     ∞ 0.000     ∞     ∞     ∞     ∞     ∞     ∞     ∞
-   3 |     ∞     ∞     ∞ 0.000     ∞     ∞     ∞ 0.901     ∞     ∞
-   4 | 0.213     ∞     ∞     ∞ 0.000 0.571 0.579     ∞     ∞ 0.569
-   5 |     ∞     ∞     ∞     ∞ 0.571 0.000 0.380     ∞     ∞ 0.582
-   6 | 0.150     ∞     ∞     ∞ 0.579 0.380 0.000     ∞     ∞     ∞
-   7 |     ∞     ∞     ∞ 0.901     ∞     ∞     ∞ 0.000     ∞     ∞
-   8 |     ∞ 0.674     ∞     ∞     ∞     ∞     ∞     ∞ 0.000     ∞
-   9 | 0.044     ∞     ∞     ∞ 0.569 0.582     ∞     ∞     ∞ 0.000
+           0     1     2     3     4     5     6     7     8     9    10    11    12    13    14
+    --------------------------------------------------------------------------------------------
+   0 | 0.000 0.386     ∞     ∞     ∞     ∞     ∞ 1.510 0.314 0.574     ∞     ∞     ∞     ∞     ∞
+   1 | 0.386 0.000 0.562     ∞     ∞     ∞     ∞ 0.484     ∞ 0.109     ∞     ∞     ∞     ∞     ∞
+   2 |     ∞ 0.562 0.000 0.403     ∞     ∞     ∞     ∞     ∞     ∞ 0.018     ∞     ∞     ∞     ∞
+   3 |     ∞     ∞ 0.403 0.000     ∞     ∞     ∞ 0.228     ∞     ∞ 0.030     ∞ 0.631     ∞     ∞
+   4 |     ∞     ∞     ∞     ∞ 0.000     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞ 0.248
+   5 |     ∞     ∞     ∞     ∞     ∞ 0.000 0.400     ∞     ∞     ∞     ∞     ∞     ∞ 0.759     ∞
+   6 |     ∞     ∞     ∞     ∞     ∞ 0.400 0.000     ∞     ∞     ∞     ∞ 0.238     ∞     ∞     ∞
+   7 | 1.510 0.484     ∞ 0.228     ∞     ∞     ∞ 0.000     ∞ 0.003     ∞     ∞ 0.870     ∞     ∞
+   8 | 0.314     ∞     ∞     ∞     ∞     ∞     ∞     ∞ 0.000     ∞     ∞     ∞     ∞     ∞     ∞
+   9 | 0.574 0.109     ∞     ∞     ∞     ∞     ∞ 0.003     ∞ 0.000     ∞     ∞     ∞     ∞     ∞
+  10 |     ∞     ∞ 0.018 0.030     ∞     ∞     ∞     ∞     ∞     ∞ 0.000     ∞     ∞     ∞     ∞
+  11 |     ∞     ∞     ∞     ∞     ∞     ∞ 0.238     ∞     ∞     ∞     ∞ 0.000     ∞     ∞     ∞
+  12 |     ∞     ∞     ∞ 0.631     ∞     ∞     ∞ 0.870     ∞     ∞     ∞     ∞ 0.000     ∞ 0.749
+  13 |     ∞     ∞     ∞     ∞     ∞ 0.759     ∞     ∞     ∞     ∞     ∞     ∞     ∞ 0.000 0.102
+  14 |     ∞     ∞     ∞     ∞ 0.248     ∞     ∞     ∞     ∞     ∞     ∞     ∞ 0.749 0.102 0.000
 
 5. NETWORK STATISTICS
 ---------------------
 Delay statistics:
-  - Minimum: 0.0440
-  - Maximum: 0.9006
-  - Average: 0.4663
-  - Standard deviation: 0.2509
+  - Minimum: 0.0034
+  - Maximum: 1.5101
+  - Average: 0.4309
+  - Standard deviation: 0.3537
 
 Routing metrics:
-  - Reachability: 0.2667 (26.7%)
-  - Unreachable destinations: 66
-  - Average hops per path: 1.50
-  - Average path cost: 0.4042
+  - Reachability: 1.0000 (100.0%)
+  - Unreachable destinations: 0
+  - Average hops per path: 4.32
+  - Average path cost: 1.4831
 
 6. PATH ANALYSIS
 ----------------
 Connectivity matrix (1=connected, 0=disconnected):
-         0   1   2   3   4   5   6   7   8   9
-    ------------------------------------------
-   0 |   1   1   0   0   1   1   1   0   0   1
-   1 |   1   1   0   0   0   0   0   0   1   0
-   2 |   1   0   1   0   0   0   0   0   0   0
-   3 |   1   0   0   1   0   0   0   1   0   0
-   4 |   1   1   0   0   1   1   1   0   0   1
-   5 |   1   1   0   0   1   1   1   0   0   1
-   6 |   1   1   0   0   1   1   1   0   0   1
-   7 |   1   0   0   1   0   0   0   1   0   0
-   8 |   1   1   0   0   0   0   0   0   1   0
-   9 |   1   1   0   0   1   1   1   0   0   1
+         0   1   2   3   4   5   6   7   8   9  10  11  12  13  14
+    --------------------------------------------------------------
+   0 |   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+   1 |   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+   2 |   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+   3 |   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+   4 |   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+   5 |   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+   6 |   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+   7 |   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+   8 |   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+   9 |   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+  10 |   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+  11 |   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+  12 |   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+  13 |   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+  14 |   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
 
 Sample shortest paths between random node pairs:
-  Path 9 → 4:
-    Nodes: 9 → 0 → 4
-    Total delay: 0.2566
+  Path 1 → 7:
+    Nodes: 1 → 9 → 7
+    Total delay: 0.1119
 
-  Path 0 → 5:
-    Nodes: 0 → 6 → 5
-    Total delay: 0.5302
+  Path 3 → 12:
+    Nodes: 3 → 12
+    Total delay: 0.6313
 
-  Path 8 → 0:
-    Nodes: 0
-    Total delay: inf
+  Path 4 → 0:
+    Nodes: 4 → 14 → 12 → 3 → 7 → 9 → 1 → 0
+    Total delay: 2.3535
 
-  Path 1 → 8:
-    Nodes: 1 → 8
-    Total delay: 0.6739
+  Path 9 → 10:
+    Nodes: 9 → 7 → 3 → 10
+    Total delay: 0.2612
 
-  Path 0 → 1:
-    Nodes: 1
-    Total delay: inf
+  Path 1 → 9:
+    Nodes: 1 → 9
+    Total delay: 0.1085
 
 
 7. NETWORK CONNECTIVITY GRAPH
@@ -399,19 +720,26 @@ Connectivity visualization:
 
 Network topology:
 
-                               [8]----[1]
-                                          [6]
-                       [2]                 \ -----[5]
-                                            \      |
-                                             \\[4]/|
-                                              \   ||
-                                                \[0|
-         / /[3]                                   ||
-        /                                         [9]
-       [7]
+         [4]-----
+                 -----
+                      ----  ----[3]
+                         [4]      --              [1]
+                                    --      [6]---
+                          \            -[5]-
+       [8]
+        --                 \[2]
+          --                /\
+            --            //  \
+              -          /     \
+              / /[0]\  -----------[3]------
+             / --- -[7]/          |        [0]
+           //--       \|          |      --
+           -           |          |    --
+          [9]---------[1]-------- |  --
+                                 [2]-
 
 Legend: [N] = Node N, connections shown with -, |, \, / characters
 
 
-Most congested link: 7-3 (delay: 0.90)
-Fastest link: 9-0 (delay: 0.04)
+Most congested link: 7-0 (delay: 1.51)
+Fastest link: 9-7 (delay: 0.00)
