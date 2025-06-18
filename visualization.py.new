@@ -1,0 +1,162 @@
+# filepath: c:\Users\dario\Desktop\GitHub\wireless-network-simulator\my-prj\visualization.py
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend
+import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
+from matplotlib.colors import LinearSegmentedColormap
+import matplotlib.cm as cm
+
+def visualize_network(network):
+    """Visualize the sensor network using multiple methods."""
+    # Create all visualizations
+    visualize_network_matplotlib(network)
+    visualize_network_networkx(network)
+    visualize_adjacency_list(network)
+
+def visualize_network_matplotlib(network):
+    """Visualize the sensor network using Matplotlib."""
+    plt.figure(figsize=(10, 10))
+    
+    # Find max coordinates for setting plot limits
+    max_x = max(node.x for node in network.nodes) * 1.1
+    max_y = max(node.y for node in network.nodes) * 1.1
+    
+    # Plot nodes
+    for node in network.nodes:
+        plt.scatter(node.x, node.y, s=100, color='blue')
+        plt.text(node.x + 0.1, node.y + 0.1, f"{node.node_id}", 
+                fontweight='bold', fontsize=12)
+        
+        # Draw transmission range circle
+        circle = plt.Circle((node.x, node.y), node.transmission_range, 
+                           alpha=0.1, color='blue')
+        plt.gca().add_patch(circle)
+        
+        # Draw connections with color indicating delay
+        for neighbor_id, delay in node.connections.items():
+            neighbor = network.get_node_by_id(neighbor_id)
+            # Only draw connection if this node has lower ID (to avoid duplicates)
+            if node.node_id < neighbor_id:
+                # Use color to represent delay (red=high delay, green=low delay)
+                color = plt.cm.RdYlGn_r(delay)
+                plt.plot([node.x, neighbor.x], [node.y, neighbor.y], 
+                        alpha=0.7,
+                        linewidth=1.5,
+                        color=color)
+                # Add delay label to midpoint of connection
+                mid_x = (node.x + neighbor.x) / 2
+                mid_y = (node.y + neighbor.y) / 2
+                plt.text(mid_x, mid_y, f"{delay:.2f}", fontsize=8, 
+                        bbox=dict(facecolor='white', alpha=0.7))
+    
+    plt.xlim(0, max_x)
+    plt.ylim(0, max_y)
+    plt.title("Wireless Sensor Network Simulation (Matplotlib)")
+    plt.xlabel("X position")
+    plt.ylabel("Y position")
+    plt.grid(True)
+    plt.savefig("network_visualization_matplotlib.png")
+    plt.close()  # Close the figure instead of showing it interactively
+    print("Saved network visualization to network_visualization_matplotlib.png")
+
+def visualize_network_networkx(network):
+    """Visualize the sensor network using NetworkX."""
+    # Create NetworkX graph
+    G = nx.Graph()
+    
+    # Add nodes with positions
+    node_positions = {}
+    for node in network.nodes:
+        G.add_node(node.node_id)
+        node_positions[node.node_id] = (node.x, node.y)
+    
+    # Add edges with delay weights
+    edge_weights = {}
+    for node in network.nodes:
+        for neighbor_id, delay in node.connections.items():
+            if node.node_id < neighbor_id:  # Avoid duplicates
+                G.add_edge(node.node_id, neighbor_id, weight=delay)
+                edge_weights[(node.node_id, neighbor_id)] = delay
+    
+    plt.figure(figsize=(12, 10))
+    
+    # Draw nodes with labels
+    nx.draw_networkx_nodes(G, node_positions, node_size=700, 
+                         node_color='lightblue', alpha=0.8)
+    nx.draw_networkx_labels(G, node_positions, font_weight='bold')
+    
+    # Draw edges with colors based on weights
+    edges = list(G.edges())
+    weights = [edge_weights.get((u, v)) or edge_weights.get((v, u), 0.5) for u, v in edges]
+    
+    # Create colormap: green for low delays, red for high delays
+    cmap = LinearSegmentedColormap.from_list('delay_cmap', ['green', 'yellow', 'red'])
+    
+    # Normalize weights for colormap
+    if weights:
+        norm = plt.Normalize(min(weights), max(weights))
+        edge_colors = [cmap(norm(weight)) for weight in weights]
+        
+        # Draw edges with variable width based on weight (inverse: thicker = lower delay)
+        edge_widths = [3 * (1 - w) + 0.5 for w in weights]  # Thicker lines for lower delays
+        
+        nx.draw_networkx_edges(G, node_positions, edgelist=edges, 
+                              width=edge_widths, edge_color=edge_colors, alpha=0.7)
+        
+        # Add edge labels (delay values)
+        edge_labels = {(u, v): f"{w:.2f}" for (u, v), w in zip(edges, weights)}
+        nx.draw_networkx_edge_labels(G, node_positions, edge_labels=edge_labels, 
+                                   font_size=8, bbox=dict(facecolor='white', alpha=0.7))
+    
+    plt.title("Wireless Sensor Network Visualization (NetworkX)")
+    plt.axis('off')  # Hide axes
+    
+    # Add colorbar for delay reference
+    if weights:
+        sm = cm.ScalarMappable(cmap=cmap, norm=norm)
+        sm.set_array([])
+        plt.colorbar(sm, ax=plt.gca(), label='Delay')
+    
+    plt.tight_layout()
+    plt.savefig("network_visualization_networkx.png")
+    plt.close()  # Close instead of showing interactively
+    print("Saved network visualization to network_visualization_networkx.png")
+
+def visualize_adjacency_list(network):
+    """Generate and display adjacency list representation of the network."""
+    plt.figure(figsize=(10, 8))
+    plt.axis('off')  # Turn off axis
+    
+    # Create adjacency list text
+    adj_list = ["Adjacency List Representation:"]
+    adj_list.append("")
+    
+    # Sort nodes by ID
+    sorted_nodes = sorted(network.nodes, key=lambda x: x.node_id)
+    
+    for node in sorted_nodes:
+        # Get connected neighbors sorted by ID
+        neighbors = sorted(node.connections.items(), key=lambda x: x[0])
+        neighbor_str = ", ".join([f"{n_id} (delay: {delay:.2f})" for n_id, delay in neighbors])
+        adj_list.append(f"[{node.node_id}]: {neighbor_str}")
+    
+    # Join with newlines
+    adj_text = "\n".join(adj_list)
+    
+    # Add text to plot
+    plt.text(0.05, 0.95, adj_text, fontsize=12, family='monospace',
+             verticalalignment='top', horizontalalignment='left',
+             transform=plt.gca().transAxes)
+    
+    plt.title("Network Adjacency List")
+    plt.tight_layout()
+    plt.savefig("network_adjacency_list.png")
+    plt.close()  # Close instead of showing interactively
+    print("Saved adjacency list to network_adjacency_list.png")
+    
+    # Also print to console for easy access
+    print("\nADJACENCY LIST REPRESENTATION:")
+    print("-----------------------------")
+    for line in adj_list:
+        print(line)

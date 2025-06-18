@@ -1,0 +1,207 @@
+
+# Wireless Sensor Network Simulator
+
+A robust simulator for wireless sensor networks that models node connectivity, data transmission, and routing protocols with interactive visualization capabilities.
+
+## Installation
+
+### Automatic Installation
+
+The easiest way to install all dependencies is to use the automatic installer:
+
+```bash
+python install_dependencies.py
+```
+
+This will check for and install all required dependencies, including visualization libraries.
+
+### Running with Auto-Install
+
+You can also run the simulator with the `--auto-install` flag to automatically install missing dependencies:
+
+```bash
+python simulation.py --auto-install
+```
+
+### Manual Installation
+
+To manually install the required dependencies:
+
+```bash
+pip install numpy matplotlib networkx pillow
+```
+
+For interactive visualizations, you'll also need a GUI backend:
+
+- **Windows**: `tkinter` (included with Python)
+- **macOS**: `pip install PyQt5`
+- **Linux**: `sudo apt-get install python3-tk` (Debian/Ubuntu) or `pip install PyQt5`
+
+## Usage
+
+### Basic Simulation
+
+Run a basic simulation with default parameters:
+
+```bash
+python simulation.py
+```
+
+### Interactive Visualization
+
+Run with interactive visualization enabled:
+
+```bash
+python simulation.py --interactive
+```
+
+### Customizing Simulation Parameters
+
+Specify the number of nodes:
+
+```bash
+python simulation.py --nodes=20
+```
+
+Run with both interactive mode and custom parameters:
+
+```bash
+python simulation.py --nodes=20 --interactive
+```
+
+### Windows PowerShell Users
+
+In PowerShell, use semicolons instead of `&&` for command chaining:
+
+```powershell
+python simulation.py --nodes=20; python simulation.py --interactive
+```
+
+## Testing
+
+To test the functionality:
+
+```bash
+python test_simple.py
+```
+
+To run multiple iterations with different parameters:
+
+```bash
+python test_iterations.py [number_of_iterations]
+```
+
+For running the full test suite:
+
+```bash
+python tests/test_suite.py
+```
+
+## Visualization Examples
+
+The simulator generates three types of visualizations:
+
+1. **Physical Network Topology (Matplotlib)**
+   - Shows nodes with their physical positions
+   - Displays transmission range circles
+   - Connections are color-coded by delay (green = low delay, red = high delay)
+
+2. **Graph Visualization (NetworkX)**
+   - Displays the network as a graph
+   - Nodes positioned according to their physical coordinates
+   - Edges have varying thickness and color based on delay
+   - Includes a color legend for reference
+
+3. **Adjacency List Representation**
+   - Text-based representation of network connections
+   - Lists each node's neighbors with delay values
+   - Easy to read, consistent format
+
+All visualizations are saved to the `visualizations` directory by default.
+
+## Troubleshooting
+
+### Visualization Issues
+
+If you encounter problems with interactive visualization:
+
+1. **Missing GUI Backend**: 
+   - Error: "No interactive backends available" or "No GUI backend found"
+   - Solution: Install a GUI backend for matplotlib based on your operating system:
+     ```bash
+     # Windows (in Command Prompt or PowerShell)
+     pip install tk
+     
+     # Linux (Ubuntu/Debian)
+     sudo apt-get install python3-tk
+     
+     # macOS
+     pip install PyQt5  # Alternative to Tk
+     ```
+
+2. **Backend Crashes**:
+   - If the default backend crashes, the simulator will try others automatically
+   - You can also try installing alternative backends:
+     ```bash
+     pip install PyQt5 wxPython
+     ```
+
+3. **No Visualizations Generated**:
+   - If no visualizations are generated, the simulator will fall back to simple visualization using PIL
+   - Make sure you have at least one of the following installed: matplotlib, networkx, or PIL/Pillow
+
+### Cross-Platform Issues
+
+1. **Windows**:
+   - If you're using PowerShell, use semicolons instead of && for command chaining
+   - Tkinter should be included with standard Python installations
+   - For conda environments, you may need to install tk separately
+
+2. **Linux**:
+   - Tkinter is typically not included by default
+   - Install with: `sudo apt-get install python3-tk` (Debian/Ubuntu)
+   - For other distributions, use the appropriate package manager
+
+3. **macOS**:
+   - Tkinter may have issues on some macOS versions
+   - PyQt5 is a good alternative: `pip install PyQt5`
+   - If using Homebrew Python, you may need additional steps
+
+## Future Enhancements
+
+Potential improvements for future versions:
+
+1. **Advanced Routing Protocols**:
+   - Add support for AODV, DSR, and other routing protocols
+   - Compare performance between different routing strategies
+
+2. **Energy Modeling**:
+   - Simulate battery consumption for transmission and reception
+   - Implement energy-aware routing protocols
+
+3. **Mobile Nodes**:
+   - Add support for nodes that change position over time
+   - Implement mobility models (random walk, random waypoint, etc.)
+
+4. **Interference Modeling**:
+   - Simulate signal interference between nodes
+   - More realistic communication modeling
+
+5. **3D Visualization**:
+   - Support for 3D networks and terrain effects
+   - Interactive 3D visualization
+
+## Contributing
+
+Contributions are welcome! Here are some ways you can contribute:
+
+1. Report bugs and issues
+2. Add new features or enhancements
+3. Improve documentation
+4. Add more test cases
+
+
+## Acknowledgments
+
+- Based on the wireless networks course at UFPB
+- Special thanks to the original authors: Marismar da Costa Silva and Gustavo Eraldo da Silva

@@ -1,0 +1,463 @@
+================================================================================
+WIRELESS SENSOR NETWORK DETAILED REPORT - Generated: 2025-06-18 10:26:40
+================================================================================
+
+1. NETWORK OVERVIEW
+-------------------
+Number of nodes: 15
+Total connections: 28
+Average connections per node: 1.87
+Network density: 0.1333 (13.3%)
+
+2. NODE DETAILS
+---------------
+
+  Node 0:
+    Position: (1.7463, 0.1978)
+    Transmission range: 2.8281
+    Number of connections: 0
+    Routing Table:
+      Dest 0: Next hop 0, Cost 0.0000
+      Dest 1: unreachable
+      Dest 2: unreachable
+      Dest 3: unreachable
+      Dest 4: unreachable
+      Dest 5: unreachable
+      Dest 6: unreachable
+      Dest 7: unreachable
+      Dest 8: unreachable
+      Dest 9: unreachable
+      Dest 10: unreachable
+      Dest 11: unreachable
+      Dest 12: unreachable
+      Dest 13: unreachable
+      Dest 14: unreachable
+
+  Node 1:
+    Position: (9.6833, 0.1287)
+    Transmission range: 2.1827
+    Number of connections: 1
+    Connected to:
+      → Node 10: delay=0.1023, distance=1.6490
+    Routing Table:
+      Dest 0: unreachable
+      Dest 1: Next hop 1, Cost 0.0000
+      Dest 2: unreachable
+      Dest 3: unreachable
+      Dest 4: unreachable
+      Dest 5: unreachable
+      Dest 6: unreachable
+      Dest 7: Next hop 10, Cost 1.0601
+      Dest 8: unreachable
+      Dest 9: unreachable
+      Dest 10: Next hop 10, Cost 0.1023
+      Dest 11: unreachable
+      Dest 12: unreachable
+      Dest 13: unreachable
+      Dest 14: unreachable
+
+  Node 2:
+    Position: (0.8556, 5.3434)
+    Transmission range: 2.9577
+    Number of connections: 3
+    Connected to:
+      → Node 4: delay=0.3342, distance=1.9894
+      → Node 13: delay=0.4626, distance=0.3624
+      → Node 14: delay=0.0580, distance=1.9172
+    Routing Table:
+      Dest 0: unreachable
+      Dest 1: unreachable
+      Dest 2: Next hop 2, Cost 0.0000
+      Dest 3: unreachable
+      Dest 4: Next hop 4, Cost 0.3342
+      Dest 5: unreachable
+      Dest 6: unreachable
+      Dest 7: unreachable
+      Dest 8: unreachable
+      Dest 9: unreachable
+      Dest 10: unreachable
+      Dest 11: unreachable
+      Dest 12: unreachable
+      Dest 13: Next hop 4, Cost 0.3533
+      Dest 14: Next hop 14, Cost 0.0580
+
+  Node 3:
+    Position: (3.9065, 3.7755)
+    Transmission range: 1.1621
+    Number of connections: 0
+    Routing Table:
+      Dest 0: unreachable
+      Dest 1: unreachable
+      Dest 2: unreachable
+      Dest 3: Next hop 3, Cost 0.0000
+      Dest 4: unreachable
+      Dest 5: unreachable
+      Dest 6: unreachable
+      Dest 7: unreachable
+      Dest 8: unreachable
+      Dest 9: unreachable
+      Dest 10: unreachable
+      Dest 11: unreachable
+      Dest 12: unreachable
+      Dest 13: unreachable
+      Dest 14: unreachable
+
+  Node 4:
+    Position: (2.4306, 6.5588)
+    Transmission range: 2.9487
+    Number of connections: 3
+    Connected to:
+      → Node 2: delay=0.3342, distance=1.9894
+      → Node 13: delay=0.0192, distance=1.7248
+      → Node 14: delay=0.4236, distance=1.9386
+    Routing Table:
+      Dest 0: unreachable
+      Dest 1: unreachable
+      Dest 2: Next hop 2, Cost 0.3342
+      Dest 3: unreachable
+      Dest 4: Next hop 4, Cost 0.0000
+      Dest 5: unreachable
+      Dest 6: unreachable
+      Dest 7: unreachable
+      Dest 8: unreachable
+      Dest 9: unreachable
+      Dest 10: unreachable
+      Dest 11: unreachable
+      Dest 12: unreachable
+      Dest 13: Next hop 13, Cost 0.0192
+      Dest 14: Next hop 2, Cost 0.3921
+
+  Node 5:
+    Position: (6.7384, 8.8657)
+    Transmission range: 2.6132
+    Number of connections: 3
+    Connected to:
+      → Node 6: delay=0.6396, distance=2.0635
+      → Node 8: delay=0.0997, distance=1.2211
+      → Node 12: delay=0.2193, distance=2.3360
+    Routing Table:
+      Dest 0: unreachable
+      Dest 1: unreachable
+      Dest 2: unreachable
+      Dest 3: unreachable
+      Dest 4: unreachable
+      Dest 5: Next hop 5, Cost 0.0000
+      Dest 6: Next hop 6, Cost 0.6396
+      Dest 7: unreachable
+      Dest 8: Next hop 8, Cost 0.0997
+      Dest 9: Next hop 12, Cost 0.5565
+      Dest 10: unreachable
+      Dest 11: Next hop 8, Cost 0.1200
+      Dest 12: Next hop 12, Cost 0.2193
+      Dest 13: unreachable
+      Dest 14: unreachable
+
+  Node 6:
+    Position: (8.7463, 8.3903)
+    Transmission range: 1.7383
+    Number of connections: 1
+    Connected to:
+      → Node 5: delay=0.6396, distance=2.0635
+    Routing Table:
+      Dest 0: unreachable
+      Dest 1: unreachable
+      Dest 2: unreachable
+      Dest 3: unreachable
+      Dest 4: unreachable
+      Dest 5: Next hop 5, Cost 0.6396
+      Dest 6: Next hop 6, Cost 0.0000
+      Dest 7: unreachable
+      Dest 8: Next hop 5, Cost 0.7394
+      Dest 9: Next hop 5, Cost 1.1961
+      Dest 10: unreachable
+      Dest 11: Next hop 5, Cost 0.7596
+      Dest 12: Next hop 5, Cost 0.8589
+      Dest 13: unreachable
+      Dest 14: unreachable
+
+  Node 7:
+    Position: (9.0004, 3.6762)
+    Transmission range: 2.5447
+    Number of connections: 1
+    Connected to:
+      → Node 10: delay=0.9579, distance=2.4831
+    Routing Table:
+      Dest 0: unreachable
+      Dest 1: Next hop 10, Cost 1.0601
+      Dest 2: unreachable
+      Dest 3: unreachable
+      Dest 4: unreachable
+      Dest 5: unreachable
+      Dest 6: unreachable
+      Dest 7: Next hop 7, Cost 0.0000
+      Dest 8: unreachable
+      Dest 9: unreachable
+      Dest 10: Next hop 10, Cost 0.9579
+      Dest 11: unreachable
+      Dest 12: unreachable
+      Dest 13: unreachable
+      Dest 14: unreachable
+
+  Node 8:
+    Position: (5.5244, 8.7346)
+    Transmission range: 2.9379
+    Number of connections: 3
+    Connected to:
+      → Node 5: delay=0.0997, distance=1.2211
+      → Node 11: delay=0.0202, distance=2.8945
+      → Node 12: delay=0.9745, distance=2.4414
+    Routing Table:
+      Dest 0: unreachable
+      Dest 1: unreachable
+      Dest 2: unreachable
+      Dest 3: unreachable
+      Dest 4: unreachable
+      Dest 5: Next hop 5, Cost 0.0997
+      Dest 6: Next hop 5, Cost 0.7394
+      Dest 7: unreachable
+      Dest 8: Next hop 8, Cost 0.0000
+      Dest 9: Next hop 5, Cost 0.6562
+      Dest 10: unreachable
+      Dest 11: Next hop 11, Cost 0.0202
+      Dest 12: Next hop 5, Cost 0.3191
+      Dest 13: unreachable
+      Dest 14: unreachable
+
+  Node 9:
+    Position: (8.7209, 6.3984)
+    Transmission range: 1.6935
+    Number of connections: 1
+    Connected to:
+      → Node 12: delay=0.3372, distance=2.1419
+    Routing Table:
+      Dest 0: unreachable
+      Dest 1: unreachable
+      Dest 2: unreachable
+      Dest 3: unreachable
+      Dest 4: unreachable
+      Dest 5: Next hop 12, Cost 0.5565
+      Dest 6: Next hop 12, Cost 1.1961
+      Dest 7: unreachable
+      Dest 8: Next hop 12, Cost 0.6562
+      Dest 9: Next hop 9, Cost 0.0000
+      Dest 10: unreachable
+      Dest 11: Next hop 12, Cost 0.6765
+      Dest 12: Next hop 12, Cost 0.3372
+      Dest 13: unreachable
+      Dest 14: unreachable
+
+  Node 10:
+    Position: (8.4738, 1.2496)
+    Transmission range: 2.4099
+    Number of connections: 2
+    Connected to:
+      → Node 1: delay=0.1023, distance=1.6490
+      → Node 7: delay=0.9579, distance=2.4831
+    Routing Table:
+      Dest 0: unreachable
+      Dest 1: Next hop 1, Cost 0.1023
+      Dest 2: unreachable
+      Dest 3: unreachable
+      Dest 4: unreachable
+      Dest 5: unreachable
+      Dest 6: unreachable
+      Dest 7: Next hop 7, Cost 0.9579
+      Dest 8: unreachable
+      Dest 9: unreachable
+      Dest 10: Next hop 10, Cost 0.0000
+      Dest 11: unreachable
+      Dest 12: unreachable
+      Dest 13: unreachable
+      Dest 14: unreachable
+
+  Node 11:
+    Position: (6.5087, 6.0126)
+    Transmission range: 1.0668
+    Number of connections: 2
+    Connected to:
+      → Node 8: delay=0.0202, distance=2.8945
+      → Node 12: delay=0.7986, distance=0.5276
+    Routing Table:
+      Dest 0: unreachable
+      Dest 1: unreachable
+      Dest 2: unreachable
+      Dest 3: unreachable
+      Dest 4: unreachable
+      Dest 5: Next hop 8, Cost 0.1200
+      Dest 6: Next hop 8, Cost 0.7596
+      Dest 7: unreachable
+      Dest 8: Next hop 8, Cost 0.0202
+      Dest 9: Next hop 8, Cost 0.6765
+      Dest 10: unreachable
+      Dest 11: Next hop 11, Cost 0.0000
+      Dest 12: Next hop 8, Cost 0.3393
+      Dest 13: unreachable
+      Dest 14: unreachable
+
+  Node 12:
+    Position: (6.5834, 6.5348)
+    Transmission range: 2.2948
+    Number of connections: 4
+    Connected to:
+      → Node 5: delay=0.2193, distance=2.3360
+      → Node 8: delay=0.9745, distance=2.4414
+      → Node 9: delay=0.3372, distance=2.1419
+      → Node 11: delay=0.7986, distance=0.5276
+    Routing Table:
+      Dest 0: unreachable
+      Dest 1: unreachable
+      Dest 2: unreachable
+      Dest 3: unreachable
+      Dest 4: unreachable
+      Dest 5: Next hop 5, Cost 0.2193
+      Dest 6: Next hop 5, Cost 0.8589
+      Dest 7: unreachable
+      Dest 8: Next hop 5, Cost 0.3191
+      Dest 9: Next hop 9, Cost 0.3372
+      Dest 10: unreachable
+      Dest 11: Next hop 5, Cost 0.3393
+      Dest 12: Next hop 12, Cost 0.0000
+      Dest 13: unreachable
+      Dest 14: unreachable
+
+  Node 13:
+    Position: (1.2178, 5.3324)
+    Transmission range: 1.0343
+    Number of connections: 2
+    Connected to:
+      → Node 2: delay=0.4626, distance=0.3624
+      → Node 4: delay=0.0192, distance=1.7248
+    Routing Table:
+      Dest 0: unreachable
+      Dest 1: unreachable
+      Dest 2: Next hop 4, Cost 0.3533
+      Dest 3: unreachable
+      Dest 4: Next hop 4, Cost 0.0192
+      Dest 5: unreachable
+      Dest 6: unreachable
+      Dest 7: unreachable
+      Dest 8: unreachable
+      Dest 9: unreachable
+      Dest 10: unreachable
+      Dest 11: unreachable
+      Dest 12: unreachable
+      Dest 13: Next hop 13, Cost 0.0000
+      Dest 14: Next hop 4, Cost 0.4113
+
+  Node 14:
+    Position: (0.6178, 7.2458)
+    Transmission range: 1.2705
+    Number of connections: 2
+    Connected to:
+      → Node 2: delay=0.0580, distance=1.9172
+      → Node 4: delay=0.4236, distance=1.9386
+    Routing Table:
+      Dest 0: unreachable
+      Dest 1: unreachable
+      Dest 2: Next hop 2, Cost 0.0580
+      Dest 3: unreachable
+      Dest 4: Next hop 2, Cost 0.3921
+      Dest 5: unreachable
+      Dest 6: unreachable
+      Dest 7: unreachable
+      Dest 8: unreachable
+      Dest 9: unreachable
+      Dest 10: unreachable
+      Dest 11: unreachable
+      Dest 12: unreachable
+      Dest 13: Next hop 2, Cost 0.4113
+      Dest 14: Next hop 14, Cost 0.0000
+
+3. ADJACENCY MATRIX (DELAY WEIGHTS)
+-----------------------------------
+           0     1     2     3     4     5     6     7     8     9    10    11    12    13    14
+    --------------------------------------------------------------------------------------------
+   0 | 0.000     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞
+   1 |     ∞ 0.000     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞ 0.102     ∞     ∞     ∞     ∞
+   2 |     ∞     ∞ 0.000     ∞ 0.334     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞ 0.463 0.058
+   3 |     ∞     ∞     ∞ 0.000     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞
+   4 |     ∞     ∞ 0.334     ∞ 0.000     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞ 0.019 0.424
+   5 |     ∞     ∞     ∞     ∞     ∞ 0.000 0.640     ∞ 0.100     ∞     ∞     ∞ 0.219     ∞     ∞
+   6 |     ∞     ∞     ∞     ∞     ∞ 0.640 0.000     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞
+   7 |     ∞     ∞     ∞     ∞     ∞     ∞     ∞ 0.000     ∞     ∞ 0.958     ∞     ∞     ∞     ∞
+   8 |     ∞     ∞     ∞     ∞     ∞ 0.100     ∞     ∞ 0.000     ∞     ∞ 0.020 0.974     ∞     ∞
+   9 |     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞ 0.000     ∞     ∞ 0.337     ∞     ∞
+  10 |     ∞ 0.102     ∞     ∞     ∞     ∞     ∞ 0.958     ∞     ∞ 0.000     ∞     ∞     ∞     ∞
+  11 |     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞ 0.020     ∞     ∞ 0.000 0.799     ∞     ∞
+  12 |     ∞     ∞     ∞     ∞     ∞ 0.219     ∞     ∞ 0.974 0.337     ∞ 0.799 0.000     ∞     ∞
+  13 |     ∞     ∞ 0.463     ∞ 0.019     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞ 0.000     ∞
+  14 |     ∞     ∞ 0.058     ∞ 0.424     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞ 0.000
+
+4. NETWORK STATISTICS
+---------------------
+Delay statistics:
+  - Minimum: 0.0192
+  - Maximum: 0.9745
+  - Average: 0.3891
+  - Standard deviation: 0.3258
+
+5. PATH ANALYSIS
+----------------
+Connectivity matrix (1=connected, 0=disconnected):
+         0   1   2   3   4   5   6   7   8   9  10  11  12  13  14
+    --------------------------------------------------------------
+   0 |   1   1   0   0   0   0   0   0   0   0   0   0   0   0   0
+   1 |   1   1   0   0   0   0   0   1   0   0   1   0   0   0   0
+   2 |   1   0   1   0   1   0   0   0   0   0   0   0   0   1   1
+   3 |   1   0   0   1   0   0   0   0   0   0   0   0   0   0   0
+   4 |   1   0   1   0   1   0   0   0   0   0   0   0   0   1   1
+   5 |   1   0   0   0   0   1   1   0   1   1   0   1   1   0   0
+   6 |   1   0   0   0   0   1   1   0   1   1   0   1   1   0   0
+   7 |   1   1   0   0   0   0   0   1   0   0   1   0   0   0   0
+   8 |   1   0   0   0   0   1   1   0   1   1   0   1   1   0   0
+   9 |   1   0   0   0   0   1   1   0   1   1   0   1   1   0   0
+  10 |   1   1   0   0   0   0   0   1   0   0   1   0   0   0   0
+  11 |   1   0   0   0   0   1   1   0   1   1   0   1   1   0   0
+  12 |   1   0   0   0   0   1   1   0   1   1   0   1   1   0   0
+  13 |   1   0   1   0   1   0   0   0   0   0   0   0   0   1   1
+  14 |   1   0   1   0   1   0   0   0   0   0   0   0   0   1   1
+
+Sample shortest paths between random node pairs:
+  Path 12 → 0:
+    Nodes: 0
+    Total delay: inf
+
+  Path 13 → 14:
+    Nodes: 13 → 4 → 2 → 14
+    Total delay: 0.4113
+
+  Path 11 → 12:
+    Nodes: 11 → 8 → 5 → 12
+    Total delay: 0.3393
+
+  Path 14 → 13:
+    Nodes: 14 → 2 → 4 → 13
+    Total delay: 0.4113
+
+
+6. NETWORK CONNECTIVITY GRAPH
+---------------------------
+
+Connectivity visualization:
+
+Network topology:
+
+            [0]                               -- -[1]
+                                             -
+                                            [0]
+                                            \
+                                             \
+                       [3]                    \[7]
+        [2[3]-
+         | -- --                   [1]--------[9]
+         |-----[4]                 [2]
+       [4]                         / |
+                                  // |
+                                  /  |        [6]
+                              [8]---[5]-------
+
+Legend: [N] = Node N, connections shown with -, |, \, / characters
+
+
+Most congested link: 12-8 (delay: 0.97)
+Fastest link: 13-4 (delay: 0.02)
