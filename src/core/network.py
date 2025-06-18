@@ -1,5 +1,6 @@
 from src.core.sensor_node import SensorNode
 import random
+import time
 
 class SensorNetwork:
     """A wireless sensor network consisting of nodes with weighted connections."""
@@ -69,6 +70,7 @@ class SensorNetwork:
         return None
     
     def simulate_message_transmission(self, source_id, target_id, message="Test message"):
+        """Simulate sending a message from source to target using current routing tables."""
         print(f"\nSimulating message transmission from Node {source_id} to Node {target_id}")
         print(f"Message: '{message}'")
         path = []
@@ -85,6 +87,65 @@ class SensorNetwork:
         print(f"Path found: {' -> '.join(map(str, path))}")
         print(f"Total transmission delay: {total_delay:.4f} units")
         return path, total_delay
+    
+    def run_distance_vector_protocol(self, max_iterations=20, verbose=False):
+        """Run the proactive distance vector protocol until convergence or max iterations.
+        
+        Args:
+            max_iterations: Maximum number of protocol iterations
+            verbose: Print detailed information during protocol execution
+        
+        Returns:
+            Number of iterations performed
+        """
+        # Initialize distance vectors for all nodes
+        for node in self.nodes:
+            node.initialize_distance_vector(self)
+            
+        if verbose:
+            print("\nInitial distance vectors:")
+            for node in self.nodes:
+                print(f"Node {node.node_id}: {node.distance_vector}")
+        
+        # Iteratively update distance vectors until convergence
+        iteration = 0
+        updates_occurred = True
+        
+        while updates_occurred and iteration < max_iterations:
+            iteration += 1
+            if verbose:
+                print(f"\nIteration {iteration}")
+            
+            # Phase 1: All nodes send their current distance vectors to neighbors
+            updates_sent = False
+            for node in self.nodes:
+                if node.send_distance_vector(self):
+                    updates_sent = True
+                    
+            # If no updates were sent, we're done
+            if not updates_sent:
+                if verbose:
+                    print("No updates sent. Protocol has converged.")
+                break
+                
+            # Phase 2: All nodes process received updates and update their routing tables
+            updates_occurred = False
+            for node in self.nodes:
+                if node.update_routing_table():
+                    updates_occurred = True
+                    if verbose:
+                        print(f"Node {node.node_id} updated its routing table")
+            
+            # Optional: Add a small delay to make the simulation more realistic
+            time.sleep(0.01)
+            
+        if verbose:
+            print(f"\nDistance vector protocol completed after {iteration} iterations")
+            print("Final routing tables:")
+            for node in self.nodes:
+                node.print_routing_table()
+                
+        return iteration
     
     def _find_shortest_path(self, source_id, target_id):
         """Find shortest path between nodes using Dijkstra's algorithm."""
@@ -121,17 +182,44 @@ class SensorNetwork:
         
         return None, float('inf')
     
-    def run_distance_vector_protocol(self, max_iterations=20):
-        """Run distance vector protocol until convergence or max_iterations."""
-        # Initialize distance vectors
-        for node in self.nodes:
-            node.distance_vector = {n.node_id: (node.connections[n.node_id] if n.node_id in node.connections else (0 if n.node_id == node.node_id else float('inf'))) for n in self.nodes}
-            node.routing_table = {n.node_id: (n.node_id if n.node_id in node.connections else (node.node_id if n.node_id == node.node_id else None), node.distance_vector[n.node_id]) for n in self.nodes}
-        for _ in range(max_iterations):
-            # Each node sends its vector to neighbors
-            for node in self.nodes:
-                node.send_distance_vector(self)
-            # Each node updates its table
-            updates = [node.update_routing_table() for node in self.nodes]
-            if not any(updates):
-                break
+    def handle_topology_change(self, node_a_id, node_b_id, new_delay=None, verbose=False):
+        """Handle a topology change (link addition, removal, or delay change).
+        
+        Args:
+            node_a_id, node_b_id: IDs of the nodes affected by the change
+            new_delay: New delay value, or None to remove the connection
+            verbose: Print detailed information during update
+            
+        Returns:
+            Number of iterations to reconverge
+        """
+        node_a = self.get_node_by_id(node_a_id)
+        node_b = self.get_node_by_id(node_b_id)
+        
+        if node_a is None or node_b is None:
+            raise ValueError(f"Node with ID {node_a_id} or {node_b_id} not found")
+            
+        if verbose:
+            if new_delay is None:
+                print(f"\nRemoving connection between Node {node_a_id} and Node {node_b_id}")
+            else:
+                print(f"\nUpdating connection between Node {node_a_id} and Node {node_b_id} to delay {new_delay:.4f}")
+        
+        # Update the connection
+        if new_delay is None:
+            # Remove the connection
+            if node_b_id in node_a.connections:
+                del node_a.connections[node_b_id]
+                node_a.update_needed = True
+            if node_a_id in node_b.connections:
+                del node_b.connections[node_a_id]
+                node_b.update_needed = True
+        else:
+            # Add or update the connection
+            node_a.connections[node_b_id] = new_delay
+            node_b.connections[node_a_id] = new_delay
+            node_a.update_needed = True
+            node_b.update_needed = True
+            
+        # Re-run the distance vector protocol to update routing tables
+        return self.run_distance_vector_protocol(verbose=verbose)

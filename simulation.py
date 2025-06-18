@@ -1,9 +1,15 @@
-from network import SensorNetwork
-from report_network import generate_network_report
+from src.core.network import SensorNetwork
+from src.reporting.report_network import generate_network_report
+from src.visualization.visualization import (
+    visualize_network_matplotlib,
+    visualize_network_networkx,
+    visualize_adjacency_list
+)
 import random
 import sys
 import os
 import platform
+import time
 
 def run_simulation(n_nodes=10, area_size=10, transmission_tests=3, interactive=False, auto_install=False):
     """Run a wireless sensor network simulation.
@@ -27,7 +33,8 @@ def run_simulation(n_nodes=10, area_size=10, transmission_tests=3, interactive=F
     network.create_random_network(n_nodes, area_size)
     
     print("Running proactive distance vector protocol for network discovery...")
-    network.run_distance_vector_protocol()
+    iterations = network.run_distance_vector_protocol(verbose=True)
+    print(f"Protocol converged after {iterations} iterations")
     
     # Print network information
     print(f"\nNetwork created with {len(network.nodes)} nodes:")
@@ -57,6 +64,61 @@ def run_simulation(n_nodes=10, area_size=10, transmission_tests=3, interactive=F
             successful_transmissions += 1
             total_delay += delay
     
+    # Demonstrate proactive network changes
+    if n_nodes >= 3:
+        print(f"\n{'-' * 50}")
+        print("Demonstrating proactive distance vector protocol with network changes...")
+        
+        # Choose two random nodes with a connection
+        connected_pairs = []
+        for i in range(n_nodes):
+            for j in range(i+1, n_nodes):
+                if j in network.nodes[i].connections:
+                    connected_pairs.append((i, j))
+        
+        if connected_pairs:
+            # Remove a random connection
+            node_a, node_b = random.choice(connected_pairs)
+            print(f"\nRemoving connection between Node {node_a} and Node {node_b}")
+            
+            # Store routing info before change for comparison
+            path_before, delay_before = network._find_shortest_path(node_a, node_b)
+            if path_before:
+                print(f"Before change - Path from {node_a} to {node_b}: {' -> '.join(map(str, path_before))}")
+                print(f"Before change - Delay: {delay_before:.4f}")
+            
+            # Apply the topology change
+            print("\nApplying topology change and running distance vector protocol...")
+            reconverge_iterations = network.handle_topology_change(node_a, node_b, new_delay=None, verbose=False)
+            print(f"Protocol reconverged after {reconverge_iterations} iterations")
+            
+            # Check the new routing
+            path_after, delay_after = network._find_shortest_path(node_a, node_b)
+            if path_after:
+                print(f"After change - Path from {node_a} to {node_b}: {' -> '.join(map(str, path_after))}")
+                print(f"After change - Delay: {delay_after:.4f}")
+            else:
+                print(f"After change - No path available from {node_a} to {node_b}")
+            
+            # Run a test transmission with changed topology
+            network.simulate_message_transmission(node_a, node_b, "Test after topology change")
+            
+            # Add a new connection with different delay
+            print(f"\nAdding new connection between Node {node_a} and Node {node_b} with different delay")
+            new_delay = random.uniform(0.1, 2.0)
+            print(f"New delay: {new_delay:.4f}")
+            reconverge_iterations = network.handle_topology_change(node_a, node_b, new_delay=new_delay, verbose=False)
+            print(f"Protocol reconverged after {reconverge_iterations} iterations")
+            
+            # Check the final routing
+            path_final, delay_final = network._find_shortest_path(node_a, node_b)
+            if path_final:
+                print(f"Final path from {node_a} to {node_b}: {' -> '.join(map(str, path_final))}")
+                print(f"Final delay: {delay_final:.4f}")
+                
+            # Run a test transmission with restored topology
+            network.simulate_message_transmission(node_a, node_b, "Test after restoring connection")
+    
     # Print summary
     print(f"\n{'-' * 50}")
     print("Simulation Summary:")
@@ -68,9 +130,12 @@ def run_simulation(n_nodes=10, area_size=10, transmission_tests=3, interactive=F
     
     # Generate detailed network report
     print("\nGenerating detailed network report...")
-    report_file = "network_report.txt"
+    report_dir = os.path.join("output", "reports")
+    os.makedirs(report_dir, exist_ok=True)
+    report_file = os.path.join(report_dir, "network_report.txt")
     generate_network_report(network, output_file=report_file)
-      # Handle visualization
+    
+    # Handle visualization
     if interactive:
         try:
             # Check if auto_install is enabled
@@ -78,12 +143,12 @@ def run_simulation(n_nodes=10, area_size=10, transmission_tests=3, interactive=F
                 print("\nChecking and installing visualization dependencies...")
                 # Import the install function and run it
                 try:
-                    from visualization import check_and_install_dependencies
+                    from src.visualization.visualization import check_and_install_dependencies
                     check_and_install_dependencies(auto_install=True)
                 except ImportError:
                     print("Could not find dependency installer. Continuing with available packages.")
             
-            from visualization import visualize_network
+            from src.visualization.visualization import visualize_network
             print("\nGenerating interactive network visualizations...")
             visualize_network(network, interactive=True)
         except ImportError as e:
@@ -111,7 +176,7 @@ def run_simulation(n_nodes=10, area_size=10, transmission_tests=3, interactive=F
             print(f"\nError in interactive visualization: {e}")
             print("Falling back to non-interactive visualizations.")
             try:
-                from visualization import visualize_network
+                from src.visualization.visualization import visualize_network
                 visualize_network(network, interactive=False)
             except Exception as e2:
                 print(f"Visualization failed: {e2}")
@@ -131,15 +196,15 @@ if __name__ == "__main__":
                 try:
                     n_nodes = int(arg.split('=')[1])
                 except ValueError:
-                    print(f"Warning: Invalid node count format. Using default ({n_nodes}).")
-    
+                    print(f"Warning: Invalid node count format. Using default ({n_nodes}).")    
     # Run the simulation
     network = run_simulation(n_nodes=n_nodes, transmission_tests=5, 
                              interactive=interactive_mode, auto_install=auto_install)
-      # Generate visualizations in non-interactive mode if not already done
+    
+    # Generate visualizations in non-interactive mode if not already done
     if not interactive_mode:
         try:
-            from visualization import visualize_network
+            from src.visualization.visualization import visualize_network
             print("\nGenerating network visualizations...")
             visualize_network(network, interactive=False)
         except ImportError as e:
@@ -150,16 +215,16 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"\nError in visualization: {e}")
             print("Visualization failed, but simulation completed successfully.")
-    
     print("\nSimulation complete!")
     if not interactive_mode:
-        print("Visualization files are saved in the visualizations directory.")
+        print("Visualization files are saved in the output/visualizations directory.")
     else:
         print("Interactive visualizations should be displayed in separate windows.")
         print("Press Enter to close the visualization windows and exit...")
         
-    print("Network report is saved in network_report.txt")
-      # Provide help for PowerShell users who might have issues with && operator
+    print("Network report is saved in the output/reports directory.")
+    
+    # Provide help for PowerShell users who might have issues with && operator
     if platform.system() == "Windows":
         print("\nTIP: If you're using PowerShell and want to run with specific parameters:")
         print("  python simulation.py --nodes=20; python simulation.py --interactive")

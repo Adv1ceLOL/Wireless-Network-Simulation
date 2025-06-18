@@ -135,8 +135,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 For interactive visualizations, you'll also need a GUI backend:
 
 - **Windows**: `tkinter` (included with Python)

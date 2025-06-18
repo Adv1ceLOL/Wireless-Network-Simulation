@@ -34,8 +34,23 @@ def generate_network_report(network, output_file=None):
     density = total_connections / max_possible if max_possible > 0 else 0
     report.append(f"Network density: {density:.4f} ({density*100:.1f}%)")
     
+    # Proactive Distance Vector Protocol information
+    report.append(f"\n2. PROACTIVE DISTANCE VECTOR PROTOCOL")
+    report.append(f"-------------------------------------")
+    report.append(f"Protocol: Proactive Distance Vector Routing")
+    report.append(f"Implementation: Distributed Bellman-Ford algorithm")
+    report.append(f"Operation:")
+    report.append(f"  - Nodes initialize with direct connections to neighbors")
+    report.append(f"  - Nodes exchange distance vectors with neighbors")
+    report.append(f"  - Nodes update routing tables based on received vectors")
+    report.append(f"  - Process continues until no further updates are needed")
+    report.append(f"Proactive Features:")
+    report.append(f"  - Nodes maintain complete routing tables at all times")
+    report.append(f"  - Topology changes trigger automatic routing updates")
+    report.append(f"  - Routing tables converge to optimal paths")
+    
     # Node details
-    report.append(f"\n2. NODE DETAILS")
+    report.append(f"\n3. NODE DETAILS")
     report.append(f"---------------")
     for i, node in enumerate(network.nodes):
         report.append(f"\n  Node {node.node_id}:")
@@ -57,9 +72,17 @@ def generate_network_report(network, output_file=None):
                 report.append(f"      Dest {dest}: Next hop {next_hop}, Cost {cost:.4f}")
             else:
                 report.append(f"      Dest {dest}: unreachable")
+        
+        # Add the distance vector information
+        report.append(f"    Distance Vector:")
+        for dest, cost in sorted(node.distance_vector.items()):
+            if cost < float('inf'):
+                report.append(f"      To Node {dest}: Cost {cost:.4f}")
+            else:
+                report.append(f"      To Node {dest}: ∞")
     
     # Connection matrix
-    report.append(f"\n3. ADJACENCY MATRIX (DELAY WEIGHTS)")
+    report.append(f"\n4. ADJACENCY MATRIX (DELAY WEIGHTS)")
     report.append(f"-----------------------------------")
     matrix = network.get_adjacency_matrix()
     
@@ -79,7 +102,7 @@ def generate_network_report(network, output_file=None):
         report.append(formatted_row)
     
     # Network statistics
-    report.append(f"\n4. NETWORK STATISTICS")
+    report.append(f"\n5. NETWORK STATISTICS")
     report.append(f"---------------------")
     
     # Calculate average delay
@@ -94,8 +117,45 @@ def generate_network_report(network, output_file=None):
         report.append(f"  - Average: {avg_delay:.4f}")
         report.append(f"  - Standard deviation: {np.std(delays):.4f}")
     
+    # Routing metrics
+    unreachable = 0
+    total_paths = 0
+    total_hops = 0
+    total_path_cost = 0
+    
+    for node in network.nodes:
+        for dest_id, (next_hop, cost) in node.routing_table.items():
+            if node.node_id != dest_id:  # Skip self-routes
+                total_paths += 1
+                if next_hop is None or cost == float('inf'):
+                    unreachable += 1
+                else:
+                    # Count hops in the path
+                    hops = 0
+                    current = node.node_id
+                    while current != dest_id:
+                        hops += 1
+                        current = network.nodes[current].routing_table[dest_id][0]
+                        # Prevent infinite loops
+                        if hops > len(network.nodes):
+                            break
+                    total_hops += hops
+                    total_path_cost += cost
+    
+    if total_paths > 0:
+        reachability = (total_paths - unreachable) / total_paths
+        report.append(f"\nRouting metrics:")
+        report.append(f"  - Reachability: {reachability:.4f} ({reachability*100:.1f}%)")
+        report.append(f"  - Unreachable destinations: {unreachable}")
+        
+        if total_paths > unreachable:
+            avg_hops = total_hops / (total_paths - unreachable)
+            avg_cost = total_path_cost / (total_paths - unreachable)
+            report.append(f"  - Average hops per path: {avg_hops:.2f}")
+            report.append(f"  - Average path cost: {avg_cost:.4f}")
+    
     # Path analysis
-    report.append(f"\n5. PATH ANALYSIS")
+    report.append(f"\n6. PATH ANALYSIS")
     report.append(f"----------------")
     
     # Generate a connectivity map (which nodes can reach each other)
@@ -140,7 +200,7 @@ def generate_network_report(network, output_file=None):
         attempts += 1
     
     # Add simple connectivity graph visualization
-    report.append(f"\n6. NETWORK CONNECTIVITY GRAPH")
+    report.append(f"\n7. NETWORK CONNECTIVITY GRAPH")
     report.append(f"---------------------------")
     
     # Find fastest and most congested links
