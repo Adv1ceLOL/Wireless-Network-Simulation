@@ -1,9 +1,7 @@
+from PIL import Image, ImageDraw
+
 def visualize_network_pil(network, output_file="network_visualization_simple.png"):
     """Create a simple network visualization using PIL as a fallback when matplotlib is not available."""
-    if not HAS_PIL:
-        print("PIL not available, skipping simple visualization")
-        return
-        
     try:
         # Define canvas size and scaling factor
         width, height = 800, 600

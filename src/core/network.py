@@ -1,4 +1,4 @@
-from sensor_node import SensorNode
+from src.core.sensor_node import SensorNode
 import random
 
 class SensorNetwork:

@@ -24,27 +24,39 @@ if %ERRORLEVEL% NEQ 0 (
     exit /b 1
 )
 
-echo Running dependency installer...
+echo Python version check passed.
 echo.
+
+:: Create necessary directories
+echo Creating directory structure...
+if not exist output\visualizations mkdir output\visualizations
+if not exist output\reports mkdir output\reports
+
+:: Install dependencies
+echo Installing required Python packages...
+python -m pip install --upgrade pip
+python -m pip install matplotlib networkx pillow
+
+:: Run the dependency installation script
+echo Running dependency checks...
 python install_dependencies.py
 
-if %ERRORLEVEL% NEQ 0 (
-    echo.
-    echo Error during dependency installation.
-    echo Please check the error messages above.
-    pause
-    exit /b 1
-)
+:: Run a simple test to verify installation
+echo.
+echo Running a simple test to verify installation...
+python tests\test_simple.py
 
 echo.
 echo ==================================================================
-echo  Installation Complete!
+echo  Setup complete! 
 echo ==================================================================
 echo.
-echo You can now run the simulator with:
-echo   python simulation.py
+echo To run the simulator, use: python simulation.py
+echo For interactive mode, use: python simulation.py --interactive
 echo.
-echo For interactive visualization:
-echo   python simulation.py --interactive
+echo To run tests, use any of the following:
+echo - python tests\test_simple.py
+echo - python tests\test_simulator.py
+echo - python tests\test_iterations.py
 echo.
 pause

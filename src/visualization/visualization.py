@@ -6,15 +6,17 @@ import warnings
 import subprocess
 import shutil
 import logging
-from PIL import Image, ImageDraw
 
 # Import our backend handler
-from visualization_backend import (
+from src.visualization.visualization_backend import (
     initialize_backend, 
     is_package_installed, 
     fix_tkinter_windows,
     get_available_backends
 )
+
+# Import PIL visualization for fallback
+from src.visualization.pil_visualization import visualize_network_pil
 
 # Define module-level flags for dependency availability
 HAS_MATPLOTLIB = is_package_installed('matplotlib')
@@ -29,6 +31,9 @@ if HAS_MATPLOTLIB:
 else:
     BACKEND_NAME, IS_INTERACTIVE = None, False
 
+# Add a module-level variable to keep track of created figures
+interactive_figures = []
+
 # Function to install a package using pip
 def install_package(package_name):
     """Install a Python package using pip."""
@@ -40,39 +45,6 @@ def install_package(package_name):
     except subprocess.CalledProcessError:
         print(f"Failed to install {package_name}")
         return False
-    
-    # Filter backends based on installed packages
-    available_backends = []
-    for backend in backends_to_try:
-        if backend == 'TkAgg' and has_tk:
-            available_backends.append(backend)
-        elif backend == 'Qt5Agg' and has_qt5:
-            available_backends.append(backend)
-        elif backend == 'Qt4Agg' and has_qt4:
-            available_backends.append(backend)
-        elif backend == 'wxAgg' and has_wx:
-            available_backends.append(backend)
-        elif backend == 'GTK3Agg' and has_gtk3:
-            available_backends.append(backend)
-        elif backend == 'MacOSX' and platform.system() == 'Darwin':
-            available_backends.append(backend)
-    
-    # Try the filtered backends
-    for backend in available_backends:
-        try:
-            matplotlib.use(backend, force=True)
-            # Try importing the backend to check if it works
-            backend_module = f"matplotlib.backends.backend_{backend.lower()}"
-            __import__(backend_module)
-            print(f"Using {backend} backend for interactive plots")
-            return True
-        except (ImportError, ModuleNotFoundError, Exception) as e:
-            print(f"Backend {backend} failed: {str(e)}")
-            continue
-      # If no interactive backend works, use non-interactive
-    print("No interactive backends available, using non-interactive mode (Agg)")
-    matplotlib.use('Agg', force=True)
-    return False
 
 # Function to check and install required dependencies
 def check_and_install_dependencies(auto_install=False):
@@ -150,7 +122,8 @@ if interactive_mode:
         print("Continuing in non-interactive mode. Visualizations will be saved to files.")
     else:
         try:
-            has_interactive_backend = get_available_backend()
+            available_backends = get_available_backends()
+            has_interactive_backend = len(available_backends) > 0 and available_backends[0] != 'Agg'
         except Exception as e:
             print(f"Error setting up interactive backend: {e}")
             print("Continuing with non-interactive mode")
@@ -165,6 +138,12 @@ try:
     import numpy as np
     from matplotlib.colors import LinearSegmentedColormap
     import matplotlib.cm as cm
+    
+    # Enable interactive mode if we have an interactive backend
+    if has_interactive_backend and interactive_mode:
+        plt.ion()  # Turn on interactive mode
+        print("Matplotlib interactive mode enabled")
+    
     HAS_MATPLOTLIB = True
 except ImportError as e:
     print(f"Error importing matplotlib: {e}")
@@ -179,13 +158,6 @@ except ImportError as e:
     print("NetworkX visualizations will not be available")
     HAS_NETWORKX = False
 
-# Check for alternative visualization libraries
-try:
-    from PIL import Image, ImageDraw
-    HAS_PIL = True
-except ImportError:
-    HAS_PIL = False
-
 def visualize_network(network, interactive=False):
     """Visualize the sensor network using multiple methods.
     
@@ -193,6 +165,10 @@ def visualize_network(network, interactive=False):
         network: The sensor network to visualize
         interactive: Whether to display the plots interactively
     """
+    # Clear any previously tracked figures
+    global interactive_figures
+    interactive_figures = []
+    
     # Check if interactive flag is set through command line
     if '--interactive' in sys.argv or '-i' in sys.argv:
         interactive = True
@@ -205,8 +181,9 @@ def visualize_network(network, interactive=False):
     
     # Keep track of successful visualizations
     successful_viz = 0
-      # Create a directory for visualizations if it doesn't exist
-    viz_dir = "visualizations"
+    
+    # Create a directory for visualizations if it doesn't exist
+    viz_dir = "output/visualizations"
     try:
         if not os.path.exists(viz_dir):
             os.makedirs(viz_dir)
@@ -272,6 +249,8 @@ def visualize_network(network, interactive=False):
         print(f"\nSuccessfully generated {successful_viz} visualizations.")
         if not interactive:
             print(f"Visualization files were saved to the '{viz_dir}' directory.")
+        else:
+            print(f"Visualizations are displayed in interactive windows.")
 
 def print_adjacency_list(network):
     """Print the adjacency list representation of the network to the console."""
@@ -347,19 +326,26 @@ def visualize_network_matplotlib(network, output_file="network_visualization_mat
         
         plt.tight_layout()
         
-        # Always try to save the file first (even in interactive mode)
+        # In interactive mode, just show the plot without saving
+        if interactive and has_interactive_backend:
+            try:
+                plt.draw()  # Draw the current figure
+                plt.pause(0.001)  # Add a small pause to allow the window to appear without blocking
+                print("Displayed interactive matplotlib visualization")
+                # Keep a reference to the figure to prevent it from being garbage collected
+                global interactive_figures
+                interactive_figures.append(plt.gcf())
+                return
+            except Exception as e:
+                print(f"Failed to show interactive plot: {e}")
+                # Fall back to saving if interactive display fails
+        
+        # If not interactive mode or if interactive display failed, save to file
         try:
             plt.savefig(output_file, dpi=300)
             print(f"Saved network visualization to {output_file}")
         except Exception as e:
             print(f"Failed to save visualization to file: {e}")
-        
-        # Then try to show interactively if requested
-        if interactive and has_interactive_backend:
-            try:
-                plt.show()
-            except Exception as e:
-                print(f"Failed to show interactive plot: {e}")
         
         plt.close()  # Close the figure to free memory
     
@@ -441,19 +427,26 @@ def visualize_network_networkx(network, output_file="network_visualization_netwo
         
         plt.tight_layout()
         
-        # Always try to save the file first (even in interactive mode)
+        # In interactive mode, just show the plot without saving
+        if interactive and has_interactive_backend:
+            try:
+                plt.draw()  # Draw the current figure
+                plt.pause(0.001)  # Add a small pause to allow the window to appear without blocking
+                print("Displayed interactive NetworkX visualization")
+                # Keep a reference to the figure to prevent it from being garbage collected
+                global interactive_figures
+                interactive_figures.append(plt.gcf())
+                return
+            except Exception as e:
+                print(f"Failed to show interactive plot: {e}")
+                # Fall back to saving if interactive display fails
+        
+        # If not interactive mode or if interactive display failed, save to file
         try:
             plt.savefig(output_file, dpi=300)
             print(f"Saved network visualization to {output_file}")
         except Exception as e:
             print(f"Failed to save visualization to file: {e}")
-        
-        # Then try to show interactively if requested
-        if interactive and has_interactive_backend:
-            try:
-                plt.show()
-            except Exception as e:
-                print(f"Failed to show interactive plot: {e}")
         
         plt.close()  # Close the figure to free memory
             
@@ -501,19 +494,26 @@ def visualize_adjacency_list(network, output_file="network_adjacency_list.png", 
         plt.title("Network Adjacency List")
         plt.tight_layout()
         
-        # Always try to save the file first (even in interactive mode)
+        # In interactive mode, just show the plot without saving
+        if interactive and has_interactive_backend:
+            try:
+                plt.draw()  # Draw the current figure
+                plt.pause(0.001)  # Add a small pause to allow the window to appear without blocking
+                print("Displayed interactive adjacency list visualization")
+                # Keep a reference to the figure to prevent it from being garbage collected
+                global interactive_figures
+                interactive_figures.append(plt.gcf())
+                return
+            except Exception as e:
+                print(f"Failed to show interactive plot: {e}")
+                # Fall back to saving if interactive display fails
+        
+        # If not interactive mode or if interactive display failed, save to file
         try:
             plt.savefig(output_file, dpi=300)
             print(f"Saved adjacency list to {output_file}")
         except Exception as e:
             print(f"Failed to save adjacency list to file: {e}")
-        
-        # Then try to show interactively if requested
-        if interactive and has_interactive_backend:
-            try:
-                plt.show()
-            except Exception as e:
-                print(f"Failed to show interactive plot: {e}")
         
         plt.close()  # Close the figure to free memory
             
@@ -525,86 +525,3 @@ def visualize_adjacency_list(network, output_file="network_adjacency_list.png", 
         except:
             pass
         raise  # Re-raise the exception to be handled by the caller
-
-def visualize_network_pil(network, output_file="network_visualization_simple.png"):
-    """Create a simple network visualization using PIL as a fallback when matplotlib is not available."""
-    if not HAS_PIL:
-        print("PIL not available, skipping simple visualization")
-        return
-        
-    try:
-        # Define canvas size and scaling factor
-        width, height = 800, 600
-        img = Image.new('RGB', (width, height), color='white')
-        draw = ImageDraw.Draw(img)
-        
-        # Find min/max coordinates to scale appropriately
-        min_x = min(node.x for node in network.nodes)
-        max_x = max(node.x for node in network.nodes)
-        min_y = min(node.y for node in network.nodes)
-        max_y = max(node.y for node in network.nodes)
-        
-        # Add some padding
-        padding = 0.1
-        range_x = max_x - min_x
-        range_y = max_y - min_y
-        min_x -= range_x * padding
-        max_x += range_x * padding
-        min_y -= range_y * padding
-        max_y += range_y * padding
-        
-        # Define scaling functions
-        def scale_x(x):
-            return int(((x - min_x) / (max_x - min_x)) * (width - 40) + 20)
-        
-        def scale_y(y):
-            return int(((y - min_y) / (max_y - min_y)) * (height - 40) + 20)
-        
-        # Draw connections
-        for node in network.nodes:
-            x1, y1 = scale_x(node.x), scale_y(node.y)
-            for neighbor_id, delay in node.connections.items():
-                if node.node_id < neighbor_id:  # Draw each connection only once
-                    neighbor = network.get_node_by_id(neighbor_id)
-                    x2, y2 = scale_x(neighbor.x), scale_y(neighbor.y)
-                    
-                    # Calculate color based on delay (red = high delay, green = low delay)
-                    r = int(255 * delay)
-                    g = int(255 * (1 - delay))
-                    b = 0
-                    
-                    # Draw the line
-                    draw.line([(x1, y1), (x2, y2)], fill=(r, g, b), width=1)
-                    
-                    # Draw delay text at midpoint
-                    mid_x, mid_y = (x1 + x2) // 2, (y1 + y2) // 2
-                    draw.text((mid_x, mid_y), f"{delay:.2f}", fill=(0, 0, 0))
-        
-        # Draw nodes and transmission ranges
-        for node in network.nodes:
-            x, y = scale_x(node.x), scale_y(node.y)
-            
-            # Draw transmission range circle
-            radius = int(node.transmission_range * (width - 40) / (max_x - min_x))
-            draw.ellipse((x - radius, y - radius, x + radius, y + radius), 
-                         outline=(200, 200, 255), fill=(240, 240, 255, 128))
-            
-            # Draw node
-            node_radius = 10
-            draw.ellipse((x - node_radius, y - node_radius, x + node_radius, y + node_radius), 
-                         outline=(0, 0, 0), fill=(100, 149, 237))
-            
-            # Draw node ID
-            draw.text((x - 3, y - 7), str(node.node_id), fill=(0, 0, 0))
-        
-        # Draw title and legend
-        title = "Wireless Sensor Network (Simple Visualization)"
-        draw.text((width // 2 - 150, 10), title, fill=(0, 0, 0))
-        
-        # Save the image
-        img.save(output_file)
-        print(f"Saved simple network visualization to {output_file}")
-        
-    except Exception as e:
-        print(f"Error in PIL visualization: {e}")
-        raise

@@ -136,8 +136,7 @@ if __name__ == "__main__":
     # Run the simulation
     network = run_simulation(n_nodes=n_nodes, transmission_tests=5, 
                              interactive=interactive_mode, auto_install=auto_install)
-    
-    # Generate visualizations in non-interactive mode if not already done
+      # Generate visualizations in non-interactive mode if not already done
     if not interactive_mode:
         try:
             from visualization import visualize_network
@@ -153,10 +152,14 @@ if __name__ == "__main__":
             print("Visualization failed, but simulation completed successfully.")
     
     print("\nSimulation complete!")
-    print("Visualization files are saved in the visualizations directory.")
+    if not interactive_mode:
+        print("Visualization files are saved in the visualizations directory.")
+    else:
+        print("Interactive visualizations should be displayed in separate windows.")
+        print("Press Enter to close the visualization windows and exit...")
+        
     print("Network report is saved in network_report.txt")
-    
-    # Provide help for PowerShell users who might have issues with && operator
+      # Provide help for PowerShell users who might have issues with && operator
     if platform.system() == "Windows":
         print("\nTIP: If you're using PowerShell and want to run with specific parameters:")
         print("  python simulation.py --nodes=20; python simulation.py --interactive")
@@ -167,3 +170,17 @@ if __name__ == "__main__":
     print("  --interactive, -i         : Enable interactive visualizations")
     print("  --auto-install            : Automatically install missing dependencies")
     print("  --nodes=<number>          : Set the number of nodes in the network")
+    
+    # If in interactive mode, wait for user input to keep the windows open
+    if interactive_mode:
+        try:
+            input("\nPress Enter to close all visualization windows and exit...")
+        except KeyboardInterrupt:
+            pass
+        finally:
+            # Try to close all open matplotlib figures
+            try:
+                import matplotlib.pyplot as plt
+                plt.close('all')
+            except:
+                pass

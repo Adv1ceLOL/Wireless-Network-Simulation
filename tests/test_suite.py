@@ -8,20 +8,25 @@ from unittest.mock import patch, MagicMock
 # Add the parent directory to sys.path to import modules
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+from src.core.network import SensorNetwork
+from src.core.sensor_node import SensorNode
+from src.reporting.report_network import generate_network_report
+from src.visualization import visualization
+
 class TestVisualization(unittest.TestCase):
     """Test suite for visualization module functionality."""
     
     def setUp(self):
         """Set up test environment."""
         # Ensure visualization module is importable
-        self.has_visualization = importlib.util.find_spec('visualization') is not None
+        self.has_visualization = importlib.util.find_spec('src.visualization') is not None
         
     def test_package_detection(self):
         """Test if package detection works correctly."""
         if not self.has_visualization:
             self.skipTest("Visualization module not available")
         
-        from visualization import is_package_installed
+        from src.visualization import is_package_installed
           # Test detection of installed packages
         self.assertTrue(is_package_installed('unittest'))
         self.assertTrue(is_package_installed('sys'))
@@ -29,18 +34,18 @@ class TestVisualization(unittest.TestCase):
         # Test detection of non-existent packages
         self.assertFalse(is_package_installed('nonexistent_package_xyz'))
     
-    @patch('visualization.matplotlib')
+    @patch('src.visualization.matplotlib')
     def test_backend_selection(self, mock_matplotlib):
         """Test that backend selection logic works."""
         if not self.has_visualization:
             self.skipTest("Visualization module not available")
         
         # Mock the platform and package detection
-        with patch('visualization.platform.system', return_value='Windows'), \
-             patch('visualization.is_package_installed', return_value=True), \
+        with patch('src.visualization.platform.system', return_value='Windows'), \
+             patch('src.visualization.is_package_installed', return_value=True), \
              patch('importlib.util.find_spec'):
             
-            from visualization import get_available_backend
+            from src.visualization import get_available_backend
             result = get_available_backend()
             
             # Check if a backend was selected
@@ -58,20 +63,20 @@ class TestVisualization(unittest.TestCase):
             return True
         
         # Save the original function and use our mock
-        from visualization import install_package as original_install
-        import visualization
+        from src.visualization import install_package as original_install
+        import src.visualization
         
         # Save original and replace with mock
-        original = visualization.install_package
-        visualization.install_package = mock_install_package
+        original = src.visualization.install_package
+        src.visualization.install_package = mock_install_package
         
         try:
             # Test the mock installation
-            result = visualization.install_package('test_package')
+            result = src.visualization.install_package('test_package')
             self.assertTrue(result)
         finally:
             # Restore original function
-            visualization.install_package = original
+            src.visualization.install_package = original
     
     def test_pil_visualization_fallback(self):
         """Test that PIL visualization works as a fallback."""
@@ -82,8 +87,8 @@ class TestVisualization(unittest.TestCase):
         if not importlib.util.find_spec('PIL'):
             self.skipTest("PIL not available")
         
-        from visualization import visualize_network_pil
-        from network import SensorNetwork
+        from src.visualization import visualize_network_pil
+        from src.core.network import SensorNetwork
         
         # Create a test network
         network = SensorNetwork()
@@ -107,8 +112,8 @@ class TestNetworkSimulation(unittest.TestCase):
     
     def setUp(self):
         """Set up the test environment."""
-        from network import SensorNetwork
-        from sensor_node import SensorNode
+        from src.core.network import SensorNetwork
+        from src.core.sensor_node import SensorNode
         
         # Create a test network with predictable values
         self.network = SensorNetwork()
@@ -138,7 +143,7 @@ class TestNetworkSimulation(unittest.TestCase):
     
     def test_distance_calculation(self):
         """Test distance calculation between nodes."""
-        from sensor_node import SensorNode
+        from src.core.sensor_node import SensorNode
         
         node1 = SensorNode(node_id=0, x=0, y=0)
         node2 = SensorNode(node_id=1, x=3, y=4)

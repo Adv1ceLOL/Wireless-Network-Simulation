@@ -3,24 +3,36 @@
 
 A robust simulator for wireless sensor networks that models node connectivity, data transmission, and routing protocols with interactive visualization capabilities.
 
+## Project Structure
+
+The project is organized into the following directories:
+
+- `src/`: Core source code
+  - `core/`: Core simulator functionality
+  - `visualization/`: Visualization modules
+  - `reporting/`: Reporting and analysis tools
+- `scripts/`: Setup and utility scripts
+- `tests/`: Test cases and test suites
+- `docs/`: Documentation
+- `output/`: Generated files
+  - `visualizations/`: Network visualizations
+  - `reports/`: Network reports
+
 ## Installation
 
 ### Automatic Installation
 
 The easiest way to install all dependencies is to use the automatic installer:
 
-```bash
-python install_dependencies.py
+**Windows:**
+```
+scripts\setup_windows.bat
 ```
 
-This will check for and install all required dependencies, including visualization libraries.
-
-### Running with Auto-Install
-
-You can also run the simulator with the `--auto-install` flag to automatically install missing dependencies:
-
+**Unix (Linux/macOS):**
 ```bash
-python simulation.py --auto-install
+chmod +x scripts/setup_unix.sh
+scripts/setup_unix.sh
 ```
 
 ### Manual Installation
@@ -28,8 +40,102 @@ python simulation.py --auto-install
 To manually install the required dependencies:
 
 ```bash
-pip install numpy matplotlib networkx pillow
+# Install Python packages
+pip install matplotlib networkx pillow
+
+# Run dependency check
+python scripts/install_dependencies.py
 ```
+
+## Usage
+
+### Basic Usage
+
+To run the simulator with default settings:
+
+```bash
+python simulation.py
+```
+
+### Interactive Mode
+
+To run the simulator with interactive visualizations:
+
+```bash
+python simulation.py --interactive
+```
+
+In interactive mode, visualization windows will appear and stay open until you press Enter.
+
+### Custom Network Configuration
+
+To specify custom network parameters:
+
+```bash
+python simulation.py --nodes 15 --area 20 --min-range 2.0 --max-range 4.0
+```
+
+### Other Options
+
+```bash
+# Run with verbose output
+python simulation.py --verbose
+
+# Generate detailed report
+python simulation.py --detailed-report
+
+# Help and options
+python simulation.py --help
+```
+
+## Testing
+
+The project includes several test suites:
+
+```bash
+# Run simple tests
+python tests/test_simple.py
+
+# Run comprehensive tests
+python tests/test_simulator.py
+
+# Run performance tests with multiple iterations
+python tests/test_iterations.py [num_iterations]
+```
+
+## Visualization
+
+The simulator supports multiple visualization methods:
+
+1. **Matplotlib**: Basic network visualization with nodes and connections
+2. **NetworkX**: Graph-based visualization with network metrics
+3. **Adjacency List**: Text-based representation of network connections
+
+## Core Components
+
+### SensorNode
+
+The `SensorNode` class represents a wireless sensor node with:
+- Spatial coordinates
+- Transmission range
+- Connection list
+- Routing table
+
+### SensorNetwork
+
+The `SensorNetwork` class manages:
+- Node creation and connection establishment
+- Distance vector routing protocol
+- Message transmission simulation
+- Network analytics
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 For interactive visualizations, you'll also need a GUI backend:
 

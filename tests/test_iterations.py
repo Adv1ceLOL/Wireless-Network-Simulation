@@ -8,9 +8,9 @@ import random
 import matplotlib
 matplotlib.use('Agg')  # Use non-interactive backend
 
-from network import SensorNetwork
-from sensor_node import SensorNode
-from report_network import generate_network_report
+from src.core.network import SensorNetwork
+from src.core.sensor_node import SensorNode
+from src.reporting.report_network import generate_network_report
 
 def run_test_iterations(num_iterations=5, nodes_range=(5, 20)):
     """Run multiple iterations of network simulation tests with varying parameters."""
@@ -98,42 +98,34 @@ def run_test_iterations(num_iterations=5, nodes_range=(5, 20)):
             "avg_delay": avg_delay
         })
     
-    # Print summary
-    print("\n" + "="*70)
-    print("TEST ITERATIONS SUMMARY")
-    print("-"*70)
+    # Print overall results
+    print("\n")
+    print("="*70)
+    print("SUMMARY OF RESULTS")
+    print("="*70)
     
-    avg_success_rate = sum(r["success_rate"] for r in results) / len(results) if results else 0
-    avg_delay_overall = sum(r["avg_delay"] for r in results) / len(results) if results else 0
-    avg_creation_time = sum(r["creation_time"] for r in results) / len(results) if results else 0
-    avg_dv_time = sum(r["dv_time"] for r in results) / len(results) if results else 0
+    avg_creation_time = sum(r["creation_time"] for r in results) / len(results)
+    avg_dv_time = sum(r["dv_time"] for r in results) / len(results)
+    avg_success_rate = sum(r["success_rate"] for r in results) / len(results)
+    avg_delay_list = [r["avg_delay"] for r in results if r["avg_delay"] > 0]
+    avg_delay = sum(avg_delay_list) / len(avg_delay_list) if avg_delay_list else 0
     
-    print(f"Number of iterations: {num_iterations}")
-    print(f"Average network size: {sum(r['nodes'] for r in results) / len(results):.1f} nodes")
-    print(f"Average connections per node: {sum(r['avg_connections'] for r in results) / len(results):.2f}")
     print(f"Average network creation time: {avg_creation_time:.3f} seconds")
     print(f"Average distance vector protocol time: {avg_dv_time:.3f} seconds")
-    print(f"Average message transmission success rate: {avg_success_rate:.1%}")
-    print(f"Average message delay: {avg_delay_overall:.4f} units")
-    print("="*70)
+    print(f"Average message success rate: {avg_success_rate:.1%}")
+    if avg_delay > 0:
+        print(f"Average message delay: {avg_delay:.4f} units")
     
     return results
 
 if __name__ == "__main__":
-    # Set random seed for reproducibility if needed
-    # random.seed(42)
-    
-    # Get number of iterations from command line if provided
+    # Default 5 iterations, can be overridden by command line arg
     num_iterations = 5
     if len(sys.argv) > 1:
         try:
             num_iterations = int(sys.argv[1])
         except ValueError:
-            print(f"Invalid number of iterations: {sys.argv[1]}")
-            print(f"Using default: {num_iterations}")
+            print(f"Invalid argument: {sys.argv[1]}. Using default value of {num_iterations}.")
     
-    # Run iterations
-    results = run_test_iterations(num_iterations=num_iterations)
-    
-    # Exit with success
-    sys.exit(0)
+    # Run the test iterations
+    run_test_iterations(num_iterations)
