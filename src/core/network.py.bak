@@ -306,8 +306,7 @@ class SensorNetwork:
             print("Warning: Network is still not fully connected after aggressive connection attempt")
         else:
             print("Network is now fully connected")
-                    
-    def get_adjacency_matrix(self):
+                      def get_adjacency_matrix(self):
         """Return the adjacency matrix with delays as weights."""
         n = len(self.nodes)
         matrix = [[float('inf') for _ in range(n)] for _ in range(n)]
@@ -345,14 +344,31 @@ class SensorNetwork:
             
         path = []
         current = source_id
+        
+        # Trace the path from source to destination using routing tables
         while current != target_id:
             path.append(current)
             next_hop, _ = self.nodes[current].routing_table.get(target_id, (None, float('inf')))
+            
             if next_hop is None or next_hop in path:
                 if verbose:
                     print("No path found (routing table incomplete or loop detected).")
                 return None, float('inf')
+                
+            if verbose:
+                print(f"Node {current} forwards packet to Node {next_hop}")
+                
             current = next_hop
+            
+        path.append(target_id)
+        total_delay = sum(self.nodes[path[i]].connections[path[i+1]] for i in range(len(path)-1))
+        
+        if verbose:
+            print(f"Path found: {' -> '.join(map(str, path))}")
+            print(f"Total transmission delay: {total_delay:.4f} units")
+            
+        return path, total_delay
+            
         path.append(target_id)
         total_delay = sum(self.nodes[path[i]].connections[path[i+1]] for i in range(len(path)-1))
         
@@ -456,6 +472,76 @@ class SensorNetwork:
         
         return None, float('inf')
     
+    def run_hello_message_exchange(self, verbose=False):
+        """Run a round of hello message exchange where all nodes send hello messages to neighbors.
+        
+        Args:
+            verbose: Whether to print detailed information
+            
+        Returns:
+            Total number of hello messages exchanged
+        """
+        total_messages = 0
+        
+        if verbose:
+            print("\nRunning hello message exchange across the network...")
+            
+        for node in self.nodes:
+            messages_sent = node.send_hello_message(self, verbose=verbose)
+            total_messages += messages_sent
+            
+        if verbose:
+            print(f"Hello message exchange complete. {total_messages} messages exchanged.")
+            
+        return total_messages
+    
+    def propagate_topology_change(self, node_a_id, node_b_id, is_new_link=False, verbose=False):
+        """Propagate information about a topology change throughout the network.
+        
+        Args:
+            node_a_id, node_b_id: IDs of the nodes affected by the change
+            is_new_link: Whether this is a new link (True) or a link failure (False)
+            verbose: Whether to print detailed information
+            
+        Returns:
+            Number of messages exchanged for topology propagation
+        """
+        node_a = self.get_node_by_id(node_a_id)
+        node_b = self.get_node_by_id(node_b_id)
+        
+        if node_a is None or node_b is None:
+            if verbose:
+                print(f"Cannot propagate topology change - Node {node_a_id} or {node_b_id} not found")
+            return 0
+            
+        messages = 0
+        
+        if is_new_link:
+            # For a new link, nodes introduce themselves to each other
+            if verbose:
+                print(f"\nPropagating new link between Node {node_a_id} and Node {node_b_id}")
+                
+            if node_a.introduce_to_new_neighbor(node_b_id, self, verbose):
+                messages += 1
+                
+            if node_b.introduce_to_new_neighbor(node_a_id, self, verbose):
+                messages += 1
+        else:
+            # For a link failure, nodes notify their neighbors
+            if verbose:
+                print(f"\nPropagating link failure between Node {node_a_id} and Node {node_b_id}")
+                
+            node_a.notify_link_failure(node_b_id, self, verbose)
+            node_b.notify_link_failure(node_a_id, self, verbose)
+            
+            # Count notifications to all neighbors of both nodes
+            messages += len(node_a.get_neighbors()) + len(node_b.get_neighbors())
+            
+        if verbose:
+            print(f"Topology change propagation complete. {messages} messages exchanged.")
+            
+        return messages
+        
     def handle_topology_change(self, node_a_id, node_b_id, new_delay=None, verbose=False):
         """Handle a topology change (link addition, removal, or delay change).
         
@@ -479,6 +565,11 @@ class SensorNetwork:
             else:
                 print(f"\nUpdating connection between Node {node_a_id} and Node {node_b_id} to delay {new_delay:.4f}")
         
+        # Record if this is a new link (wasn't previously connected)
+        is_new_link = False
+        if new_delay is not None and node_b_id not in node_a.connections:
+            is_new_link = True
+        
         # Update the connection
         if new_delay is None:
             # Remove the connection
@@ -488,17 +579,19 @@ class SensorNetwork:
             if node_a_id in node_b.connections:
                 del node_b.connections[node_a_id]
                 node_b.update_needed = True
-            # After removal, check connectivity and create a bridge if needed
-            if not self._is_network_fully_connected():
-                if verbose:
-                    print("Network is disconnected after link removal. Creating bridge link to restore connectivity.")
-                self._ensure_fully_connected_network()
+                
+            # Propagate link failure information
+            self.propagate_topology_change(node_a_id, node_b_id, is_new_link=False, verbose=verbose)
         else:
             # Add or update the connection
             node_a.connections[node_b_id] = new_delay
             node_b.connections[node_a_id] = new_delay
             node_a.update_needed = True
             node_b.update_needed = True
+            
+            # Propagate new link information if this is a new link
+            if is_new_link:
+                self.propagate_topology_change(node_a_id, node_b_id, is_new_link=True, verbose=verbose)
             
         # Re-run the distance vector protocol to update routing tables
         return self.run_distance_vector_protocol(verbose=verbose)

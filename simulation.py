@@ -59,26 +59,24 @@ def run_dynamic_scenario(network, time_steps=20, p_request=0.3, p_fail=0.1, p_ne
         
         if verbose:
             print(f"\n--- Time Step {t+1}/{time_steps} ---")
-        
+            print("[Step] Exchanging hello messages...")
+        # 1. Hello message exchange (simulate)
+        # ...existing code...
         # 1. Randomly remove links with probability p_fail
         if random.random() < p_fail and len(network.get_all_links()) > 0:
             # Select a random existing link
             links = network.get_all_links()
             if links:
                 node_a_id, node_b_id, _ = random.choice(links)
-                
                 if verbose:
-                    print(f"Link failure: Connection between Node {node_a_id} and Node {node_b_id} disappeared")
-                
+                    print(f"[Step] Link failure: Connection between Node {node_a_id} and Node {node_b_id} disappeared")
                 # Remove the link
-                iterations = network.handle_topology_change(node_a_id, node_b_id, new_delay=None, verbose=False)
+                iterations = network.handle_topology_change(node_a_id, node_b_id, new_delay=None, verbose=verbose)
                 stats["links_removed"] += 1
                 stats["reconvergence_iterations"] += iterations
                 step_events["events"].append(f"Link removed: {node_a_id}-{node_b_id}")
-                
                 if verbose:
-                    print(f"Protocol reconverged after {iterations} iterations")
-        
+                    print(f"[Step] Protocol reconverged after {iterations} iterations")
         # 2. Randomly add new links with probability p_new
         if random.random() < p_new:
             # Find nodes that aren't connected
@@ -91,37 +89,29 @@ def run_dynamic_scenario(network, time_steps=20, p_request=0.3, p_fail=0.1, p_ne
                         node_b = network.nodes[j]
                         if node_a.can_reach(node_b) or node_b.can_reach(node_a):
                             unconnected_pairs.append((i, j))
-            
             if unconnected_pairs:
                 node_a_id, node_b_id = random.choice(unconnected_pairs)
                 delay = random.uniform(0.1, 1.0)
-                
                 if verbose:
-                    print(f"New link: Connection established between Node {node_a_id} and Node {node_b_id} with delay {delay:.4f}")
-                
+                    print(f"[Step] New link: Connection established between Node {node_a_id} and Node {node_b_id} with delay {delay:.4f}")
                 # Add the link
-                iterations = network.handle_topology_change(node_a_id, node_b_id, new_delay=delay, verbose=False)
+                iterations = network.handle_topology_change(node_a_id, node_b_id, new_delay=delay, verbose=verbose)
                 stats["links_added"] += 1
                 stats["reconvergence_iterations"] += iterations
                 step_events["events"].append(f"Link added: {node_a_id}-{node_b_id}")
-                
                 if verbose:
-                    print(f"Protocol reconverged after {iterations} iterations")
-        
+                    print(f"[Step] Protocol reconverged after {iterations} iterations")
         # 3. Process random packet requests with probability p_request
         if random.random() < p_request:
             source_id = random.randint(0, n_nodes-1)
             dest_id = random.randint(0, n_nodes-1)
             while dest_id == source_id:
                 dest_id = random.randint(0, n_nodes-1)
-                
             message = f"Packet at t={t+1}"
             if verbose:
-                print(f"Packet request: Node {source_id} → Node {dest_id}")
-                
+                print(f"[Step] Packet request: Node {source_id} → Node {dest_id}")
             path, delay = network.simulate_message_transmission(source_id, dest_id, message, verbose=verbose)
             stats["requests"] += 1
-            
             if path:
                 stats["successful_transmissions"] += 1
                 stats["total_delay"] += delay
@@ -129,7 +119,9 @@ def run_dynamic_scenario(network, time_steps=20, p_request=0.3, p_fail=0.1, p_ne
             else:
                 stats["failed_transmissions"] += 1
                 step_events["events"].append(f"Transmission: {source_id}→{dest_id} failed")
-                
+        if verbose:
+            print("[Step] Routing tables updated.")
+        
         # Visualize the network state if in interactive mode
         if interactive:
             try:
