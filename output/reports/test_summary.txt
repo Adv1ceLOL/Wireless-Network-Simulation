@@ -1,0 +1,16 @@
+WIRELESS SENSOR NETWORK SIMULATOR - TEST SUMMARY
+======================================================================
+Tests run at: 2025-06-21 16:12:49
+Tests passed: 10/10 (100.0%)
+----------------------------------------------------------------------
+
+SensorNode Creation: PASS [0.000s]
+SensorNetwork Creation: PASS [0.000s]
+Connection Establishment: PASS [0.000s]
+Distance Vector Protocol: PASS [0.032s]
+Routing Table Correctness: PASS [0.001s]
+Message Transmission: PASS [0.001s]
+Report Generation: PASS [0.013s]
+Random Network Creation: PASS [0.001s]
+Network Connectivity: PASS [0.078s]
+Network Reliability: PASS [0.157s]

@@ -39,13 +39,16 @@ class SensorNetwork:
             transmission_range = random.uniform(min_range, max_range)
             node = SensorNode(node_id=i, x=x, y=y, transmission_range=transmission_range)
             self.nodes.append(node)
-            
-        # Generate weighted connections
+              # Generate weighted connections
         self._generate_connections()
         return self.nodes
         
-    def _generate_connections(self):
-        """Generate bidirectional weighted connections between nodes that can reach each other."""
+    def _generate_connections(self, ensure_connected=True):
+        """Generate bidirectional weighted connections between nodes that can reach each other.
+        
+        Args:
+            ensure_connected: If True, ensure no isolated nodes and a fully connected network
+        """
         n = len(self.nodes)
         for i in range(n):
             for j in range(i + 1, n):
@@ -56,11 +59,12 @@ class SensorNetwork:
                     node_a.add_connection(node_b.node_id, delay)
                     node_b.add_connection(node_a.node_id, delay)
         
-        # Ensure no isolated nodes (nodes without connections)
-        self._ensure_no_isolated_nodes()
-        
-        # Ensure the network is fully connected (any node can reach any other)
-        self._ensure_fully_connected_network()
+        if ensure_connected:
+            # Ensure no isolated nodes (nodes without connections)
+            self._ensure_no_isolated_nodes()
+            
+            # Ensure the network is fully connected (any node can reach any other)
+            self._ensure_fully_connected_network()
                     
     def _ensure_no_isolated_nodes(self):
         """Ensure that every node has at least one connection."""

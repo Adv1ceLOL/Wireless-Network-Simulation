@@ -8,6 +8,9 @@ import random
 import matplotlib
 matplotlib.use('Agg')  # Use non-interactive backend
 
+# Add the parent directory to sys.path to find the src module
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from src.core.network import SensorNetwork
 from src.core.sensor_node import SensorNode
 from src.reporting.report_network import generate_network_report

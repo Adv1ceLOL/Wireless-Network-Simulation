@@ -79,7 +79,7 @@ python simulation.py --nodes=20; python simulation.py --interactive
 
 ## ⚙️ Installation
 
-### Automatic Installation
+### Automatic Installation for dependancies
 
 **Windows:**
 ```

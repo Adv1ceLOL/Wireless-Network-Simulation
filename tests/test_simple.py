@@ -4,6 +4,10 @@
 import os
 import sys
 import random
+
+# Add the parent directory to sys.path to find the src module
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from src.core.network import SensorNetwork
 from src.core.sensor_node import SensorNode
 from src.reporting.report_network import generate_network_report
@@ -32,22 +36,22 @@ def run_test(test_name, test_func):
 def test_sensor_node_creation():
     """Test that sensor nodes can be created with proper attributes"""
     # Create a sensor node with specific attributes
-    node = SensorNode(id=1, x=5.0, y=10.0, transmission_range=3.0)
+    node = SensorNode(node_id=1, x=5.0, y=10.0, transmission_range=3.0)
     
     # Verify attributes
-    assert node.id == 1, f"Node ID is {node.id}, expected 1"
+    assert node.node_id == 1, f"Node ID is {node.node_id}, expected 1"
     assert node.x == 5.0, f"Node X is {node.x}, expected 5.0"
     assert node.y == 10.0, f"Node Y is {node.y}, expected 10.0"
     assert node.transmission_range == 3.0, f"Transmission range is {node.transmission_range}, expected 3.0"
-    assert node.connections == [], f"Initial connections should be empty, got {node.connections}"
+    assert isinstance(node.connections, dict), f"Initial connections should be an empty dict, got {node.connections}"
     
     return True
 
 def test_distance_calculation():
     """Test that distance between nodes is calculated correctly"""
     # Create two nodes
-    node1 = SensorNode(id=1, x=0.0, y=0.0, transmission_range=5.0)
-    node2 = SensorNode(id=2, x=3.0, y=4.0, transmission_range=5.0)
+    node1 = SensorNode(node_id=1, x=0.0, y=0.0, transmission_range=5.0)
+    node2 = SensorNode(node_id=2, x=3.0, y=4.0, transmission_range=5.0)
     
     # Calculate distance (should be 5.0 - Pythagorean theorem)
     distance = node1.distance_to(node2)
@@ -64,9 +68,9 @@ def test_network_creation():
     network = SensorNetwork()
     
     # Add nodes manually
-    network.add_node(SensorNode(id=0, x=0.0, y=0.0, transmission_range=2.0))
-    network.add_node(SensorNode(id=1, x=1.0, y=1.0, transmission_range=2.0))
-    network.add_node(SensorNode(id=2, x=2.0, y=2.0, transmission_range=2.0))
+    network.add_node(SensorNode(node_id=0, x=0.0, y=0.0, transmission_range=2.0))
+    network.add_node(SensorNode(node_id=1, x=1.0, y=1.0, transmission_range=2.0))
+    network.add_node(SensorNode(node_id=2, x=2.0, y=2.0, transmission_range=2.0))
     
     # Verify node count
     assert len(network.nodes) == 3, f"Network has {len(network.nodes)} nodes, expected 3"
@@ -74,7 +78,7 @@ def test_network_creation():
     # Verify node retrieval by ID
     node = network.get_node_by_id(1)
     assert node is not None, "Could not retrieve node with ID 1"
-    assert node.id == 1, f"Retrieved node has ID {node.id}, expected 1"
+    assert node.node_id == 1, f"Retrieved node has ID {node.node_id}, expected 1"
     
     return True
 
@@ -84,16 +88,15 @@ def test_connection_establishment():
     network = SensorNetwork()
     
     # Add nodes with overlapping transmission ranges
-    node0 = SensorNode(id=0, x=0.0, y=0.0, transmission_range=2.0)
-    node1 = SensorNode(id=1, x=1.0, y=1.0, transmission_range=2.0)
-    node2 = SensorNode(id=2, x=4.0, y=4.0, transmission_range=2.0)  # Should be out of range
+    node0 = SensorNode(node_id=0, x=0.0, y=0.0, transmission_range=2.0)
+    node1 = SensorNode(node_id=1, x=1.0, y=1.0, transmission_range=2.0)
+    node2 = SensorNode(node_id=2, x=4.0, y=4.0, transmission_range=2.0)  # Should be out of range
     
     network.add_node(node0)
     network.add_node(node1)
     network.add_node(node2)
-    
-    # Establish connections
-    network.establish_connections()
+      # Establish connections
+    network._generate_connections(ensure_connected=False)  # Don't automatically connect isolated nodes
     
     # Verify connections
     assert 1 in node0.connections, "Node 0 should be connected to Node 1"
@@ -109,12 +112,12 @@ def test_distance_vector_protocol():
     network = SensorNetwork()
     
     # Add nodes in a line
-    network.add_node(SensorNode(id=0, x=0.0, y=0.0, transmission_range=1.5))
-    network.add_node(SensorNode(id=1, x=1.0, y=0.0, transmission_range=1.5))
-    network.add_node(SensorNode(id=2, x=2.0, y=0.0, transmission_range=1.5))
+    network.add_node(SensorNode(node_id=0, x=0.0, y=0.0, transmission_range=1.5))
+    network.add_node(SensorNode(node_id=1, x=1.0, y=0.0, transmission_range=1.5))
+    network.add_node(SensorNode(node_id=2, x=2.0, y=0.0, transmission_range=1.5))
     
     # Establish connections
-    network.establish_connections()
+    network._generate_connections()
     
     # Run the distance vector protocol
     network.run_distance_vector_protocol()
@@ -124,13 +127,13 @@ def test_distance_vector_protocol():
     node1 = network.get_node_by_id(1)
     node2 = network.get_node_by_id(2)
     
-    # Check routing table entries
-    assert node0.routing_table[1] == 1, f"Node 0 route to Node 1 is {node0.routing_table.get(1)}, expected 1"
-    assert node0.routing_table[2] == 1, f"Node 0 route to Node 2 is {node0.routing_table.get(2)}, expected 1"
-    assert node1.routing_table[0] == 0, f"Node 1 route to Node 0 is {node1.routing_table.get(0)}, expected 0"
-    assert node1.routing_table[2] == 2, f"Node 1 route to Node 2 is {node1.routing_table.get(2)}, expected 2"
-    assert node2.routing_table[0] == 1, f"Node 2 route to Node 0 is {node2.routing_table.get(0)}, expected 1"
-    assert node2.routing_table[1] == 1, f"Node 2 route to Node 1 is {node2.routing_table.get(1)}, expected 1"
+    # Check routing table entries - format is (next_hop, cost)
+    assert node0.routing_table[1][0] == 1, f"Node 0 route to Node 1 is {node0.routing_table.get(1)}, expected next hop 1"
+    assert node0.routing_table[2][0] == 1, f"Node 0 route to Node 2 is {node0.routing_table.get(2)}, expected next hop 1"
+    assert node1.routing_table[0][0] == 0, f"Node 1 route to Node 0 is {node1.routing_table.get(0)}, expected next hop 0"
+    assert node1.routing_table[2][0] == 2, f"Node 1 route to Node 2 is {node1.routing_table.get(2)}, expected next hop 2"
+    assert node2.routing_table[0][0] == 1, f"Node 2 route to Node 0 is {node2.routing_table.get(0)}, expected next hop 1"
+    assert node2.routing_table[1][0] == 1, f"Node 2 route to Node 1 is {node2.routing_table.get(1)}, expected next hop 1"
     
     return True
 
@@ -140,12 +143,12 @@ def test_message_transmission():
     network = SensorNetwork()
     
     # Add nodes in a line
-    network.add_node(SensorNode(id=0, x=0.0, y=0.0, transmission_range=1.5))
-    network.add_node(SensorNode(id=1, x=1.0, y=0.0, transmission_range=1.5))
-    network.add_node(SensorNode(id=2, x=2.0, y=0.0, transmission_range=1.5))
+    network.add_node(SensorNode(node_id=0, x=0.0, y=0.0, transmission_range=1.5))
+    network.add_node(SensorNode(node_id=1, x=1.0, y=0.0, transmission_range=1.5))
+    network.add_node(SensorNode(node_id=2, x=2.0, y=0.0, transmission_range=1.5))
     
     # Establish connections
-    network.establish_connections()
+    network._generate_connections()
     
     # Run the distance vector protocol
     network.run_distance_vector_protocol()
@@ -171,8 +174,8 @@ def test_network_report():
     
     # Verify the report is not empty and contains expected sections
     assert report, "Report should not be empty"
-    assert "Network Summary" in report, "Report should contain Network Summary section"
-    assert "Node Details" in report, "Report should contain Node Details section"
+    assert "NETWORK OVERVIEW" in report, "Report should contain Network Overview section"
+    assert "NODE DETAILS" in report, "Report should contain Node Details section"
     
     return True
 

@@ -1,0 +1,139 @@
+================================================================================
+WIRELESS SENSOR NETWORK DETAILED REPORT - Generated: 2025-06-21 16:12:49
+================================================================================
+
+1. NETWORK OVERVIEW
+-------------------
+Number of nodes: 4
+Total connections: 6
+Average connections per node: 1.50
+Network density: 0.5000 (50.0%)
+
+2. PROACTIVE DISTANCE VECTOR PROTOCOL
+-------------------------------------
+Protocol: Proactive Distance Vector Routing
+Implementation: Distributed Bellman-Ford algorithm
+Operation:
+  - Nodes initialize with direct connections to neighbors
+  - Nodes exchange distance vectors with neighbors
+  - Nodes update routing tables based on received vectors
+  - Process continues until no further updates are needed
+Proactive Features:
+  - Nodes maintain complete routing tables at all times
+  - Topology changes trigger automatic routing updates
+  - Routing tables converge to optimal paths
+
+3. NODE DETAILS
+---------------
+
+  Node 0:
+    Position: (0.0000, 0.0000)
+    Transmission range: 1.5000
+    Number of connections: 1
+    Connected to:
+      → Node 1: delay=0.5678, distance=1.0000
+    Routing Table and Distance Vector:
+      Dest | Next |     Cost     Dest |     Cost
+      -----|------|---------     -----|---------
+         0 |    0 |   0.0000        0 |   0.0000
+         1 |    1 |   0.5678        1 |   0.5678
+         2 |    1 |   1.2279        2 |   1.2279
+         3 |    1 |   2.0330        3 |   2.0330
+
+  Node 1:
+    Position: (1.0000, 0.0000)
+    Transmission range: 1.5000
+    Number of connections: 2
+    Connected to:
+      → Node 0: delay=0.5678, distance=1.0000
+      → Node 2: delay=0.6601, distance=1.0000
+    Routing Table and Distance Vector:
+      Dest | Next |     Cost     Dest |     Cost
+      -----|------|---------     -----|---------
+         0 |    0 |   0.5678        0 |   0.5678
+         1 |    1 |   0.0000        1 |   0.0000
+         2 |    2 |   0.6601        2 |   0.6601
+         3 |    2 |   1.4651        3 |   1.4651
+
+  Node 2:
+    Position: (2.0000, 0.0000)
+    Transmission range: 1.5000
+    Number of connections: 2
+    Connected to:
+      → Node 1: delay=0.6601, distance=1.0000
+      → Node 3: delay=0.8050, distance=1.0000
+    Routing Table and Distance Vector:
+      Dest | Next |     Cost     Dest |     Cost
+      -----|------|---------     -----|---------
+         0 |    1 |   1.2279        0 |   1.2279
+         1 |    1 |   0.6601        1 |   0.6601
+         2 |    2 |   0.0000        2 |   0.0000
+         3 |    3 |   0.8050        3 |   0.8050
+
+  Node 3:
+    Position: (3.0000, 0.0000)
+    Transmission range: 1.5000
+    Number of connections: 1
+    Connected to:
+      → Node 2: delay=0.8050, distance=1.0000
+    Routing Table and Distance Vector:
+      Dest | Next |     Cost     Dest |     Cost
+      -----|------|---------     -----|---------
+         0 |    2 |   2.0330        0 |   2.0330
+         1 |    2 |   1.4651        1 |   1.4651
+         2 |    2 |   0.8050        2 |   0.8050
+         3 |    3 |   0.0000        3 |   0.0000
+
+4. ADJACENCY MATRIX (DELAY WEIGHTS)
+-----------------------------------
+           0     1     2     3
+    --------------------------
+   0 | 0.000 0.568     ∞     ∞
+   1 | 0.568 0.000 0.660     ∞
+   2 |     ∞ 0.660 0.000 0.805
+   3 |     ∞     ∞ 0.805 0.000
+
+5. NETWORK STATISTICS
+---------------------
+Delay statistics:
+  - Minimum: 0.5678
+  - Maximum: 0.8050
+  - Average: 0.6777
+  - Standard deviation: 0.0976
+
+Routing metrics:
+  - Reachability: 1.0000 (100.0%)
+  - Unreachable destinations: 0
+  - Average hops per path: 1.67
+  - Average path cost: 1.1265
+
+6. SAMPLE PATHS
+----------------
+
+Sample shortest paths between random node pairs:
+  Path 1 → 2:
+    Nodes: 1 → 2
+    Total delay: 0.6601
+
+  Path 0 → 2:
+    Nodes: 0 → 1 → 2
+    Total delay: 1.2279
+
+  Path 1 → 3:
+    Nodes: 1 → 2 → 3
+    Total delay: 1.4651
+
+  Path 1 → 2:
+    Nodes: 1 → 2
+    Total delay: 0.6601
+
+  Path 3 → 1:
+    Nodes: 3 → 2 → 1
+    Total delay: 1.4651
+
+
+7. NETWORK LINK INFORMATION
+---------------------------
+
+Most congested link: 3-2 (delay: 0.81)
+Fastest link: 1-0 (delay: 0.57)
