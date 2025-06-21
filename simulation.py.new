@@ -93,22 +93,17 @@ def run_dynamic_scenario(network, time_steps=20, p_request=0.3, p_fail=0.1, p_ne
     initial_iterations = network.run_distance_vector_protocol(verbose=verbose)
     if verbose:
         print(f"Initial protocol convergence: {initial_iterations} iterations")
-      # Simulate time steps
+    
+    # Simulate time steps
     for t in range(time_steps):
         step_events = {"step": t+1, "events": []}
         
         if verbose:
             print(f"\n--- Time Step {t+1}/{time_steps} ---")
             print("[Step] Exchanging hello messages...")
-        
-        # 1. Hello message exchange 
-        # Increment hello message counters for each node based on its connections
-        for node in network.nodes:
-            # Each node sends one hello message to each of its neighbors
-            hello_msgs = len(node.connections)
-            node.hello_msg_count += hello_msgs
-        
-        # 2. Randomly remove links with probability p_fail
+        # 1. Hello message exchange (simulate)
+        # ...existing code...
+        # 1. Randomly remove links with probability p_fail
         if random.random() < p_fail and len(network.get_all_links()) > 0:
             # Select a random existing link
             links = network.get_all_links()

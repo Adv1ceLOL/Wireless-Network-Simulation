@@ -331,12 +331,37 @@ class SensorNetwork:
         """Return a list of all links in the network as (node_a_id, node_b_id, delay) tuples."""
         links = []
         for i, node in enumerate(self.nodes):
-            for neighbor_id, delay in node.connections.items():
-                # Only add each link once (when i < neighbor_id)
+            for neighbor_id, delay in node.connections.items():                # Only add each link once (when i < neighbor_id)
                 if i < neighbor_id:
                     links.append((i, neighbor_id, delay))
         return links
+    
+    def get_message_counter_totals(self):
+        """Calculate total message counts across all nodes in the network.
         
+        Returns:
+            Dictionary with totals for each message type and a grand total
+        """
+        totals = {
+            "hello_msg_count": 0,
+            "topology_msg_count": 0,
+            "route_discovery_msg_count": 0,
+            "data_packet_count": 0
+        }
+        
+        for node in self.nodes:
+            totals["hello_msg_count"] += node.hello_msg_count
+            totals["topology_msg_count"] += node.topology_msg_count
+            totals["route_discovery_msg_count"] += node.route_discovery_msg_count
+            totals["data_packet_count"] += node.data_packet_count
+            
+        totals["total_messages"] = (totals["hello_msg_count"] + 
+                                   totals["topology_msg_count"] + 
+                                   totals["route_discovery_msg_count"] + 
+                                   totals["data_packet_count"])
+        
+        return totals
+    
     def simulate_message_transmission(self, source_id, target_id, message="Test message", verbose=True):
         """Simulate sending a message from source to target using current routing tables."""
         if verbose:
@@ -352,16 +377,19 @@ class SensorNetwork:
                 if verbose:
                     print("No path found (routing table incomplete or loop detected).")
                 return None, float('inf')
+            
+            # Increment data packet count for the forwarding node
+            self.nodes[current].data_packet_count += 1
+            
             current = next_hop
         path.append(target_id)
         total_delay = sum(self.nodes[path[i]].connections[path[i+1]] for i in range(len(path)-1))
-        
         if verbose:
             print(f"Path found: {' -> '.join(map(str, path))}")
             print(f"Total transmission delay: {total_delay:.4f} units")
             
         return path, total_delay
-    
+        
     def run_distance_vector_protocol(self, max_iterations=20, verbose=False):
         """Run the proactive distance vector protocol until convergence or max iterations.
         
@@ -375,6 +403,7 @@ class SensorNetwork:
         # Initialize distance vectors for all nodes
         for node in self.nodes:
             node.initialize_distance_vector(self)
+            node.topology_msg_count += 1  # Count initial topology setup
             
         if verbose:
             print("\nInitial distance vectors:")

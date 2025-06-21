@@ -25,6 +25,13 @@ class SensorNode:
         self.neighbor_vectors = {}  # {neighbor_id: their distance vector}
         self.updates_to_process = []  # [(from_node_id, distance_vector), ...]
         self.update_needed = False  # Flag to indicate if this node needs to send updates
+        
+        # Message counters
+        self.hello_msg_count = 0  # Count of hello messages
+        self.topology_msg_count = 0  # Count of topology discovery messages
+        self.route_discovery_msg_count = 0  # Count of control packets for route discovery
+        self.data_packet_count = 0  # Count of data packets forwarded
+        
         SensorNode._all_nodes.append(self)
         
     def distance_to(self, other_node):
@@ -68,20 +75,22 @@ class SensorNode:
         self.routing_table = {}
         for dest_id in range(n_nodes):
             if dest_id == self.node_id:
-                self.routing_table[dest_id] = (self.node_id, 0)
+                self.routing_table[dest_id] = (self.node_id, 0)            
             elif dest_id in self.connections:
                 self.routing_table[dest_id] = (dest_id, self.connections[dest_id])
             else:
                 self.routing_table[dest_id] = (None, float('inf'))
         
         self.update_needed = True
-    
+        
     def send_distance_vector(self, network):
         """Send this node's distance vector to all neighbors if updates are needed."""
         if self.update_needed:
             for neighbor_id in self.get_neighbors():
                 neighbor = network.get_node_by_id(neighbor_id)
                 neighbor.receive_distance_vector(self.node_id, copy.deepcopy(self.distance_vector))
+                # Increment route discovery message count
+                self.route_discovery_msg_count += 1
             self.update_needed = False
             return True
         return False
