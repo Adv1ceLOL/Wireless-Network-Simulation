@@ -5,6 +5,7 @@ from src.visualization.visualization import (
     visualize_network_networkx,
     visualize_adjacency_list
 )
+from src.core.evaluation import run_evaluation, get_protocol_efficiency
 import random
 import sys
 import os
@@ -51,7 +52,6 @@ def get_total_message_count(network):
             get_route_discovery_msg_count(network) + 
             get_data_packet_count(network))
 
-# Original simulation.py content below
 def run_dynamic_scenario(network, time_steps=20, p_request=0.3, p_fail=0.1, p_new=0.1, 
                         interactive=False, delay_between_steps=1.0, verbose=True):
     """Run a dynamic scenario simulation with probabilistic events.
@@ -409,6 +409,7 @@ if __name__ == "__main__":
     interactive_mode = "--interactive" in sys.argv or "-i" in sys.argv
     auto_install = "--auto-install" in sys.argv
     dynamic_scenario = "--dynamic" in sys.argv
+    evaluation_mode = "--evaluation" in sys.argv or "-e" in sys.argv
     
     # Get number of nodes from command line if specified
     n_nodes = 15
@@ -417,6 +418,11 @@ if __name__ == "__main__":
     p_fail = 0.1
     p_new = 0.1
     delay_between_steps = 1.0
+      # Evaluation mode parameters
+    n_topologies = 5
+    iterations_per_topology = 10
+    max_probability = 0.3
+    fixed_p_request = 0.5  # Default fixed value for p_request in evaluation mode
     
     if len(sys.argv) > 1:
         for arg in sys.argv[1:]:
@@ -436,6 +442,8 @@ if __name__ == "__main__":
                     if not 0 <= p_request <= 1:
                         print(f"Warning: p_request must be between 0 and 1. Using default ({p_request}).")
                         p_request = 0.3
+                    # Also update the fixed_p_request for evaluation mode
+                    fixed_p_request = p_request
                 except ValueError:
                     print(f"Warning: Invalid p_request format. Using default ({p_request}).")
             elif arg.startswith('--p-fail='):
@@ -459,16 +467,58 @@ if __name__ == "__main__":
                     delay_between_steps = float(arg.split('=')[1])
                 except ValueError:
                     print(f"Warning: Invalid delay format. Using default ({delay_between_steps}).")
-    
-    # Run the simulation
-    network = run_simulation(n_nodes=n_nodes, transmission_tests=5, 
-                           interactive=interactive_mode, auto_install=auto_install,
-                           dynamic_scenario=dynamic_scenario, time_steps=time_steps,
-                           p_request=p_request, p_fail=p_fail, p_new=p_new,
-                           delay_between_steps=delay_between_steps)
-    
-    # Generate visualizations in non-interactive mode if not already done
-    if not dynamic_scenario and not interactive_mode:
+            # Evaluation mode parameters
+            elif arg.startswith('--topologies='):
+                try:
+                    n_topologies = int(arg.split('=')[1])
+                    if n_topologies < 1:
+                        print(f"Warning: Number of topologies must be at least 1. Using default ({n_topologies}).")
+                        n_topologies = 5
+                except ValueError:
+                    print(f"Warning: Invalid topologies format. Using default ({n_topologies}).")
+            elif arg.startswith('--iterations='):
+                try:
+                    iterations_per_topology = int(arg.split('=')[1])
+                    if iterations_per_topology < 1:
+                        print(f"Warning: Iterations must be at least 1. Using default ({iterations_per_topology}).")
+                        iterations_per_topology = 10
+                except ValueError:
+                    print(f"Warning: Invalid iterations format. Using default ({iterations_per_topology}).")
+            elif arg.startswith('--max-prob='):
+                try:
+                    max_probability = float(arg.split('=')[1])
+                    if not 0 < max_probability <= 1:
+                        print(f"Warning: max-prob must be between 0 and 1. Using default ({max_probability}).")
+                        max_probability = 0.3
+                except ValueError:
+                    print(f"Warning: Invalid max-prob format. Using default ({max_probability}).")
+      # Run the simulation based on selected mode
+    if evaluation_mode:
+        # Run the evaluation mode
+        results = run_evaluation(
+            n_topologies=n_topologies,
+            iterations_per_topology=iterations_per_topology,
+            max_probability=max_probability,
+            n_nodes=n_nodes,
+            area_size=10,
+            fixed_p_request=fixed_p_request
+        )
+    else:
+        # Run the standard simulation
+        network = run_simulation(
+            n_nodes=n_nodes, 
+            transmission_tests=5, 
+            interactive=interactive_mode, 
+            auto_install=auto_install,
+            dynamic_scenario=dynamic_scenario, 
+            time_steps=time_steps,
+            p_request=p_request, 
+            p_fail=p_fail, 
+            p_new=p_new,
+            delay_between_steps=delay_between_steps
+        )
+      # Generate visualizations in non-interactive mode if not already done
+    if not evaluation_mode and not dynamic_scenario and not interactive_mode:
         try:
             from src.visualization.visualization import visualize_network
             print("\nGenerating network visualizations...")
@@ -483,21 +533,23 @@ if __name__ == "__main__":
             print("Visualization failed, but simulation completed successfully.")
     
     print("\nSimulation complete!")
-    if not interactive_mode:
+    if not interactive_mode and not evaluation_mode:
         print("Visualization files are saved in the output/visualizations directory.")
-    else:
+    elif interactive_mode:
         print("Interactive visualizations should be displayed in separate windows.")
         print("Press Enter to close the visualization windows and exit...")
-        
-    print("Network report is saved in the output/reports directory.")
+    
+    if not evaluation_mode:
+        print("Network report is saved in the output/reports directory.")
+    else:
+        print("Evaluation report is saved in the output/reports directory.")
     
     # Provide help for PowerShell users who might have issues with && operator
     if platform.system() == "Windows":
         print("\nTIP: If you're using PowerShell and want to run with specific parameters:")
         print("  python simulation.py --nodes=20; python simulation.py --interactive")
         print("  # Use semicolon instead of && for command chaining in PowerShell")
-    
-    # Show available command-line options
+      # Show available command-line options
     print("\nAvailable command-line options:")
     print("  --interactive, -i         : Enable interactive visualizations")
     print("  --auto-install            : Automatically install missing dependencies")
@@ -508,6 +560,10 @@ if __name__ == "__main__":
     print("  --p-fail=<float>          : Probability of link failure (default: 0.1)")
     print("  --p-new=<float>           : Probability of new link (default: 0.1)")
     print("  --delay=<float>           : Delay between time steps in seconds (default: 1.0)")
+    print("  --evaluation, -e          : Run protocol evaluation mode")
+    print("  --topologies=<number>     : Number of topologies to evaluate (default: 5)")
+    print("  --iterations=<number>     : Iterations per topology (default: 10)")
+    print("  --max-prob=<float>        : Maximum probability for random parameters p_fail and p_new (default: 0.3)")
     
     # If in interactive mode, wait for user input to keep the windows open
     if interactive_mode:

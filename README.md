@@ -19,6 +19,10 @@ python simulation.py [options]
 | `--p-fail=<float>`    | Probability of link failure per time step           | 0.1        |
 | `--p-new=<float>`     | Probability of new link formation per time step     | 0.1        |
 | `--delay=<float>`     | Delay between time steps in seconds                 | 1.0        |
+| `--evaluation`, `-e`  | Run protocol evaluation mode                         | False      |
+| `--topologies=<number>` | Number of topologies to evaluate in evaluation mode  | 5          |
+| `--iterations=<number>` | Iterations per topology in evaluation mode           | 10         |
+| `--max-prob=<float>`  | Max probability for parameters in evaluation mode    | 0.3        |
 
 ## 📂 Directory Structure
 
@@ -54,6 +58,11 @@ python simulation.py --interactive
 python simulation.py --dynamic --nodes=10 --time-steps=5 --p-request=0.5 --p-fail=0.2 --p-new=0.3
 ```
 
+### Protocol Evaluation Mode
+```bash
+python simulation.py --evaluation --topologies=3 --iterations=5 --max-prob=0.4
+```
+
 ### Windows PowerShell Users
 In PowerShell, use semicolons instead of `&&` for command chaining:
 ```powershell
@@ -72,6 +81,12 @@ python simulation.py --nodes=20; python simulation.py --interactive
 - **`--p-fail=<float>`**: Controls how often existing links fail (0-1).
 - **`--p-new=<float>`**: Controls how often new links form between nodes (0-1).
 - **`--delay=<float>`**: Controls the real-time delay between simulation steps.
+
+### Protocol Evaluation
+- **`--evaluation`, `-e`**: Enables protocol evaluation mode that compares multiple network topologies.
+- **`--topologies=<number>`**: Number of random network topologies to generate and evaluate.
+- **`--iterations=<number>`**: Number of simulation iterations to run per topology with different parameters.
+- **`--max-prob=<float>`**: Maximum probability value for randomized parameters (p_fail and p_new).
 
 ### Visualization
 - **`--interactive`**: Shows network topology and changes in real-time using matplotlib.
@@ -156,7 +171,40 @@ If you encounter problems with interactive visualization:
 - **Linux**: Install tkinter with `sudo apt-get install python3-tk` (Debian/Ubuntu)
 - **macOS**: Try PyQt5 as an alternative: `pip install PyQt5`
 
-## 🔮 Future Enhancements
+## � Protocol Evaluation
+
+The simulator includes a comprehensive protocol evaluation mode that analyzes network performance across multiple topologies:
+
+### Scoring Metrics
+
+Each topology is scored based on the following weighted metrics:
+
+- **Efficiency (25%)**: Ratio of data packets to total packets
+- **Resilience (20%)**: Network ability to handle topology changes and maintain connectivity
+- **Overhead (15%)**: Efficiency of control message usage
+- **Routing Quality (20%)**: Quality of routing paths based on average hop count (fewer is better)
+- **Delay Factor (10%)**: Quality of paths based on link weights/delays (lower is better)
+- **Traffic Balance (10%)**: Balance between data volume and network capacity
+
+### Evaluation Reports
+
+The evaluation mode generates detailed reports in the `output/reports/` directory:
+- Topology-by-topology statistics
+- Comparative analysis across topologies
+- Detailed scoring breakdowns
+- Cross-topology metric comparisons
+
+### Running an Evaluation
+
+```bash
+# Basic evaluation with default parameters
+python simulation.py --evaluation
+
+# Advanced evaluation with custom parameters
+python simulation.py --evaluation --topologies=10 --iterations=20 --max-prob=0.5
+```
+
+## �🔮 Future Enhancements
 
 1. **Advanced Routing Protocols**: AODV, DSR, and other routing protocols
 2. **Energy Modeling**: Battery consumption simulation and energy-aware routing
