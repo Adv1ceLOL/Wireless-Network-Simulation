@@ -10,7 +10,6 @@ from src.visualization.visualization import visualize_adjacency_list
 from src.core.evaluation_score import calculate_topology_score
 import random
 import os
-import time
 import math
 
 def get_protocol_efficiency(network):

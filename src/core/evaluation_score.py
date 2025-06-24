@@ -1,5 +1,3 @@
-import os
-import random
 import math
 
 def calculate_topology_score(topology_summary, weights=None):

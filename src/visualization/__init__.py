@@ -1,14 +1,10 @@
 """Visualization modules for the wireless sensor network."""
 
-# Import platform for testing
-import platform
-
 # Import functions needed by the test suite
 from src.visualization.visualization_backend import is_package_installed
-from src.visualization.visualization import install_package, visualize_network, matplotlib
+from src.visualization.visualization import matplotlib
 
 # Import PIL visualization for fallback
-from src.visualization.pil_visualization import visualize_network_pil
 
 # Define a custom function for testing
 def get_available_backend():
