@@ -11,7 +11,6 @@ python simulation.py [options]
 | Option                | Description                                         | Default    |
 |-----------------------|-----------------------------------------------------|------------|
 | `--interactive`, `-i` | Enable interactive visualizations                   | False      |
-| `--auto-install`      | Automatically install missing dependencies          | False      |
 | `--nodes=<number>`    | Set the number of nodes in the network              | 15         |
 | `--dynamic`           | Run dynamic scenario simulation                     | False      |
 | `--time-steps=<number>` | Number of time steps for dynamic scenario         | 20         |
@@ -32,7 +31,6 @@ wireless-network/
 │   ├── core/             # Core simulator functionality
 │   ├── visualization/    # Visualization modules
 │   └── reporting/        # Reporting and analysis tools
-├── scripts/              # Setup and utility scripts
 ├── tests/                # Test cases and test suites
 ├── docs/                 # Documentation
 ├── output/               # Generated files
@@ -90,30 +88,15 @@ python simulation.py --nodes=20; python simulation.py --interactive
 
 ### Visualization
 - **`--interactive`**: Shows network topology and changes in real-time using matplotlib.
-- **`--auto-install`**: Automatically tries to install required visualization dependencies.
 
 ## ⚙️ Installation
 
-### Automatic Installation for dependancies
-
-**Windows:**
-```
-scripts\setup_windows.bat
-```
-
-**Unix (Linux/macOS):**
-```bash
-chmod +x scripts/setup_unix.sh
-scripts/setup_unix.sh
-```
-
-### Manual Installation
 ```bash
 # Install Python packages
-pip install matplotlib networkx pillow
+pip install -r requirements.txt
 
-# Run dependency check
-python scripts/install_dependencies.py
+# Run a simple test script to check everything is ok
+python tests/test_simple.py
 ```
 
 ## 🧪 Testing

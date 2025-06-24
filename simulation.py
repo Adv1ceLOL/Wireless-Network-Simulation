@@ -211,8 +211,8 @@ def run_dynamic_scenario(network, time_steps=20, p_request=0.3, p_fail=0.1, p_ne
     
     return stats
 
-def run_simulation(n_nodes=10, area_size=10, transmission_tests=3, interactive=False, auto_install=False, 
-                  dynamic_scenario=False, time_steps=20, p_request=0.3, p_fail=0.1, p_new=0.1, delay_between_steps=1.0):
+def run_simulation(n_nodes=10, area_size=10, transmission_tests=3, interactive=False, 
+                   dynamic_scenario=False, time_steps=20, p_request=0.3, p_fail=0.1, p_new=0.1, delay_between_steps=1.0):
     """Run a wireless sensor network simulation.
     
     Args:
@@ -220,7 +220,6 @@ def run_simulation(n_nodes=10, area_size=10, transmission_tests=3, interactive=F
         area_size: Size of the simulation area
         transmission_tests: Number of random transmissions to test
         interactive: Whether to display interactive visualizations
-        auto_install: Whether to automatically install missing dependencies
         dynamic_scenario: Whether to run a dynamic scenario simulation
         time_steps: Number of time steps for dynamic scenario
         p_request: Probability of a packet request in dynamic scenario
@@ -359,16 +358,6 @@ def run_simulation(n_nodes=10, area_size=10, transmission_tests=3, interactive=F
     # Handle visualization
     if interactive:
         try:
-            # Check if auto_install is enabled
-            if auto_install:
-                print("\nChecking and installing visualization dependencies...")
-                # Import the install function and run it
-                try:
-                    from src.visualization.visualization import check_and_install_dependencies
-                    check_and_install_dependencies(auto_install=True)
-                except ImportError:
-                    print("Could not find dependency installer. Continuing with available packages.")
-            
             from src.visualization.visualization import visualize_network
             print("\nGenerating interactive network visualizations...")
             visualize_network(network, interactive=True)
@@ -376,16 +365,7 @@ def run_simulation(n_nodes=10, area_size=10, transmission_tests=3, interactive=F
             print(f"\nInteractive visualization module not available: {e}")
             print("Continuing without interactive visualizations.")
             
-            if auto_install:
-                print("Automatic installation was attempted but failed.")
-                print("Please check your internet connection or try manual installation:")
-            else:
-                print("To enable visualizations, you can:")
-                print("  1. Run with --auto-install: python simulation.py --interactive --auto-install")
-                print("  2. Run the installer: python install_dependencies.py")
-                print("  3. Manually install the packages:")
-            
-            print("    pip install matplotlib networkx pillow")
+            print("To enable visualizations, you can manually install the packages (pip install -r requirements.txt)")
             
             if platform.system() == "Windows":
                 print("    Make sure you have tkinter installed (comes with standard Python installation)")
@@ -407,7 +387,6 @@ def run_simulation(n_nodes=10, area_size=10, transmission_tests=3, interactive=F
 if __name__ == "__main__":
     # Check for command line arguments
     interactive_mode = "--interactive" in sys.argv or "-i" in sys.argv
-    auto_install = "--auto-install" in sys.argv
     dynamic_scenario = "--dynamic" in sys.argv
     evaluation_mode = "--evaluation" in sys.argv or "-e" in sys.argv
     
@@ -509,7 +488,6 @@ if __name__ == "__main__":
             n_nodes=n_nodes, 
             transmission_tests=5, 
             interactive=interactive_mode, 
-            auto_install=auto_install,
             dynamic_scenario=dynamic_scenario, 
             time_steps=time_steps,
             p_request=p_request, 
@@ -527,7 +505,7 @@ if __name__ == "__main__":
             print(f"\nVisualization module not available: {e}")
             print("Make sure you have all required packages installed (matplotlib, networkx)")
             print("Install them with: pip install matplotlib networkx")
-            print("Or run with: python simulation.py --auto-install to automatically install dependencies")
+            print("Or run with: pip install -r requirements.txt to automatically install dependencies")
         except Exception as e:
             print(f"\nError in visualization: {e}")
             print("Visualization failed, but simulation completed successfully.")
@@ -552,7 +530,6 @@ if __name__ == "__main__":
       # Show available command-line options
     print("\nAvailable command-line options:")
     print("  --interactive, -i         : Enable interactive visualizations")
-    print("  --auto-install            : Automatically install missing dependencies")
     print("  --nodes=<number>          : Set the number of nodes in the network")
     print("  --dynamic                 : Run dynamic scenario simulation")
     print("  --time-steps=<number>     : Number of time steps for dynamic scenario (default: 20)")

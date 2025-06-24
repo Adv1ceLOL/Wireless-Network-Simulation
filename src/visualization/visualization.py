@@ -47,7 +47,7 @@ def install_package(package_name):
         return False
 
 # Function to check and install required dependencies
-def check_and_install_dependencies(auto_install=False):
+def check_and_install_dependencies():
     """Check if required visualization dependencies are installed and optionally install them."""
     dependencies = {
         'matplotlib': 'matplotlib',
@@ -83,18 +83,6 @@ def check_and_install_dependencies(auto_install=False):
         else:
             missing_gui_deps[dep_name] = pip_name
     
-    # Install missing dependencies if auto_install is True
-    if auto_install:
-        for dep_name, pip_name in missing_deps.items():
-            install_package(pip_name)
-        
-        # Only try to install GUI dependencies if no GUI backend is available
-        if not has_gui_backend:
-            for dep_name, pip_name in missing_gui_deps.items():
-                success = install_package(pip_name)
-                if success:
-                    break  # Stop after installing one GUI backend
-    
     # Return information about missing dependencies
     return {
         'core_dependencies': missing_deps,
@@ -102,23 +90,21 @@ def check_and_install_dependencies(auto_install=False):
         'has_gui_backend': has_gui_backend or len(missing_gui_deps) == 0
     }
 
-# Check for interactive mode flag and auto-install flag
+# Check for interactive mode flag
 interactive_mode = '--interactive' in sys.argv or '-i' in sys.argv
-auto_install = '--auto-install' in sys.argv
 
 # Check dependencies and optionally install them
-dependency_status = check_and_install_dependencies(auto_install)
+dependency_status = check_and_install_dependencies()
 
 has_interactive_backend = False
 
 # Try to set the interactive backend if requested
 if interactive_mode:
-    if not dependency_status['has_gui_backend'] and not auto_install:
+    if not dependency_status['has_gui_backend']:
         print("\nInteractive mode was requested but no GUI backend is available.")
         print("Install one of the following packages to enable interactive mode:")
         for dep_name, pip_name in dependency_status['gui_dependencies'].items():
             print(f"  - {dep_name} (pip install {pip_name})")
-        print("\nYou can also run with --auto-install to attempt automatic installation of dependencies.")
         print("Continuing in non-interactive mode. Visualizations will be saved to files.")
     else:
         try:
