@@ -9,7 +9,7 @@ import logging
 from PIL import Image, ImageDraw
 
 # Import our backend handler
-from visualization_backend import (
+from src.visualization.visualization_backend import (
     initialize_backend, 
     is_package_installed, 
     fix_tkinter_windows,
