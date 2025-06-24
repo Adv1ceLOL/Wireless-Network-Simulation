@@ -11,7 +11,14 @@ import sys
 import os
 import platform
 import time
+import logging
 
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+)
+logger = logging.getLogger('wireless_network_sim')
 
 # Add these functions to count messages
 def get_hello_msg_count(network):
@@ -86,12 +93,15 @@ def run_dynamic_scenario(
         Dictionary with simulation statistics
     """
     if verbose:
+        # Main simulation header is important info for the user
         print(f"\n{'='*70}")
         print(f"DYNAMIC SCENARIO SIMULATION")
         print(
             f"Time steps: {time_steps}, P(request): {p_request}, P(fail): {p_fail}, P(new): {p_new}"
         )
         print(f"{'='*70}\n")
+        # Log the same information
+        logger.info(f"Starting dynamic scenario simulation - Time steps: {time_steps}, P(request): {p_request}, P(fail): {p_fail}, P(new): {p_new}")
 
     # Statistics tracking
     stats = {
@@ -110,14 +120,14 @@ def run_dynamic_scenario(
     # Run the protocol initially to ensure routing tables are built
     initial_iterations = network.run_distance_vector_protocol(verbose=verbose)
     if verbose:
-        print(f"Initial protocol convergence: {initial_iterations} iterations")
+        logger.info(f"Initial protocol convergence: {initial_iterations} iterations")
     # Simulate time steps
     for t in range(time_steps):
         step_events = {"step": t + 1, "events": []}
 
         if verbose:
             print(f"\n--- Time Step {t+1}/{time_steps} ---")
-            print("[Step] Exchanging hello messages...")
+            logger.debug("[Step] Exchanging hello messages...")
 
         # 1. Hello message exchange
         # Increment hello message counters for each node based on its connections
@@ -133,7 +143,7 @@ def run_dynamic_scenario(
             if links:
                 node_a_id, node_b_id, _ = random.choice(links)
                 if verbose:
-                    print(
+                    logger.warning(
                         f"[Step] Link failure: Connection between Node {node_a_id} and Node {node_b_id} disappeared"
                     )
                 # Remove the link
@@ -144,7 +154,7 @@ def run_dynamic_scenario(
                 stats["reconvergence_iterations"] += iterations
                 step_events["events"].append(f"Link removed: {node_a_id}-{node_b_id}")
                 if verbose:
-                    print(f"[Step] Protocol reconverged after {iterations} iterations")
+                    logger.debug(f"[Step] Protocol reconverged after {iterations} iterations")
         # 2. Randomly add new links with probability p_new
         if random.random() < p_new:
             # Find nodes that aren't connected
@@ -161,7 +171,7 @@ def run_dynamic_scenario(
                 node_a_id, node_b_id = random.choice(unconnected_pairs)
                 delay = random.uniform(0.1, 1.0)
                 if verbose:
-                    print(
+                    logger.info(
                         f"[Step] New link: Connection established between Node {node_a_id} and Node {node_b_id} with delay {delay:.4f}"
                     )
                 # Add the link
@@ -172,7 +182,7 @@ def run_dynamic_scenario(
                 stats["reconvergence_iterations"] += iterations
                 step_events["events"].append(f"Link added: {node_a_id}-{node_b_id}")
                 if verbose:
-                    print(f"[Step] Protocol reconverged after {iterations} iterations")
+                    logger.debug(f"[Step] Protocol reconverged after {iterations} iterations")
         # 3. Process random packet requests with probability p_request
         if random.random() < p_request:
             source_id = random.randint(0, n_nodes - 1)
@@ -181,7 +191,7 @@ def run_dynamic_scenario(
                 dest_id = random.randint(0, n_nodes - 1)
             message = f"Packet at t={t+1}"
             if verbose:
-                print(f"[Step] Packet request: Node {source_id} → Node {dest_id}")
+                logger.info(f"[Step] Packet request: Node {source_id} → Node {dest_id}")
             path, delay = network.simulate_message_transmission(
                 source_id, dest_id, message, verbose=verbose
             )
@@ -198,7 +208,7 @@ def run_dynamic_scenario(
                     f"Transmission: {source_id}→{dest_id} failed"
                 )
         if verbose:
-            print("[Step] Routing tables updated.")
+            logger.debug("[Step] Routing tables updated.")
 
         # Visualize the network state if in interactive mode
         if interactive:
@@ -218,7 +228,7 @@ def run_dynamic_scenario(
                 )
                 input()
             except Exception as e:
-                print(f"Visualization error: {e}")
+                logger.error(f"Visualization error: {e}")
 
         stats["events_by_step"].append(step_events)
 
@@ -228,6 +238,7 @@ def run_dynamic_scenario(
 
     # Print simulation summary
     if verbose:
+        # Important summary headers remain as print statements for visibility
         print(f"\n{'='*70}")
         print("DYNAMIC SCENARIO SIMULATION SUMMARY")
         print(f"{'='*70}")
@@ -293,11 +304,14 @@ def run_simulation(
         p_new: Probability of a new link in dynamic scenario
         delay_between_steps: Delay between time steps in dynamic scenario
     """
+    # Main simulation header remains as print statement for user visibility
     print(f"\n{'='*70}")
     print(f"WIRELESS SENSOR NETWORK SIMULATION")
     print(f"Platform: {platform.system()} {platform.release()}")
     print(f"{'='*70}\n")
-
+    
+    logger.info(f"Starting wireless sensor network simulation on {platform.system()} {platform.release()}")
+    logger.info(f"Creating a wireless sensor network with {n_nodes} nodes")
     print(f"Creating a wireless sensor network with {n_nodes} nodes")
 
     # Create and set up network
@@ -334,6 +348,7 @@ def run_simulation(
     # Run some random transmissions
     print(f"\n{'-' * 50}")
     print("Running transmission simulations...")
+    logger.info(f"Running {transmission_tests} random transmission tests")
 
     successful_transmissions = 0
     total_delay = 0
@@ -458,10 +473,12 @@ def run_simulation(
             from src.visualization.visualization import visualize_network
 
             print("\nGenerating interactive network visualizations...")
+            logger.info("Generating interactive network visualizations")
             visualize_network(network, interactive=True)
         except ImportError as e:
             print(f"\nInteractive visualization module not available: {e}")
             print("Continuing without interactive visualizations.")
+            logger.warning(f"Interactive visualization module not available: {e}")
 
             print(
                 "To enable visualizations, you can manually install the packages (pip install -r requirements.txt)"
@@ -478,12 +495,15 @@ def run_simulation(
         except Exception as e:
             print(f"\nError in interactive visualization: {e}")
             print("Falling back to non-interactive visualizations.")
+            logger.error(f"Error in interactive visualization: {e}")
+            logger.info("Falling back to non-interactive visualizations")
             try:
                 from src.visualization.visualization import visualize_network
 
                 visualize_network(network, interactive=False)
             except Exception as e2:
                 print(f"Visualization failed: {e2}")
+                logger.error(f"Visualization failed: {e2}")
 
     return network
 
@@ -596,6 +616,7 @@ if __name__ == "__main__":
     ]:
         if not 0 <= value <= 1:
             print(f"Warning: {name} must be between 0 and 1. Using default value.")
+            logger.warning(f"Invalid {name} value: {value}, must be between 0 and 1. Using default value.")
             if name == "p_request":
                 p_request = 0.3
                 fixed_p_request = 0.3
@@ -636,9 +657,11 @@ if __name__ == "__main__":
             from src.visualization.visualization import visualize_network
 
             print("\nGenerating network visualizations...")
+            logger.info("Generating non-interactive network visualizations")
             visualize_network(network, interactive=False)
         except ImportError as e:
             print(f"\nVisualization module not available: {e}")
+            logger.error(f"Visualization module not available: {e}")
             print(
                 "Make sure you have all required packages installed (matplotlib, networkx)"
             )
@@ -649,8 +672,11 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"\nError in visualization: {e}")
             print("Visualization failed, but simulation completed successfully.")
+            logger.error(f"Error in visualization: {e}")
+            logger.info("Simulation completed successfully despite visualization failure")
 
     print("\nSimulation complete!")
+    logger.info("Simulation complete!")
     if not interactive_mode and not evaluation_mode:
         print("Visualization files are saved in the output/visualizations directory.")
     elif interactive_mode:
@@ -679,7 +705,7 @@ if __name__ == "__main__":
     )
     print("  --p-request=<float>       : Probability of packet request (default: 0.3)")
     print("  --p-fail=<float>          : Probability of link failure (default: 0.1)")
-    print("  --p-new=<float>           : Probability of new link (default: 0.1)")
+    print("  --p-new=<float>           : Probability of a new link (default: 0.1)")
     print(
         "  --delay=<float>           : Delay between time steps in seconds (default: 1.0)"
     )
@@ -704,3 +730,6 @@ if __name__ == "__main__":
                 plt.close("all")
             except:
                 pass
+            
+    # Final log message
+    logger.info("Simulation program terminated")
