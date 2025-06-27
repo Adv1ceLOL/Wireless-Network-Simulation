@@ -643,6 +643,8 @@ def get_network_data() -> Dict[str, Any]:
             'y': node.y,
             'transmission_range': node.transmission_range,
             'connections': len(node.connections),
+            'neighbors': list(node.connections.keys()),
+            'neighbor_delays': node.connections,
             'message_counts': {
                 'hello': getattr(node, 'hello_msg_count', 0),
                 'topology': getattr(node, 'topology_msg_count', 0),

@@ -494,8 +494,9 @@ input:checked + .toggle-slider:before {
 }
 
 .node.selected {
-    stroke: #3498db;
-    stroke-width: 3px;
+    stroke: #e74c3c !important;
+    stroke-width: 3px !important;
+    filter: drop-shadow(0 0 8px rgba(231, 76, 60, 0.6));
 }
 
 .node.source {
@@ -510,6 +511,12 @@ input:checked + .toggle-slider:before {
     fill: #f39c12;
 }
 
+.node.neighbor-highlighted {
+    stroke: #f39c12 !important;
+    stroke-width: 2px !important;
+    filter: drop-shadow(0 0 6px rgba(243, 156, 18, 0.5));
+}
+
 .link {
     stroke: #999;
     stroke-width: 2px;
@@ -520,6 +527,12 @@ input:checked + .toggle-slider:before {
     stroke: #3498db;
     stroke-width: 3px;
     opacity: 1;
+}
+
+.link.neighbor-link {
+    stroke: #f39c12 !important;
+    stroke-width: 2px !important;
+    opacity: 0.8 !important;
 }
 
 .node-label {
@@ -537,6 +550,220 @@ input:checked + .toggle-slider:before {
     stroke-width: 1px;
     stroke-dasharray: 5,5;
     opacity: 0.3;
+}
+
+/* Enhanced Node Information Display */
+.node-info-details {
+    padding: 10px 0;
+}
+
+.node-info-details h5 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 5px;
+}
+
+.info-section {
+    margin-bottom: 20px;
+}
+
+.info-section h6 {
+    color: #34495e;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border-left: 3px solid #3498db;
+}
+
+.info-label {
+    font-weight: 500;
+    color: #5a6c7d;
+    font-size: 0.85rem;
+}
+
+.info-value {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 0.85rem;
+}
+
+.message-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.stat-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 10px;
+    background: linear-gradient(90deg, #ecf0f1 0%, #bdc3c7 100%);
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.stat-bar.total {
+    background: linear-gradient(90deg, #3498db 0%, #2980b9 100%);
+    color: white;
+    margin-top: 5px;
+}
+
+.stat-label {
+    color: #5a6c7d;
+}
+
+.stat-bar.total .stat-label {
+    color: white;
+}
+
+.stat-value {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.stat-bar.total .stat-value {
+    color: white;
+}
+
+.btn-routing {
+    width: 100%;
+    background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-routing:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+}
+
+.node-panel {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Scrollbar styling for node panel */
+.node-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.node-panel::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.node-panel::-webkit-scrollbar-thumb {
+    background: #bdc3c7;
+    border-radius: 3px;
+}
+
+.node-panel::-webkit-scrollbar-thumb:hover {
+    background: #95a5a6;
+}
+
+/* Neighbors List Styling */
+.neighbors-list {
+    max-height: 120px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #f8f9fa;
+}
+
+.neighbor-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid #e9ecef;
+    font-size: 0.8rem;
+}
+
+.neighbor-item.clickable {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.neighbor-item.clickable:hover {
+    background: #3498db;
+    color: white;
+}
+
+.neighbor-item.clickable:hover .neighbor-id {
+    color: white;
+}
+
+.neighbor-item.clickable:hover .neighbor-delay {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.neighbor-id {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.neighbor-delay {
+    font-size: 0.75rem;
+    color: #6c757d;
+    background: #dee2e6;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.no-neighbors {
+    padding: 12px;
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+    font-size: 0.8rem;
+}
+
+/* Scrollbar for neighbors list */
+.neighbors-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.neighbors-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 2px;
+}
+
+.neighbors-list::-webkit-scrollbar-thumb {
+    background: #bdc3c7;
+    border-radius: 2px;
+}
+
+.neighbors-list::-webkit-scrollbar-thumb:hover {
+    background: #95a5a6;
+}
+
+.neighbor-item:last-child {
+    border-bottom: none;
 }
 
 /* Responsive Design */

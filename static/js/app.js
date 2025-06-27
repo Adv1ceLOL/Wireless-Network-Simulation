@@ -502,6 +502,17 @@ class NetworkSimulator {
         this.svg.selectAll('.transmission-range')
             .attr('cx', d => d.x)
             .attr('cy', d => d.y);
+        
+        // Update node information panel if a node is selected
+        if (this.selectedNodes.length > 0) {
+            const selectedNodeId = this.selectedNodes[0].id;
+            const updatedNode = this.networkData.nodes.find(n => n.id === selectedNodeId);
+            if (updatedNode) {
+                this.showNodeInfo(updatedNode);
+                // Maintain neighbor highlighting
+                this.highlightNeighbors(updatedNode);
+            }
+        }
     }
 
     showAlert(title, message, type = 'info') {
@@ -579,36 +590,154 @@ class NetworkSimulator {
     }
 
     selectNode(node) {
-        // Toggle node selection
-        const index = this.selectedNodes.findIndex(n => n.id === node.id);
-        if (index > -1) {
-            this.selectedNodes.splice(index, 1);
+        // Check if this node is already selected
+        const isAlreadySelected = this.selectedNodes.some(n => n.id === node.id);
+        
+        if (isAlreadySelected) {
+            // Deselect the current node
+            this.selectedNodes = [];
+            // Clear node info when deselecting
+            document.getElementById('nodeInfoContent').innerHTML = '<p>Click on a node to see details</p>';
+            // Clear neighbor highlighting
+            this.clearNeighborHighlighting();
+            this.log(`Node ${node.id} deselected`, 'info');
         } else {
-            this.selectedNodes.push(node);
+            // Clear any previously selected nodes and select this one
+            this.selectedNodes = [node];
+            // Show node info when selecting
+            this.showNodeInfo(node);
+            // Highlight neighbors
+            this.highlightNeighbors(node);
+            this.log(`Node ${node.id} selected`, 'info');
         }
         
         // Update visual selection
         this.svg.selectAll('.node')
             .classed('selected', d => this.selectedNodes.some(n => n.id === d.id));
+    }
+    
+    selectNodeById(nodeId) {
+        const node = this.networkData.nodes.find(n => n.id === nodeId);
+        if (node) {
+            // Clear current selection first
+            this.selectedNodes = [];
+            this.clearNeighborHighlighting();
+            
+            // Select the new node
+            this.selectNode(node);
+        }
+    }
+    
+    highlightNeighbors(selectedNode) {
+        // Clear any existing neighbor highlighting
+        this.clearNeighborHighlighting();
         
-        this.log(`Node ${node.id} ${index > -1 ? 'deselected' : 'selected'}`, 'info');
+        if (!selectedNode.neighbors) return;
+        
+        // Highlight neighbor nodes
+        this.svg.selectAll('.node')
+            .classed('neighbor-highlighted', d => 
+                selectedNode.neighbors.includes(d.id) && d.id !== selectedNode.id
+            );
+        
+        // Highlight links to neighbors
+        this.svg.selectAll('.link')
+            .classed('neighbor-link', d => {
+                return (d.source.id === selectedNode.id && selectedNode.neighbors.includes(d.target.id)) ||
+                       (d.target.id === selectedNode.id && selectedNode.neighbors.includes(d.source.id));
+            });
+    }
+    
+    clearNeighborHighlighting() {
+        this.svg.selectAll('.node').classed('neighbor-highlighted', false);
+        this.svg.selectAll('.link').classed('neighbor-link', false);
     }
     
     showNodeInfo(node) {
         const content = document.getElementById('nodeInfoContent');
+        
+        // Calculate total messages
+        const totalMessages = (node.message_counts?.hello || 0) + 
+                             (node.message_counts?.topology || 0) + 
+                             (node.message_counts?.route_discovery || 0) + 
+                             (node.message_counts?.data_packets || 0);
+        
+        // Format neighbors list
+        let neighborsHtml = '';
+        if (node.neighbors && node.neighbors.length > 0) {
+            neighborsHtml = node.neighbors.map(neighborId => {
+                const delay = node.neighbor_delays?.[neighborId]?.toFixed(2) || 'N/A';
+                return `<div class="neighbor-item clickable" onclick="simulator.selectNodeById(${neighborId})">
+                    <span class="neighbor-id">Node ${neighborId}</span>
+                    <span class="neighbor-delay">Delay: ${delay}</span>
+                </div>`;
+            }).join('');
+        } else {
+            neighborsHtml = '<div class="no-neighbors">No connected neighbors</div>';
+        }
+        
         content.innerHTML = `
-            <h5>Node ${node.id}</h5>
-            <p><strong>Position:</strong> (${node.x?.toFixed(2) || 0}, ${node.y?.toFixed(2) || 0})</p>
-            <p><strong>Transmission Range:</strong> ${node.transmission_range?.toFixed(2) || 0}</p>
-            <p><strong>Connections:</strong> ${node.connections || 0}</p>
-            <h6>Message Counts:</h6>
-            <ul>
-                <li>Hello Messages: ${node.message_counts?.hello || 0}</li>
-                <li>Topology Messages: ${node.message_counts?.topology || 0}</li>
-                <li>Route Discovery: ${node.message_counts?.route_discovery || 0}</li>
-                <li>Data Packets: ${node.message_counts?.data_packets || 0}</li>
-            </ul>
-            <button class="btn btn-small" onclick="simulator.getRoutingInfo([${node.id}])">Show Routing Info</button>
+            <div class="node-info-details">
+                <h5>🔌 Node ${node.id}</h5>
+                
+                <div class="info-section">
+                    <h6>📍 Location & Network</h6>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Position:</span>
+                            <span class="info-value">(${node.x?.toFixed(2) || 0}, ${node.y?.toFixed(2) || 0})</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Range:</span>
+                            <span class="info-value">${node.transmission_range?.toFixed(2) || 0}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Connections:</span>
+                            <span class="info-value">${node.connections || 0}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <h6>🔗 Connected Neighbors</h6>
+                    <div class="neighbors-list">
+                        ${neighborsHtml}
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <h6>📊 Message Statistics</h6>
+                    <div class="message-stats">
+                        <div class="stat-bar">
+                            <span class="stat-label">Hello Messages:</span>
+                            <span class="stat-value">${node.message_counts?.hello || 0}</span>
+                        </div>
+                        <div class="stat-bar">
+                            <span class="stat-label">Topology Messages:</span>
+                            <span class="stat-value">${node.message_counts?.topology || 0}</span>
+                        </div>
+                        <div class="stat-bar">
+                            <span class="stat-label">Route Discovery:</span>
+                            <span class="stat-value">${node.message_counts?.route_discovery || 0}</span>
+                        </div>
+                        <div class="stat-bar">
+                            <span class="stat-label">Data Packets:</span>
+                            <span class="stat-value">${node.message_counts?.data_packets || 0}</span>
+                        </div>
+                        <div class="stat-bar total">
+                            <span class="stat-label"><strong>Total Messages:</strong></span>
+                            <span class="stat-value"><strong>${totalMessages}</strong></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <h6>🔍 Actions</h6>
+                    <button class="btn btn-small btn-routing" onclick="simulator.getRoutingInfo([${node.id}])">
+                        📋 Show Routing Table
+                    </button>
+                </div>
+            </div>
         `;
     }
     
