@@ -1,0 +1,11 @@
+WIRELESS SENSOR NETWORK SIMULATOR - TEST REPORT
+======================================================================
+Tests run at: 2025-06-27 16:18:02
+Tests passed: 5/5 (100.0%)
+----------------------------------------------------------------------
+
+Network Creation: PASS [0.000s]
+Node Connections: PASS [0.000s]
+Distance Vector Protocol: PASS [0.087s]
+Message Transmission: PASS [0.000s]
+Network Reporting: PASS [0.001s]

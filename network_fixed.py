@@ -354,7 +354,7 @@ class SensorNetwork:
             if next_hop is None or next_hop in path:
                 if verbose:
                     print("No path found (routing table incomplete or loop detected).")
-                return None, float('inf')
+                return None, float('inf'), "No path found (routing table incomplete or loop detected)"
                 
             if verbose:
                 print(f"Node {current} forwards packet to Node {next_hop}")
@@ -368,7 +368,7 @@ class SensorNetwork:
             print(f"Path found: {' -> '.join(map(str, path))}")
             print(f"Total transmission delay: {total_delay:.4f} units")
             
-        return path, total_delay
+        return path, total_delay, None
     
     def run_distance_vector_protocol(self, max_iterations=20, verbose=False):
         """Run the proactive distance vector protocol until convergence or max iterations.

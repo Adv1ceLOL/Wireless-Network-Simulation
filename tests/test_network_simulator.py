@@ -150,7 +150,12 @@ class NetworkSimulatorTester:
                 target_id = random.randint(0, num_nodes-1)
                 
             message = f"Test message from {source_id} to {target_id}"
-            path, delay = self.network.simulate_message_transmission(source_id, target_id, message)
+            result = self.network.simulate_message_transmission(source_id, target_id, message)
+            # Unpack the result - handle both 2-tuple and 3-tuple returns
+            if len(result) == 3:
+                path, delay, _ = result
+            else:
+                path, delay = result
             
             if path:
                 success_count += 1

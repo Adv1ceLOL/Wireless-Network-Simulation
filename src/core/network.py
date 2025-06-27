@@ -371,34 +371,77 @@ class SensorNetwork:
         
         return totals
     
-    def simulate_message_transmission(self, source_id: int, target_id: int, message: str = "Test message", verbose: bool = True) -> Tuple[Optional[List[int]], float]:
-        """Simulate sending a message from source to target using current routing tables."""
+    def simulate_message_transmission(self, source_id: int, target_id: int, message: str = "Test message", verbose: bool = True) -> Tuple[List[int], float, Optional[str]]:
+        """Simulate sending a message from source to target using current routing tables.
+        
+        Args:
+            source_id: ID of the source node
+            target_id: ID of the target node
+            message: The message to send
+            verbose: Whether to print status messages
+            
+        Returns:
+            Tuple of (path, delay, error_reason)
+            - path: List of node IDs in the transmission path, or empty list if no path
+            - delay: Total transmission delay, or float('inf') if no path
+            - error_reason: String describing the error if path is empty, otherwise None
+        """
         if verbose:
             print(f"\nSimulating message transmission from Node {source_id} to Node {target_id}")
             print(f"Message: '{message}'")
+        
+        # Check if both nodes exist
+        if source_id >= len(self.nodes) or source_id < 0:
+            return [], float('inf'), f"Source node {source_id} does not exist"
+        if target_id >= len(self.nodes) or target_id < 0:
+            return [], float('inf'), f"Target node {target_id} does not exist"
+        
+        source_node = self.nodes[source_id]
+        target_node = self.nodes[target_id]
+        
+        # Check if target node is in source's routing table
+        if target_id not in source_node.routing_table:
+            return [], float('inf'), f"No route from node {source_id} to node {target_id} - nodes may be in different partitions"
             
         path: List[int] = []
         current: int = source_id
-        while current != target_id:
-            path.append(current)  # type: ignore
-            next_hop, _ = self.nodes[current].routing_table.get(target_id, (None, float('inf')))  # type: ignore
-            if next_hop is None or next_hop in path:
-                if verbose:
-                    print("No path found (routing table incomplete or loop detected).")
-                return None, float('inf')
-            
-            # Increment data packet count for the forwarding node
-            self.nodes[current].data_packet_count += 1  # type: ignore
-            
-            current = next_hop  # type: ignore
-        path.append(target_id)
-        total_delay: float = sum(self.nodes[path[i]].connections[path[i+1]] for i in range(len(path)-1))  # type: ignore
-        if verbose:
-            print(f"Path found: {' -> '.join(map(str, path))}")
-            print(f"Total transmission delay: {total_delay:.4f} units")
-            
-        return path, total_delay
         
+        try:
+            while current != target_id:
+                path.append(current)
+                
+                # Get next hop from routing table
+                if target_id not in self.nodes[current].routing_table:
+                    return [], float('inf'), f"Node {current} has no route to node {target_id} - network may be partitioned"
+                
+                next_hop, _ = self.nodes[current].routing_table.get(target_id, (None, float('inf')))
+                
+                if next_hop is None:
+                    return [], float('inf'), f"No path found from node {current} to target - routing table incomplete"
+                
+                if next_hop in path:
+                    return [], float('inf'), f"Routing loop detected at node {current} - invalid routing tables"
+                
+                # Increment data packet count for the forwarding node
+                self.nodes[current].data_packet_count += 1
+                current = next_hop
+                
+            path.append(target_id)
+            total_delay: float = sum(self.nodes[path[i]].connections[path[i+1]] for i in range(len(path)-1))
+            
+            if verbose:
+                print(f"Path found: {' -> '.join(map(str, path))}")
+                print(f"Total transmission delay: {total_delay:.4f} units")
+                
+            return path, total_delay, None
+            
+        except (KeyError, IndexError) as e:
+            # This can happen if a node or connection doesn't exist
+            error_msg = f"Error while finding path: {str(e)}"
+            if verbose:
+                print(error_msg)
+            return [], float('inf'), error_msg
+    
     def run_distance_vector_protocol(self, max_iterations: int = 20, verbose: bool = False) -> int:
         """Run the proactive distance vector protocol until convergence or max iterations.
         
@@ -496,13 +539,15 @@ class SensorNetwork:
         
         return None, float('inf')
     
-    def handle_topology_change(self, node_a_id: int, node_b_id: int, new_delay: Optional[float] = None, verbose: bool = False) -> int:
+    def handle_topology_change(self, node_a_id: int, node_b_id: int, new_delay: Optional[float] = None, 
+                           verbose: bool = False, auto_reconnect: bool = True) -> int:
         """Handle a topology change (link addition, removal, or delay change).
         
         Args:
             node_a_id, node_b_id: IDs of the nodes affected by the change
             new_delay: New delay value, or None to remove the connection
             verbose: Print detailed information during update
+            auto_reconnect: Whether to automatically reconnect isolated nodes
             
         Returns:
             Number of iterations to reconverge
@@ -519,6 +564,11 @@ class SensorNetwork:
             else:
                 print(f"\nUpdating connection between Node {node_a_id} and Node {node_b_id} to delay {new_delay:.4f}")
         
+        reconnection_info = None
+        
+        # Initialize reconnection info
+        reconnection_info = {'isolated_nodes': [], 'reconnections': []}
+        
         # Update the connection
         if new_delay is None:
             # Remove the connection
@@ -528,11 +578,16 @@ class SensorNetwork:
             if node_a_id in node_b.connections:  # type: ignore
                 del node_b.connections[node_a_id]  # type: ignore
                 node_b.update_needed = True  # type: ignore
-            # After removal, check connectivity and create a bridge if needed
-            if not self._is_network_fully_connected():
-                if verbose:
-                    print("Network is disconnected after link removal. Creating bridge link to restore connectivity.")
-                self._ensure_fully_connected_network()
+            
+            # Check if either node becomes isolated (has no connections)
+            isolated_nodes = []
+            if len(node_a.connections) == 0:  # type: ignore
+                isolated_nodes.append(node_a_id)
+            if len(node_b.connections) == 0:  # type: ignore
+                isolated_nodes.append(node_b_id)
+                
+            # Record isolated nodes without reconnecting them
+            reconnection_info = {'isolated_nodes': isolated_nodes, 'reconnections': []}
         else:
             # Add or update the connection
             node_a.connections[node_b_id] = new_delay  # type: ignore
@@ -541,4 +596,71 @@ class SensorNetwork:
             node_b.update_needed = True  # type: ignore
             
         # Re-run the distance vector protocol to update routing tables
-        return self.run_distance_vector_protocol(verbose=verbose)
+        iterations = self.run_distance_vector_protocol(verbose=verbose)
+        
+        # Return both iterations and reconnection info
+        if hasattr(self, '_last_reconnection_info'):
+            self._last_reconnection_info = reconnection_info
+        else:
+            self._last_reconnection_info = reconnection_info
+            
+        return iterations
+    
+    def _reconnect_isolated_nodes(self, isolated_nodes: List[int], verbose: bool = False) -> Optional[Dict]:
+        """Reconnect isolated nodes to the network.
+        
+        Args:
+            isolated_nodes: List of node IDs that have become isolated
+            verbose: Print detailed information
+            
+        Returns:
+            Dictionary with reconnection information, or None if no reconnection needed
+        """
+        if not isolated_nodes:
+            return None
+            
+        reconnections = []
+        
+        for isolated_node_id in isolated_nodes:
+            if verbose:
+                print(f"Node {isolated_node_id} is isolated, finding nearest node to reconnect...")
+                
+            isolated_node = self.get_node_by_id(isolated_node_id)
+            if not isolated_node:
+                continue
+                
+            # Find the nearest connected node
+            min_distance = float('inf')
+            best_target_id = None
+            
+            for potential_target in self.nodes:
+                if potential_target.node_id == isolated_node_id:  # type: ignore
+                    continue
+                if len(potential_target.connections) == 0:  # type: ignore
+                    continue  # Skip other isolated nodes
+                    
+                distance = isolated_node.distance_to(potential_target)  # type: ignore
+                if distance < min_distance:
+                    min_distance = distance
+                    best_target_id = potential_target.node_id  # type: ignore
+                    
+            if best_target_id is not None:
+                # Create reconnection
+                delay = random.uniform(0.1, 1.0)
+                target_node = self.get_node_by_id(best_target_id)
+                
+                if target_node:
+                    isolated_node.add_connection(best_target_id, delay)  # type: ignore
+                    target_node.add_connection(isolated_node_id, delay)  # type: ignore
+                    
+                    reconnections.append({
+                        'isolated_node': isolated_node_id,
+                        'connected_to': best_target_id,
+                        'delay': delay,
+                        'distance': min_distance
+                    })
+                    
+                    if verbose:
+                        print(f"Reconnected isolated Node {isolated_node_id} to Node {best_target_id} (distance: {min_distance:.2f}, delay: {delay:.3f})")
+        
+        return {'reconnections': reconnections} if reconnections else None

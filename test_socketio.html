@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket.IO Test</title>
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Socket.IO Connection Test</h1>
+    <div id="status">Connecting...</div>
+    <button id="testCreate">Test Create Network</button>
+    <div id="log"></div>
+
+    <script>
+        const socket = io();
+        const statusDiv = document.getElementById('status');
+        const logDiv = document.getElementById('log');
+        const testButton = document.getElementById('testCreate');
+
+        function log(message) {
+            console.log(message);
+            logDiv.innerHTML += '<div>' + new Date().toISOString() + ': ' + message + '</div>';
+        }
+
+        socket.on('connect', () => {
+            statusDiv.textContent = 'Connected';
+            statusDiv.style.color = 'green';
+            log('Socket.IO connected successfully');
+        });
+
+        socket.on('disconnect', () => {
+            statusDiv.textContent = 'Disconnected';
+            statusDiv.style.color = 'red';
+            log('Socket.IO disconnected');
+        });
+
+        socket.on('connect_error', (error) => {
+            statusDiv.textContent = 'Connection Error';
+            statusDiv.style.color = 'red';
+            log('Connection error: ' + error.message);
+        });
+
+        socket.on('network_created', (data) => {
+            log('Network created response received: ' + JSON.stringify(data));
+        });
+
+        socket.on('error', (data) => {
+            log('Error received: ' + JSON.stringify(data));
+        });
+
+        testButton.addEventListener('click', () => {
+            log('Sending create_network event...');
+            const params = {
+                n_nodes: 5,
+                area_size: 10,
+                p_request: 0.3,
+                p_fail: 0.1,
+                p_new: 0.1
+            };
+            
+            socket.emit('create_network', { params });
+            log('Event sent with params: ' + JSON.stringify(params));
+        });
+    </script>
+</body>
+</html>

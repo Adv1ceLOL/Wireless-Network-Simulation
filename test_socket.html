@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Socket.IO</title>
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Socket.IO Test</h1>
+    <div id="status">Connecting...</div>
+    <button id="testBtn">Test Create Network</button>
+    <div id="log"></div>
+
+    <script>
+        const socket = io();
+        const status = document.getElementById('status');
+        const log = document.getElementById('log');
+        
+        socket.on('connect', () => {
+            status.textContent = 'Connected!';
+            console.log('Connected to server');
+        });
+        
+        socket.on('disconnect', () => {
+            status.textContent = 'Disconnected';
+            console.log('Disconnected from server');
+        });
+        
+        socket.on('network_created', (data) => {
+            console.log('Network created:', data);
+            log.innerHTML += '<p>Network created: ' + data.message + '</p>';
+        });
+        
+        socket.on('error', (data) => {
+            console.log('Error:', data);
+            log.innerHTML += '<p style="color: red;">Error: ' + data.message + '</p>';
+        });
+        
+        document.getElementById('testBtn').addEventListener('click', () => {
+            console.log('Sending create_network request...');
+            socket.emit('create_network', {
+                params: {
+                    n_nodes: 5,
+                    area_size: 10,
+                    p_request: 0.3,
+                    p_fail: 0.1,
+                    p_new: 0.1
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireless Sensor Network Simulator - Web Console</title>
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div id="app" class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🌐 Wireless Sensor Network Simulator</h1>
+            <div class="connection-status">
+                <span id="connectionStatus" class="status-indicator">●</span>
+                <span id="connectionText">Connecting...</span>
+            </div>
+        </header>
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <!-- Network Creation Panel -->
+            <div class="panel network-panel">
+                <h3>🏗️ Network Configuration</h3>
+                <div class="form-group">
+                    <label for="nodeCount">Nodes:</label>
+                    <input type="number" id="nodeCount" value="10" min="3" max="50">
+                </div>
+                <div class="form-group">
+                    <label for="areaSize">Area Size:</label>
+                    <input type="number" id="areaSize" value="10" min="5" max="20">
+                </div>
+                <button id="createNetwork" class="btn btn-primary">Create Network</button>
+            </div>
+
+            <!-- Simulation Control Panel -->
+            <div class="panel simulation-panel">
+                <h3>⚡ Simulation Controls</h3>
+                <div class="simulation-params">
+                    <div class="form-group">
+                        <label for="pRequest">P(Request):</label>
+                        <input type="number" id="pRequest" value="0.3" min="0" max="1" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="pFail">P(Fail):</label>
+                        <input type="number" id="pFail" value="0.1" min="0" max="1" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="pNew">P(New):</label>
+                        <input type="number" id="pNew" value="0.1" min="0" max="1" step="0.1">
+                    </div>
+                </div>
+                <div class="control-buttons">
+                    <button id="stepSimulation" class="btn btn-success">Step Forward</button>
+                    <button id="autoPlay" class="btn btn-warning">Auto Play</button>
+                    <button id="stopAutoPlay" class="btn btn-danger" disabled>Stop Auto</button>
+                </div>
+            </div>
+
+            <!-- Navigation Panel -->
+            <div class="panel navigation-panel">
+                <h3>🧭 Step Navigation</h3>
+                <div class="navigation-info">
+                    <span>Step: <span id="currentStep">0</span> / <span id="maxSteps">0</span></span>
+                </div>
+                <div class="navigation-controls">
+                    <button id="firstStep" class="btn btn-nav">⏮️</button>
+                    <button id="prevStep" class="btn btn-nav">⏪</button>
+                    <button id="nextStep" class="btn btn-nav">⏩</button>
+                    <button id="lastStep" class="btn btn-nav">⏭️</button>
+                </div>
+                <div class="form-group">
+                    <label for="gotoStep">Go to step:</label>
+                    <input type="number" id="gotoStep" min="0" value="0">
+                    <button id="gotoStepBtn" class="btn btn-small">Go</button>
+                </div>
+            </div>
+
+            <!-- Topology Control Panel -->
+            <div class="panel topology-panel">
+                <h3>🔗 Topology Controls</h3>
+                <div class="form-group">
+                    <label for="nodeA">Node A:</label>
+                    <select id="nodeA"></select>
+                </div>
+                <div class="form-group">
+                    <label for="nodeB">Node B:</label>
+                    <select id="nodeB"></select>
+                </div>
+                <div class="form-group">
+                    <label for="linkDelay">Link Delay:</label>
+                    <input type="number" id="linkDelay" value="1.0" min="0.1" step="0.1">
+                </div>
+                <div class="topology-buttons">
+                    <button id="addLink" class="btn btn-success">Add Link</button>
+                    <button id="removeLink" class="btn btn-danger">Remove Link</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Visualization Area -->
+            <div class="visualization-area">
+                <h3>📊 Network Visualization</h3>
+                <div class="visualization-controls">
+                    <button id="zoomIn" class="btn btn-small">🔍+</button>
+                    <button id="zoomOut" class="btn btn-small">🔍-</button>
+                    <button id="resetZoom" class="btn btn-small">↺</button>
+                    <label>
+                        <input type="checkbox" id="showLabels" checked> Show Labels
+                    </label>
+                    <label>
+                        <input type="checkbox" id="showRanges"> Show Ranges
+                    </label>
+                </div>
+                <svg id="networkVisualization" width="800" height="600"></svg>
+            </div>
+
+            <!-- Information Panels -->
+            <div class="info-panels">
+                <!-- Statistics Panel -->
+                <div class="info-panel stats-panel">
+                    <h4>📈 Statistics</h4>
+                    <div id="statisticsContent">
+                        <div class="stat-item">
+                            <span class="stat-label">Requests:</span>
+                            <span class="stat-value" id="statRequests">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Successful:</span>
+                            <span class="stat-value" id="statSuccessful">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Failed:</span>
+                            <span class="stat-value" id="statFailed">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Success Rate:</span>
+                            <span class="stat-value" id="statSuccessRate">0%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Avg Delay:</span>
+                            <span class="stat-value" id="statAvgDelay">0.000</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Links Added:</span>
+                            <span class="stat-value" id="statLinksAdded">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Links Removed:</span>
+                            <span class="stat-value" id="statLinksRemoved">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Node Information Panel -->
+                <div class="info-panel node-panel">
+                    <h4>🔍 Node Information</h4>
+                    <div id="nodeInfoContent">
+                        <p>Click on a node to see details</p>
+                    </div>
+                </div>
+
+                <!-- Event Log Panel -->
+                <div class="info-panel log-panel">
+                    <h4>📝 Event Log</h4>
+                    <div id="eventLog" class="event-log">
+                        <div class="log-entry">Simulation ready. Create a network to begin.</div>
+                    </div>
+                    <button id="clearLog" class="btn btn-small">Clear Log</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Export Panel -->
+        <div class="export-panel">
+            <h3>💾 Export & Reports</h3>
+            <div class="export-buttons">
+                <button id="exportJSON" class="btn btn-secondary">Export JSON</button>
+                <button id="exportReport" class="btn btn-secondary">Generate Report</button>
+                <button id="exportImage" class="btn btn-secondary">Export Image</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Routing Information -->
+    <div id="routingModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Routing Information</h3>
+            <div id="routingContent"></div>
+        </div>
+    </div>
+
+    <!-- Modal for Export Preview -->
+    <div id="exportModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Export Data</h3>
+            <div id="exportContent"></div>
+            <div class="modal-actions">
+                <button id="downloadExport" class="btn btn-primary">Download</button>
+                <button id="closeExportModal" class="btn btn-secondary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
