@@ -501,7 +501,8 @@ class NetworkSimulator {
         // Update transmission range positions if they exist
         this.svg.selectAll('.transmission-range')
             .attr('cx', d => d.x)
-            .attr('cy', d => d.y);
+            .attr('cy', d => d.y)
+            .attr('r', d => d.transmission_range * this.scaleX);
         
         // Update node information panel if a node is selected
         if (this.selectedNodes.length > 0) {
@@ -511,6 +512,9 @@ class NetworkSimulator {
                 this.showNodeInfo(updatedNode);
                 // Maintain neighbor highlighting
                 this.highlightNeighbors(updatedNode);
+                // Maintain transmission range highlighting
+                this.svg.selectAll('.transmission-range')
+                    .classed('selected', d => d.id === selectedNodeId);
             }
         }
     }
@@ -614,6 +618,10 @@ class NetworkSimulator {
         // Update visual selection
         this.svg.selectAll('.node')
             .classed('selected', d => this.selectedNodes.some(n => n.id === d.id));
+        
+        // Update transmission range selection
+        this.svg.selectAll('.transmission-range')
+            .classed('selected', d => this.selectedNodes.some(n => n.id === d.id));
     }
     
     selectNodeById(nodeId) {
@@ -651,6 +659,7 @@ class NetworkSimulator {
     clearNeighborHighlighting() {
         this.svg.selectAll('.node').classed('neighbor-highlighted', false);
         this.svg.selectAll('.link').classed('neighbor-link', false);
+        this.svg.selectAll('.transmission-range').classed('selected', false);
     }
     
     showNodeInfo(node) {
@@ -866,19 +875,33 @@ class NetworkSimulator {
     
     toggleTransmissionRanges(show) {
         if (show) {
+            // Ensure we have up-to-date node data with correct positions
+            const nodes = this.networkData.nodes.map(d => {
+                const position = this.nodePositions.get(d.id);
+                return position ? { ...d, x: position.x, y: position.y } : d;
+            });
+            
             const ranges = this.svg.select('.transmission-ranges')
                 .selectAll('.transmission-range')
-                .data(this.networkData.nodes, d => d.id);
+                .data(nodes, d => d.id);
             
             ranges.enter()
                 .append('circle')
                 .attr('class', 'transmission-range')
-                .attr('r', d => d.transmission_range * 30) // Scale for visualization
+                .attr('cx', d => d.x)
+                .attr('cy', d => d.y)
+                .attr('r', d => d.transmission_range * this.scaleX) // Use same scale as nodes
                 .style('fill', 'none')
                 .style('stroke', '#3498db')
                 .style('stroke-width', 1)
                 .style('stroke-dasharray', '5,5')
                 .style('opacity', 0.3);
+            
+            // Update existing ranges
+            ranges
+                .attr('cx', d => d.x)
+                .attr('cy', d => d.y)
+                .attr('r', d => d.transmission_range * this.scaleX);
         } else {
             this.svg.selectAll('.transmission-range').remove();
         }

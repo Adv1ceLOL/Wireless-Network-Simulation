@@ -552,6 +552,14 @@ input:checked + .toggle-slider:before {
     opacity: 0.3;
 }
 
+/* Transmission range highlighting */
+.transmission-range.selected {
+    stroke: #e74c3c !important;
+    stroke-width: 2px !important;
+    opacity: 0.6 !important;
+    filter: drop-shadow(0 0 6px rgba(231, 76, 60, 0.4));
+}
+
 /* Enhanced Node Information Display */
 .node-info-details {
     padding: 10px 0;

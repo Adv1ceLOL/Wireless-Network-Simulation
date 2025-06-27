@@ -384,6 +384,24 @@ def handle_modify_topology(data):
             return
             
         if action == 'add_link':
+            # Validate that nodes are within transmission range
+            node_a_obj = simulation.network.get_node_by_id(node_a)
+            node_b_obj = simulation.network.get_node_by_id(node_b)
+            
+            if not node_a_obj or not node_b_obj:
+                emit('app_error', {'message': f'Node {node_a} or {node_b} not found'})
+                return
+                
+            # Check if nodes can reach each other (bidirectional check)
+            if not (node_a_obj.can_reach(node_b_obj) and node_b_obj.can_reach(node_a_obj)):
+                distance = node_a_obj.distance_to(node_b_obj)
+                max_range = max(node_a_obj.transmission_range, node_b_obj.transmission_range)
+                emit('app_error', {
+                    'message': f'Cannot create link: Nodes {node_a} and {node_b} are out of range\n'
+                              f'Distance: {distance:.2f}, Max range: {max_range:.2f}'
+                })
+                return
+            
             iterations = simulation.network.handle_topology_change(
                 node_a, node_b, new_delay=delay, verbose=False
             )
@@ -567,7 +585,11 @@ def execute_simulation_step() -> Dict[str, Any]:
         for i in range(n_nodes):
             for j in range(i + 1, n_nodes):
                 if j not in simulation.network.nodes[i].connections:
-                    unconnected_pairs.append((i, j))
+                    # Only add pairs that are within transmission range
+                    node_i = simulation.network.nodes[i]
+                    node_j = simulation.network.nodes[j]
+                    if node_i.can_reach(node_j) and node_j.can_reach(node_i):
+                        unconnected_pairs.append((i, j))
                     
         if unconnected_pairs:
             node_a_id, node_b_id = random.choice(unconnected_pairs)
