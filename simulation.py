@@ -1,57 +1,59 @@
-from src.core.network import SensorNetwork
-from src.reporting.report_network import generate_network_report
-from src.core.evaluation import run_evaluation
+from typing import Dict, List, Tuple, Union, Optional, Any, cast
+from src.core.network import SensorNetwork  # type: ignore
+from src.reporting.report_network import generate_network_report  # type: ignore
+from src.core.evaluation import run_evaluation  # type: ignore
 import random
 import os
 import platform
 import time
 import logging
+import argparse
 
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
 )
-logger = logging.getLogger('wireless_network_sim')
+logger: logging.Logger = logging.getLogger('wireless_network_sim')
 
 # Add these functions to count messages
-def get_hello_msg_count(network: SensorNetwork):
+def get_hello_msg_count(network: SensorNetwork) -> int:
     """Count all hello messages across all nodes"""
-    count = 0
-    for node in network.nodes:
+    count: int = 0
+    for node in network.nodes:  # type: ignore
         # Adding a default of 0 if the attribute doesn't exist
-        count += getattr(node, "hello_msg_count", 0)
+        count += getattr(node, "hello_msg_count", 0)  # type: ignore
     return count
 
 
-def get_topology_msg_count(network):
+def get_topology_msg_count(network: SensorNetwork) -> int:
     """Count all topology discovery messages across all nodes"""
-    count = 0
-    for node in network.nodes:
+    count: int = 0
+    for node in network.nodes:  # type: ignore
         # Adding a default of 0 if the attribute doesn't exist
-        count += getattr(node, "topology_msg_count", 0)
+        count += getattr(node, "topology_msg_count", 0)  # type: ignore
     return count
 
 
-def get_route_discovery_msg_count(network):
+def get_route_discovery_msg_count(network: SensorNetwork) -> int:
     """Count all route discovery control packets across all nodes"""
-    count = 0
-    for node in network.nodes:
+    count: int = 0
+    for node in network.nodes:  # type: ignore
         # Adding a default of 0 if the attribute doesn't exist
-        count += getattr(node, "route_discovery_msg_count", 0)
+        count += getattr(node, "route_discovery_msg_count", 0)  # type: ignore
     return count
 
 
-def get_data_packet_count(network):
+def get_data_packet_count(network: SensorNetwork) -> int:
     """Count all data packets forwarded across all nodes"""
-    count = 0
-    for node in network.nodes:
+    count: int = 0
+    for node in network.nodes:  # type: ignore
         # Adding a default of 0 if the attribute doesn't exist
-        count += getattr(node, "data_packet_count", 0)
+        count += getattr(node, "data_packet_count", 0)  # type: ignore
     return count
 
 
-def get_total_message_count(network):
+def get_total_message_count(network: SensorNetwork) -> int:
     """Get the total of all message types"""
     return (
         get_hello_msg_count(network)
@@ -62,15 +64,15 @@ def get_total_message_count(network):
 
 
 def run_dynamic_scenario(
-    network,
-    time_steps=20,
-    p_request=0.3,
-    p_fail=0.1,
-    p_new=0.1,
-    interactive=False,
-    delay_between_steps=1.0,
-    verbose=True,
-):
+    network: SensorNetwork,
+    time_steps: int = 20,
+    p_request: float = 0.3,
+    p_fail: float = 0.1,
+    p_new: float = 0.1,
+    interactive: bool = False,
+    delay_between_steps: float = 1.0,
+    verbose: bool = True,
+) -> Dict[str, Any]:
     """Run a dynamic scenario simulation with probabilistic events.
 
     Args:
@@ -98,7 +100,7 @@ def run_dynamic_scenario(
         logger.info(f"Starting dynamic scenario simulation - Time steps: {time_steps}, P(request): {p_request}, P(fail): {p_fail}, P(new): {p_new}")
 
     # Statistics tracking
-    stats = {
+    stats: Dict[str, Any] = {
         "requests": 0,
         "successful_transmissions": 0,
         "failed_transmissions": 0,
@@ -109,15 +111,15 @@ def run_dynamic_scenario(
         "events_by_step": [],
     }
 
-    n_nodes = len(network.nodes)
+    n_nodes: int = len(network.nodes)  # type: ignore
 
     # Run the protocol initially to ensure routing tables are built
-    initial_iterations = network.run_distance_vector_protocol(verbose=verbose)
+    initial_iterations: int = network.run_distance_vector_protocol(verbose=verbose)  # type: ignore
     if verbose:
         logger.info(f"Initial protocol convergence: {initial_iterations} iterations")
     # Simulate time steps
     for t in range(time_steps):
-        step_events = {"step": t + 1, "events": []}
+        step_events: Dict[str, Any] = {"step": t + 1, "events": []}
 
         if verbose:
             print(f"\n--- Time Step {t+1}/{time_steps} ---")
@@ -125,23 +127,26 @@ def run_dynamic_scenario(
 
         # 1. Hello message exchange
         # Increment hello message counters for each node based on its connections
-        for node in network.nodes:
+        for node in network.nodes:  # type: ignore
             # Each node sends one hello message to each of its neighbors
-            hello_msgs = len(node.connections)
-            node.hello_msg_count += hello_msgs
+            hello_msgs: int = len(node.connections)  # type: ignore
+            node.hello_msg_count += hello_msgs  # type: ignore
 
         # 2. Randomly remove links with probability p_fail
-        if random.random() < p_fail and len(network.get_all_links()) > 0:
+        if random.random() < p_fail and len(network.get_all_links()) > 0:  # type: ignore
             # Select a random existing link
-            links = network.get_all_links()
+            links: List[Tuple[int, int, float]] = network.get_all_links()  # type: ignore
             if links:
+                node_a_id: int
+                node_b_id: int
+                _: float
                 node_a_id, node_b_id, _ = random.choice(links)
                 if verbose:
                     logger.warning(
                         f"[Step] Link failure: Connection between Node {node_a_id} and Node {node_b_id} disappeared"
                     )
                 # Remove the link
-                iterations = network.handle_topology_change(
+                iterations: int = network.handle_topology_change(  # type: ignore
                     node_a_id, node_b_id, new_delay=None, verbose=verbose
                 )
                 stats["links_removed"] += 1
@@ -152,24 +157,26 @@ def run_dynamic_scenario(
         # 2. Randomly add new links with probability p_new
         if random.random() < p_new:
             # Find nodes that aren't connected
-            unconnected_pairs = []
+            unconnected_pairs: List[Tuple[int, int]] = []
             for i in range(n_nodes):
                 for j in range(i + 1, n_nodes):
-                    if j not in network.nodes[i].connections:
+                    if j not in network.nodes[i].connections:  # type: ignore
                         # Check if they're within range
-                        node_a = network.nodes[i]
-                        node_b = network.nodes[j]
-                        if node_a.can_reach(node_b) or node_b.can_reach(node_a):
+                        node_a = network.nodes[i]  # type: ignore
+                        node_b = network.nodes[j]  # type: ignore
+                        if node_a.can_reach(node_b) or node_b.can_reach(node_a):  # type: ignore
                             unconnected_pairs.append((i, j))
             if unconnected_pairs:
+                node_a_id: int
+                node_b_id: int
                 node_a_id, node_b_id = random.choice(unconnected_pairs)
-                delay = random.uniform(0.1, 1.0)
+                delay: float = random.uniform(0.1, 1.0)
                 if verbose:
                     logger.info(
                         f"[Step] New link: Connection established between Node {node_a_id} and Node {node_b_id} with delay {delay:.4f}"
                     )
                 # Add the link
-                iterations = network.handle_topology_change(
+                iterations: int = network.handle_topology_change(  # type: ignore
                     node_a_id, node_b_id, new_delay=delay, verbose=verbose
                 )
                 stats["links_added"] += 1
@@ -179,16 +186,18 @@ def run_dynamic_scenario(
                     logger.debug(f"[Step] Protocol reconverged after {iterations} iterations")
         # 3. Process random packet requests with probability p_request
         if random.random() < p_request:
-            source_id = random.randint(0, n_nodes - 1)
-            dest_id = random.randint(0, n_nodes - 1)
+            source_id: int = random.randint(0, n_nodes - 1)
+            dest_id: int = random.randint(0, n_nodes - 1)
             while dest_id == source_id:
                 dest_id = random.randint(0, n_nodes - 1)
-            message = f"Packet at t={t+1}"
+            message: str = f"Packet at t={t+1}"
             if verbose:
                 logger.info(f"[Step] Packet request: Node {source_id} → Node {dest_id}")
-            path, delay = network.simulate_message_transmission(
+            result = network.simulate_message_transmission(  # type: ignore
                 source_id, dest_id, message, verbose=verbose
             )
+            path: Optional[List[int]] = cast(Optional[List[int]], result[0])
+            delay: float = cast(float, result[1])
             stats["requests"] += 1
             if path:
                 stats["successful_transmissions"] += 1
@@ -207,9 +216,9 @@ def run_dynamic_scenario(
         # Visualize the network state if in interactive mode
         if interactive:
             try:
-                from src.visualization.visualization import visualize_network
+                from src.visualization.visualization import visualize_network  # type: ignore
 
-                visualize_network(
+                visualize_network(  # type: ignore
                     network,
                     interactive=True,
                     clear_previous=True,
@@ -273,17 +282,17 @@ def run_dynamic_scenario(
 
 
 def run_simulation(
-    n_nodes=10,
-    area_size=10,
-    transmission_tests=3,
-    interactive=False,
-    dynamic_scenario=False,
-    time_steps=20,
-    p_request=0.3,
-    p_fail=0.1,
-    p_new=0.1,
-    delay_between_steps=1.0,
-):
+    n_nodes: int = 10,
+    area_size: int = 10,
+    transmission_tests: int = 3,
+    interactive: bool = False,
+    dynamic_scenario: bool = False,
+    time_steps: int = 20,
+    p_request: float = 0.3,
+    p_fail: float = 0.1,
+    p_new: float = 0.1,
+    delay_between_steps: float = 1.0,
+) -> Union[SensorNetwork, Dict[str, Any]]:
     """Run a wireless sensor network simulation.
 
     Args:
@@ -310,7 +319,7 @@ def run_simulation(
 
     # Create and set up network
     network: SensorNetwork = SensorNetwork()
-    network.create_random_network(n_nodes, area_size)
+    network.create_random_network(n_nodes, area_size)  # type: ignore
 
     # If running dynamic scenario, hand off to that function
     if dynamic_scenario:
@@ -325,16 +334,16 @@ def run_simulation(
         )
 
     print("Running proactive distance vector protocol for network discovery...")
-    iterations = network.run_distance_vector_protocol(verbose=True)
+    iterations: int = network.run_distance_vector_protocol(verbose=True)  # type: ignore
     print(f"Protocol converged after {iterations} iterations")
 
     # Print network information
-    print(f"\nNetwork created with {len(network.nodes)} nodes:")
-    for node in network.nodes:
+    print(f"\nNetwork created with {len(network.nodes)} nodes:")  # type: ignore
+    for node in network.nodes:  # type: ignore
         print(f"  {node}")
-        neighbors = [
+        neighbors: List[str] = [
             f"Node {n_id} (delay: {delay:.3f})"
-            for n_id, delay in node.connections.items()
+            for n_id, delay in node.connections.items()  # type: ignore
         ]
         if neighbors:
             print(f"    Connected to: {', '.join(neighbors)}")
@@ -344,19 +353,21 @@ def run_simulation(
     print("Running transmission simulations...")
     logger.info(f"Running {transmission_tests} random transmission tests")
 
-    successful_transmissions = 0
-    total_delay = 0
+    successful_transmissions: int = 0
+    total_delay: float = 0
 
     for i in range(transmission_tests):
-        source_id = random.randint(0, n_nodes - 1)
-        target_id = random.randint(0, n_nodes - 1)
+        source_id: int = random.randint(0, n_nodes - 1)
+        target_id: int = random.randint(0, n_nodes - 1)
         while target_id == source_id:
             target_id = random.randint(0, n_nodes - 1)
 
-        message = f"Test message {i+1}"
-        path, delay = network.simulate_message_transmission(
+        message: str = f"Test message {i+1}"
+        result = network.simulate_message_transmission(  # type: ignore
             source_id, target_id, message
         )
+        path: Optional[List[int]] = cast(Optional[List[int]], result[0])
+        delay: float = cast(float, result[1])
 
         if path:
             successful_transmissions += 1
@@ -370,19 +381,24 @@ def run_simulation(
         )
 
         # Choose two random nodes with a connection
-        connected_pairs = []
+        connected_pairs: List[Tuple[int, int]] = []
         for i in range(n_nodes):
             for j in range(i + 1, n_nodes):
-                if j in network.nodes[i].connections:
+                if j in network.nodes[i].connections:  # type: ignore
                     connected_pairs.append((i, j))
 
         if connected_pairs:
             # Remove a random connection
+            node_a: int
+            node_b: int
             node_a, node_b = random.choice(connected_pairs)
             print(f"\nRemoving connection between Node {node_a} and Node {node_b}")
 
             # Store routing info before change for comparison
-            path_before, delay_before = network._find_shortest_path(node_a, node_b)
+            # Note: Using protected method for demonstration - in production use public methods
+            path_result_before = network._find_shortest_path(node_a, node_b)  # type: ignore
+            path_before: Optional[List[int]] = cast(Optional[List[int]], path_result_before[0])
+            delay_before: float = path_result_before[1]
             if path_before:
                 print(
                     f"Before change - Path from {node_a} to {node_b}: {' -> '.join(map(str, path_before))}"
@@ -391,13 +407,15 @@ def run_simulation(
 
             # Apply the topology change
             print("\nApplying topology change and running distance vector protocol...")
-            reconverge_iterations = network.handle_topology_change(
+            reconverge_iterations: int = network.handle_topology_change(  # type: ignore
                 node_a, node_b, new_delay=None, verbose=False
             )
             print(f"Protocol reconverged after {reconverge_iterations} iterations")
 
             # Check the new routing
-            path_after, delay_after = network._find_shortest_path(node_a, node_b)
+            path_result_after = network._find_shortest_path(node_a, node_b)  # type: ignore
+            path_after: Optional[List[int]] = cast(Optional[List[int]], path_result_after[0])
+            delay_after: float = path_result_after[1]
             if path_after:
                 print(
                     f"After change - Path from {node_a} to {node_b}: {' -> '.join(map(str, path_after))}"
@@ -407,7 +425,7 @@ def run_simulation(
                 print(f"After change - No path available from {node_a} to {node_b}")
 
             # Run a test transmission with changed topology
-            network.simulate_message_transmission(
+            network.simulate_message_transmission(  # type: ignore
                 node_a, node_b, "Test after topology change"
             )
 
@@ -415,15 +433,17 @@ def run_simulation(
             print(
                 f"\nAdding new connection between Node {node_a} and Node {node_b} with different delay"
             )
-            new_delay = random.uniform(0.1, 2.0)
+            new_delay: float = random.uniform(0.1, 2.0)
             print(f"New delay: {new_delay:.4f}")
-            reconverge_iterations = network.handle_topology_change(
+            reconverge_iterations = network.handle_topology_change(  # type: ignore
                 node_a, node_b, new_delay=new_delay, verbose=False
             )
             print(f"Protocol reconverged after {reconverge_iterations} iterations")
 
             # Check the final routing
-            path_final, delay_final = network._find_shortest_path(node_a, node_b)
+            path_result_final = network._find_shortest_path(node_a, node_b)  # type: ignore
+            path_final: Optional[List[int]] = cast(Optional[List[int]], path_result_final[0])
+            delay_final: float = path_result_final[1]
             if path_final:
                 print(
                     f"Final path from {node_a} to {node_b}: {' -> '.join(map(str, path_final))}"
@@ -431,7 +451,7 @@ def run_simulation(
                 print(f"Final delay: {delay_final:.4f}")
 
             # Run a test transmission with restored topology
-            network.simulate_message_transmission(
+            network.simulate_message_transmission(  # type: ignore
                 node_a, node_b, "Test after restoring connection"
             )
 
@@ -459,16 +479,16 @@ def run_simulation(
     report_dir = os.path.join("output", "reports")
     os.makedirs(report_dir, exist_ok=True)
     report_file = os.path.join(report_dir, "network_report.txt")
-    generate_network_report(network, output_file=report_file)
+    generate_network_report(network, output_file=report_file)  # type: ignore
 
     # Handle visualization
     if interactive:
         try:
-            from src.visualization.visualization import visualize_network
+            from src.visualization.visualization import visualize_network  # type: ignore
 
             print("\nGenerating interactive network visualizations...")
             logger.info("Generating interactive network visualizations")
-            visualize_network(network, interactive=True)
+            visualize_network(network, interactive=True)  # type: ignore
         except ImportError as e:
             print(f"\nInteractive visualization module not available: {e}")
             print("Continuing without interactive visualizations.")
@@ -492,9 +512,9 @@ def run_simulation(
             logger.error(f"Error in interactive visualization: {e}")
             logger.info("Falling back to non-interactive visualizations")
             try:
-                from src.visualization.visualization import visualize_network
+                from src.visualization.visualization import visualize_network  # type: ignore
 
-                visualize_network(network, interactive=False)
+                visualize_network(network, interactive=False)  # type: ignore
             except Exception as e2:
                 print(f"Visualization failed: {e2}")
                 logger.error(f"Visualization failed: {e2}")
@@ -504,9 +524,8 @@ def run_simulation(
 
 if __name__ == "__main__":
     # Check for command line arguments
-    import argparse
 
-    parser = argparse.ArgumentParser(description="Wireless Sensor Network Simulation")
+    parser: argparse.ArgumentParser = argparse.ArgumentParser(description="Wireless Sensor Network Simulation")
     # Mode selection arguments
     parser.add_argument(
         "--interactive",
@@ -581,25 +600,25 @@ if __name__ == "__main__":
         help="Maximum probability for random parameters (default: 0.3)",
     )
 
-    args = parser.parse_args()
+    args: argparse.Namespace = parser.parse_args()
 
     # Extract arguments
-    interactive_mode = args.interactive
-    dynamic_scenario = args.dynamic
-    evaluation_mode = args.evaluation
+    interactive_mode: bool = args.interactive
+    dynamic_scenario: bool = args.dynamic
+    evaluation_mode: bool = args.evaluation
 
-    n_nodes = args.nodes
-    time_steps = args.time_steps
-    p_request = args.p_request
-    p_fail = args.p_fail
-    p_new = args.p_new
-    delay_between_steps = args.delay
+    n_nodes: int = args.nodes
+    time_steps: int = args.time_steps
+    p_request: float = args.p_request
+    p_fail: float = args.p_fail
+    p_new: float = args.p_new
+    delay_between_steps: float = args.delay
 
     # Evaluation mode parameters
-    n_topologies = args.topologies
-    iterations_per_topology = args.iterations
-    max_probability = args.max_prob
-    fixed_p_request = p_request  # Use the same p_request for evaluation mode
+    n_topologies: int = args.topologies
+    iterations_per_topology: int = args.iterations
+    max_probability: float = args.max_prob
+    fixed_p_request: float = p_request  # Use the same p_request for evaluation mode
 
     # Validate probability values
     for name, value in [
@@ -622,10 +641,11 @@ if __name__ == "__main__":
                 max_probability = 0.3
 
     # Run the simulation based on selected mode
-    network = None  # Ensure network is always defined (to avoid UnboundLocalError after)
+    network: Optional[SensorNetwork] = None  # Ensure network is always defined (to avoid UnboundLocalError after)
+    simulation_result: Union[SensorNetwork, Dict[str, Any], None] = None
     if evaluation_mode:
         # Run the evaluation mode
-        results = run_evaluation(
+        results: Dict[str, Any] = run_evaluation(  # type: ignore
             n_topologies=n_topologies,
             iterations_per_topology=iterations_per_topology,
             max_probability=max_probability,
@@ -635,7 +655,7 @@ if __name__ == "__main__":
         )
     else:
         # Run the standard simulation
-        network = run_simulation(
+        simulation_result = run_simulation(
             n_nodes=n_nodes,
             transmission_tests=5,
             interactive=interactive_mode,
@@ -646,14 +666,17 @@ if __name__ == "__main__":
             p_new=p_new,
             delay_between_steps=delay_between_steps,
         )
+        # If it's a dynamic scenario, simulation_result is a dict, otherwise it's a SensorNetwork
+        if isinstance(simulation_result, SensorNetwork):
+            network = simulation_result
     # Generate visualizations in non-interactive mode if not already done
     if not dynamic_scenario and not interactive_mode and network is not None:
         try:
-            from src.visualization.visualization import visualize_network
+            from src.visualization.visualization import visualize_network  # type: ignore
 
             print("\nGenerating network visualizations...")
             logger.info("Generating non-interactive network visualizations")
-            visualize_network(network, interactive=False)
+            visualize_network(network, interactive=False)  # type: ignore
         except ImportError as e:
             print(f"\nVisualization module not available: {e}")
             logger.error(f"Visualization module not available: {e}")
