@@ -1,4 +1,4 @@
-from typing import Dict, List, Tuple, Union, Optional, Any, cast
+from typing import Dict, List, Tuple, Union, Optional, Any
 from src.core.network import SensorNetwork  # type: ignore
 from src.reporting.report_network import generate_network_report  # type: ignore
 from src.core.evaluation import run_evaluation  # type: ignore
@@ -196,8 +196,8 @@ def run_dynamic_scenario(
             result = network.simulate_message_transmission(  # type: ignore
                 source_id, dest_id, message, verbose=verbose
             )
-            path: Optional[List[int]] = cast(Optional[List[int]], result[0])
-            delay: float = cast(float, result[1])
+            path: Optional[List[int]] = result[0]
+            delay: float = result[1]
             stats["requests"] += 1
             if path:
                 stats["successful_transmissions"] += 1
@@ -366,8 +366,8 @@ def run_simulation(
         result = network.simulate_message_transmission(  # type: ignore
             source_id, target_id, message
         )
-        path: Optional[List[int]] = cast(Optional[List[int]], result[0])
-        delay: float = cast(float, result[1])
+        path: Optional[List[int]] = result[0]
+        delay: float = result[1]
 
         if path:
             successful_transmissions += 1
@@ -397,7 +397,7 @@ def run_simulation(
             # Store routing info before change for comparison
             # Note: Using protected method for demonstration - in production use public methods
             path_result_before = network._find_shortest_path(node_a, node_b)  # type: ignore
-            path_before: Optional[List[int]] = cast(Optional[List[int]], path_result_before[0])
+            path_before: Optional[List[int]] = path_result_before[0]
             delay_before: float = path_result_before[1]
             if path_before:
                 print(
@@ -414,7 +414,7 @@ def run_simulation(
 
             # Check the new routing
             path_result_after = network._find_shortest_path(node_a, node_b)  # type: ignore
-            path_after: Optional[List[int]] = cast(Optional[List[int]], path_result_after[0])
+            path_after: Optional[List[int]] = path_result_after[0]
             delay_after: float = path_result_after[1]
             if path_after:
                 print(
@@ -442,7 +442,7 @@ def run_simulation(
 
             # Check the final routing
             path_result_final = network._find_shortest_path(node_a, node_b)  # type: ignore
-            path_final: Optional[List[int]] = cast(Optional[List[int]], path_result_final[0])
+            path_final: Optional[List[int]] = path_result_final[0]
             delay_final: float = path_result_final[1]
             if path_final:
                 print(
