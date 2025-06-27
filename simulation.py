@@ -1,13 +1,7 @@
 from src.core.network import SensorNetwork
 from src.reporting.report_network import generate_network_report
-from src.visualization.visualization import (
-    visualize_network_matplotlib,
-    visualize_network_networkx,
-    visualize_adjacency_list,
-)
-from src.core.evaluation import run_evaluation, get_protocol_efficiency
+from src.core.evaluation import run_evaluation
 import random
-import sys
 import os
 import platform
 import time
@@ -21,7 +15,7 @@ logging.basicConfig(
 logger = logging.getLogger('wireless_network_sim')
 
 # Add these functions to count messages
-def get_hello_msg_count(network):
+def get_hello_msg_count(network: SensorNetwork):
     """Count all hello messages across all nodes"""
     count = 0
     for node in network.nodes:
@@ -95,7 +89,7 @@ def run_dynamic_scenario(
     if verbose:
         # Main simulation header is important info for the user
         print(f"\n{'='*70}")
-        print(f"DYNAMIC SCENARIO SIMULATION")
+        print("DYNAMIC SCENARIO SIMULATION")
         print(
             f"Time steps: {time_steps}, P(request): {p_request}, P(fail): {p_fail}, P(new): {p_new}"
         )
@@ -266,7 +260,7 @@ def run_dynamic_scenario(
         )
 
         # Display message counters
-        print(f"\nMessage Exchange Counters:")
+        print("\nMessage Exchange Counters:")
         print(f"  Hello Messages: {get_hello_msg_count(network)}")
         print(f"  Topology Discovery Messages: {get_topology_msg_count(network)}")
         print(
@@ -306,7 +300,7 @@ def run_simulation(
     """
     # Main simulation header remains as print statement for user visibility
     print(f"\n{'='*70}")
-    print(f"WIRELESS SENSOR NETWORK SIMULATION")
+    print("WIRELESS SENSOR NETWORK SIMULATION")
     print(f"Platform: {platform.system()} {platform.release()}")
     print(f"{'='*70}\n")
     
@@ -315,7 +309,7 @@ def run_simulation(
     print(f"Creating a wireless sensor network with {n_nodes} nodes")
 
     # Create and set up network
-    network = SensorNetwork()
+    network: SensorNetwork = SensorNetwork()
     network.create_random_network(n_nodes, area_size)
 
     # If running dynamic scenario, hand off to that function
@@ -451,7 +445,7 @@ def run_simulation(
     print(f"  Success rate: {successful_transmissions/transmission_tests:.1%}")
 
     # Print message counters
-    print(f"\nMessage Exchange Counters:")
+    print("\nMessage Exchange Counters:")
     print(f"  Hello Messages: {get_hello_msg_count(network)}")
     print(f"  Topology Discovery Messages: {get_topology_msg_count(network)}")
     print(
@@ -628,6 +622,7 @@ if __name__ == "__main__":
                 max_probability = 0.3
 
     # Run the simulation based on selected mode
+    network = None  # Ensure network is always defined (to avoid UnboundLocalError after)
     if evaluation_mode:
         # Run the evaluation mode
         results = run_evaluation(
@@ -652,7 +647,7 @@ if __name__ == "__main__":
             delay_between_steps=delay_between_steps,
         )
     # Generate visualizations in non-interactive mode if not already done
-    if not evaluation_mode and not dynamic_scenario and not interactive_mode:
+    if not dynamic_scenario and not interactive_mode and network is not None:
         try:
             from src.visualization.visualization import visualize_network
 
@@ -728,7 +723,7 @@ if __name__ == "__main__":
                 import matplotlib.pyplot as plt
 
                 plt.close("all")
-            except:
+            except Exception:
                 pass
             
     # Final log message
