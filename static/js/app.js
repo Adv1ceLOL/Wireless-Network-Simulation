@@ -136,6 +136,13 @@ class NetworkSimulator {
             this.log(data.message, 'error');
             this.showAlert('Error', data.message, 'error');
         });
+        
+        // Add event handler for parameter updates
+        this.socket.on('parameters_updated', (data) => {
+            if (data.success) {
+                this.log(`Parameters updated: P(Request)=${data.parameters.p_request}, P(Fail)=${data.parameters.p_fail}, P(New)=${data.parameters.p_new}`, 'info');
+            }
+        });
     }
     
     initUI() {
@@ -195,6 +202,19 @@ class NetworkSimulator {
         
         document.getElementById('stopAutoPlay').addEventListener('click', () => {
             this.stopAutoPlay();
+        });
+        
+        // Parameter change events
+        document.getElementById('pRequest').addEventListener('change', () => {
+            this.updateParameters();
+        });
+        
+        document.getElementById('pFail').addEventListener('change', () => {
+            this.updateParameters();
+        });
+        
+        document.getElementById('pNew').addEventListener('change', () => {
+            this.updateParameters();
         });
         
         // Navigation controls
@@ -311,7 +331,15 @@ class NetworkSimulator {
     }
     
     stepSimulation() {
-        this.socket.emit('step_simulation');
+        // Get current parameter values from UI
+        const params = {
+            p_request: parseFloat(document.getElementById('pRequest').value),
+            p_fail: parseFloat(document.getElementById('pFail').value),
+            p_new: parseFloat(document.getElementById('pNew').value)
+        };
+        
+        // Send current parameters with step request
+        this.socket.emit('step_simulation', { params });
     }
     
     navigate(direction, step = null) {
@@ -334,8 +362,15 @@ class NetworkSimulator {
     }
     
     startAutoPlay() {
+        // Get current parameter values from UI to ensure auto play steps use current values
+        const params = {
+            p_request: parseFloat(document.getElementById('pRequest').value),
+            p_fail: parseFloat(document.getElementById('pFail').value),
+            p_new: parseFloat(document.getElementById('pNew').value)
+        };
+        
         const delay = 1.0; // Could be made configurable
-        this.socket.emit('start_auto_play', { delay });
+        this.socket.emit('start_auto_play', { delay, params });
     }
     
     stopAutoPlay() {
@@ -955,6 +990,17 @@ class NetworkSimulator {
     clearLog() {
         document.getElementById('eventLog').innerHTML = '';
         this.log('Log cleared', 'info');
+    }
+    
+    updateParameters() {
+        const params = {
+            p_request: parseFloat(document.getElementById('pRequest').value),
+            p_fail: parseFloat(document.getElementById('pFail').value),
+            p_new: parseFloat(document.getElementById('pNew').value)
+        };
+        
+        this.socket.emit('update_parameters', { params });
+        console.log('Emitted update_parameters event with params:', params);
     }
 }
 

@@ -588,10 +588,10 @@ class SensorNetwork:
                 
             # Record isolated nodes without reconnecting them
             reconnection_info = {'isolated_nodes': isolated_nodes, 'reconnections': []}
-        else:
-            # Add or update the connection - validate transmission range first
-            if not (node_a.can_reach(node_b) and node_b.can_reach(node_a)):  # type: ignore
-                # Don't add the connection if nodes are out of range
+        else:            # Add or update the connection - validate transmission range first
+            # Fix: Allow link creation if either node can reach the other (OR condition)
+            if not (node_a.can_reach(node_b) or node_b.can_reach(node_a)):  # type: ignore
+                # Don't add the connection if neither node can reach the other
                 # Return 0 iterations since no change was made
                 return 0
                 

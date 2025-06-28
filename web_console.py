@@ -147,6 +147,7 @@ class SimulationState:
             }
         return routing_tables
 
+    
     def _get_message_counts(self) -> Dict[int, Dict[str, int]]:
         """Get message counts for all nodes."""
         if not self.network:
@@ -309,13 +310,53 @@ def handle_create_network(data: Dict[str, Any]) -> None:
         logger.error(f"Error creating network: {str(e)}", exc_info=True)
         emit('app_error', {'message': f'Error creating network: {str(e)}'})
 
+@socketio.on('update_parameters')
+def handle_update_parameters(data: Dict[str, Any]) -> None:
+    """Update simulation parameters without recreating the network."""
+    try:
+        params: Dict[str, Any] = data.get('params', {})
+        logger.info(f"Updating simulation parameters: {params}")
+        
+        # Update only the probability parameters, not network structure parameters
+        if 'p_request' in params:
+            simulation.simulation_params['p_request'] = params['p_request']
+        if 'p_fail' in params:
+            simulation.simulation_params['p_fail'] = params['p_fail']
+        if 'p_new' in params:
+            simulation.simulation_params['p_new'] = params['p_new']
+        if 'time_steps' in params:
+            simulation.simulation_params['time_steps'] = params['time_steps']
+            
+        logger.info(f"Updated simulation parameters: {simulation.simulation_params}")
+        
+        emit('parameters_updated', {
+            'success': True,
+            'message': 'Simulation parameters updated',
+            'parameters': simulation.simulation_params
+        })
+        
+    except Exception as e:
+        logger.error(f"Error updating parameters: {str(e)}", exc_info=True)
+        emit('app_error', {'message': f'Error updating parameters: {str(e)}'})
+
 @socketio.on('step_simulation')
-def handle_step_simulation():
-    """Execute one simulation step."""
+def handle_step_simulation(data: Optional[Dict[str, Any]] = None):
+    """Execute one simulation step with current parameters."""
     try:
         if not simulation.network:
             emit('app_error', {'message': 'No network created'})
             return
+            
+        # If parameters are provided with the step request, update them first
+        if data and 'params' in data:
+            params = data['params']
+            logger.info(f"Updating parameters for step: {params}")
+            if 'p_request' in params:
+                simulation.simulation_params['p_request'] = params['p_request']
+            if 'p_fail' in params:
+                simulation.simulation_params['p_fail'] = params['p_fail']
+            if 'p_new' in params:
+                simulation.simulation_params['p_new'] = params['p_new']
             
         # Execute one step of the dynamic simulation
         result = execute_simulation_step()
@@ -391,10 +432,14 @@ def handle_modify_topology(data):
             if not node_a_obj or not node_b_obj:
                 emit('app_error', {'message': f'Node {node_a} or {node_b} not found'})
                 return
-                
-            # Check if nodes can reach each other (bidirectional check)
-            if not (node_a_obj.can_reach(node_b_obj) and node_b_obj.can_reach(node_a_obj)):
-                distance = node_a_obj.distance_to(node_b_obj)
+                  # Check if at least one node can reach the other
+            distance = node_a_obj.distance_to(node_b_obj)
+            
+            # Fix: Allow link creation if distance is less than or equal to at least one node's range
+            if distance <= node_a_obj.transmission_range or distance <= node_b_obj.transmission_range:
+                # At least one node can reach the other, allow link creation
+                pass
+            else:
                 max_range = max(node_a_obj.transmission_range, node_b_obj.transmission_range)
                 emit('app_error', {
                     'message': f'Cannot create link: Nodes {node_a} and {node_b} are out of range\n'
@@ -419,13 +464,14 @@ def handle_modify_topology(data):
             simulation.statistics['links_removed'] += 1
             simulation.statistics['reconvergence_iterations'] += iterations
             message = f"Link removed: {node_a} <-> {node_b}"
-            
-            # Check if any nodes were isolated and report but don't prevent
+              # Check if any nodes were isolated and report but don't prevent
             reconnection_info = getattr(simulation.network, '_last_reconnection_info', None)
             if reconnection_info and reconnection_info.get('isolated_nodes'):
                 isolated_nodes = reconnection_info.get('isolated_nodes', [])
                 if isolated_nodes:
                     message += f"\nWarning: Node(s) {', '.join(map(str, isolated_nodes))} became isolated"
+                    # Add a note suggesting reconnection for isolated nodes
+                    message += "\nSuggestion: Consider adding new links to reconnect isolated nodes"
         else:
             emit('app_error', {'message': 'Invalid topology action'})
             return
@@ -490,6 +536,17 @@ def handle_start_auto_play(data):
     try:
         simulation.auto_play = True
         simulation.auto_play_delay = data.get('delay', 1.0)
+        
+        # Update parameters if provided
+        if 'params' in data:
+            params = data['params']
+            if 'p_request' in params:
+                simulation.simulation_params['p_request'] = params['p_request']
+            if 'p_fail' in params:
+                simulation.simulation_params['p_fail'] = params['p_fail']
+            if 'p_new' in params:
+                simulation.simulation_params['p_new'] = params['p_new']
+            logger.info(f"Updated parameters for auto-play: {simulation.simulation_params}")
         
         def auto_play_thread():
             while simulation.auto_play and simulation.network:
@@ -575,22 +632,44 @@ def execute_simulation_step() -> Dict[str, Any]:
     n_nodes = len(simulation.network.nodes)
     max_possible_links = (n_nodes * (n_nodes - 1)) // 2  # Maximum possible undirected links
     current_links = len(links)
-    
-    # The more connected the network is, the lower the probability of adding new links
+      # The more connected the network is, the lower the probability of adding new links
     # to balance with link removal over time
     effective_p_new = simulation.simulation_params['p_new'] * ((max_possible_links - current_links) / max_possible_links)
     
-    if random.random() < effective_p_new:
-        unconnected_pairs = []
-        for i in range(n_nodes):
-            for j in range(i + 1, n_nodes):
-                if j not in simulation.network.nodes[i].connections:
-                    # Only add pairs that are within transmission range
-                    node_i = simulation.network.nodes[i]
+    # Find isolated nodes (nodes with no connections)
+    isolated_nodes = [i for i, node in enumerate(simulation.network.nodes) if len(node.connections) == 0]
+    
+    # Increase the probability if there are isolated nodes to prioritize reconnection
+    if isolated_nodes:
+        effective_p_new = max(effective_p_new, 0.5)  # Ensure higher probability for reconnection
+    
+    if random.random() < effective_p_new or isolated_nodes:  # Always try to add links if there are isolated nodes
+        prioritized_pairs = []
+        regular_pairs = []
+        
+        # First check for pairs involving isolated nodes
+        for isolated_node_id in isolated_nodes:
+            node_i = simulation.network.nodes[isolated_node_id]
+            for j in range(n_nodes):
+                if isolated_node_id != j:
                     node_j = simulation.network.nodes[j]
-                    if node_i.can_reach(node_j) and node_j.can_reach(node_i):
-                        unconnected_pairs.append((i, j))
-                    
+                    # Only add pairs that are within transmission range
+                    if node_i.can_reach(node_j) or node_j.can_reach(node_i):
+                        prioritized_pairs.append((isolated_node_id, j))
+        
+        # Only check regular pairs if no prioritized pairs found
+        if not prioritized_pairs:
+            for i in range(n_nodes):
+                for j in range(i + 1, n_nodes):
+                    if j not in simulation.network.nodes[i].connections:
+                        node_i = simulation.network.nodes[i]
+                        node_j = simulation.network.nodes[j]
+                        # Only add pairs that are within transmission range
+                        if node_i.can_reach(node_j) or node_j.can_reach(node_i):
+                            regular_pairs.append((i, j))
+          # Choose pairs from prioritized list if available, otherwise from regular list
+        unconnected_pairs = prioritized_pairs if prioritized_pairs else regular_pairs
+        
         if unconnected_pairs:
             node_a_id, node_b_id = random.choice(unconnected_pairs)
             delay = random.uniform(0.1, 1.0)
@@ -599,7 +678,11 @@ def execute_simulation_step() -> Dict[str, Any]:
             )
             simulation.statistics['links_added'] += 1
             simulation.statistics['reconvergence_iterations'] += iterations
-            step_events.append(f"Link added: {node_a_id}-{node_b_id} (p={effective_p_new:.3f})")
+            
+            # Indicate if this was a priority reconnection for an isolated node
+            was_isolated = node_a_id in isolated_nodes or node_b_id in isolated_nodes
+            priority_msg = " (priority reconnection)" if was_isolated else f" (p={effective_p_new:.3f})"
+            step_events.append(f"Link added: {node_a_id}-{node_b_id}{priority_msg}")
             
     # 4. Random packet request
     if random.random() < simulation.simulation_params['p_request']:
@@ -659,6 +742,7 @@ def get_network_data() -> Dict[str, Any]:
         
     nodes = []
     for node in simulation.network.nodes:
+        is_isolated = len(node.connections) == 0
         nodes.append({
             'id': node.node_id,
             'x': node.x,
@@ -667,6 +751,7 @@ def get_network_data() -> Dict[str, Any]:
             'connections': len(node.connections),
             'neighbors': list(node.connections.keys()),
             'neighbor_delays': node.connections,
+            'is_isolated': is_isolated,
             'message_counts': {
                 'hello': getattr(node, 'hello_msg_count', 0),
                 'topology': getattr(node, 'topology_msg_count', 0),
