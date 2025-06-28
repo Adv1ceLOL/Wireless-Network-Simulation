@@ -113,10 +113,10 @@ def run_evaluation_scenario(network, time_steps=5, p_request=0.3, p_fail=0.1, p_
             for i in range(n_nodes):
                 for j in range(i+1, n_nodes):
                     if j not in network.nodes[i].connections:
-                        # Check if they're within range
+                        # Check if they're mutually within range
                         node_a = network.nodes[i]
                         node_b = network.nodes[j]
-                        if node_a.can_reach(node_b) or node_b.can_reach(node_a):
+                        if node_a.can_reach(node_b) and node_b.can_reach(node_a):
                             unconnected_pairs.append((i, j))
             if unconnected_pairs:                
                 node_a_id, node_b_id = random.choice(unconnected_pairs)

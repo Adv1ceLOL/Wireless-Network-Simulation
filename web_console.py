@@ -435,15 +435,14 @@ def handle_modify_topology(data):
                   # Check if at least one node can reach the other
             distance = node_a_obj.distance_to(node_b_obj)
             
-            # Fix: Allow link creation if distance is less than or equal to at least one node's range
-            if distance <= node_a_obj.transmission_range or distance <= node_b_obj.transmission_range:
-                # At least one node can reach the other, allow link creation
+            # Only allow link creation if both nodes can reach each other
+            if distance <= node_a_obj.transmission_range and distance <= node_b_obj.transmission_range:
+                # Both nodes can reach each other, allow link creation
                 pass
             else:
-                max_range = max(node_a_obj.transmission_range, node_b_obj.transmission_range)
                 emit('app_error', {
-                    'message': f'Cannot create link: Nodes {node_a} and {node_b} are out of range\n'
-                              f'Distance: {distance:.2f}, Max range: {max_range:.2f}'
+                    'message': f'Cannot create link: Nodes {node_a} and {node_b} are not mutually reachable\n'
+                              f'Distance: {distance:.2f}, Both nodes need range ≥ {distance:.2f}, Available ranges: {node_a_obj.transmission_range:.2f}, {node_b_obj.transmission_range:.2f}'
                 })
                 return
             
@@ -653,8 +652,8 @@ def execute_simulation_step() -> Dict[str, Any]:
             for j in range(n_nodes):
                 if isolated_node_id != j:
                     node_j = simulation.network.nodes[j]
-                    # Only add pairs that are within transmission range
-                    if node_i.can_reach(node_j) or node_j.can_reach(node_i):
+                    # Only add pairs that are mutually within transmission range
+                    if node_i.can_reach(node_j) and node_j.can_reach(node_i):
                         prioritized_pairs.append((isolated_node_id, j))
         
         # Only check regular pairs if no prioritized pairs found
@@ -664,8 +663,8 @@ def execute_simulation_step() -> Dict[str, Any]:
                     if j not in simulation.network.nodes[i].connections:
                         node_i = simulation.network.nodes[i]
                         node_j = simulation.network.nodes[j]
-                        # Only add pairs that are within transmission range
-                        if node_i.can_reach(node_j) or node_j.can_reach(node_i):
+                        # Only add pairs that are mutually within transmission range
+                        if node_i.can_reach(node_j) and node_j.can_reach(node_i):
                             regular_pairs.append((i, j))
           # Choose pairs from prioritized list if available, otherwise from regular list
         unconnected_pairs = prioritized_pairs if prioritized_pairs else regular_pairs

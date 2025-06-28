@@ -161,10 +161,10 @@ def run_dynamic_scenario(
             for i in range(n_nodes):
                 for j in range(i + 1, n_nodes):
                     if j not in network.nodes[i].connections:  # type: ignore
-                        # Check if they're within range
+                        # Check if they're mutually within range
                         node_a = network.nodes[i]  # type: ignore
                         node_b = network.nodes[j]  # type: ignore
-                        if node_a.can_reach(node_b) or node_b.can_reach(node_a):  # type: ignore
+                        if node_a.can_reach(node_b) and node_b.can_reach(node_a):  # type: ignore
                             unconnected_pairs.append((i, j))
             if unconnected_pairs:
                 node_a_id: int

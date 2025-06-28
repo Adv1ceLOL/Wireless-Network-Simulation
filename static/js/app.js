@@ -61,6 +61,9 @@ class NetworkSimulator {
                 this.updateNodeSelects();
                 this.updateStatistics(data.statistics);
                 this.log(data.message, 'success');
+                
+                // Refresh transmission ranges if they are being shown
+                this.refreshTransmissionRangesIfVisible();
             } else {
                 this.log('Failed to create network', 'error');
             }
@@ -538,6 +541,9 @@ class NetworkSimulator {
             .attr('cx', d => d.x)
             .attr('cy', d => d.y)
             .attr('r', d => d.transmission_range * this.scaleX);
+            
+        // Refresh transmission ranges if they are visible
+        this.refreshTransmissionRangesIfVisible();
         
         // Update node information panel if a node is selected
         if (this.selectedNodes.length > 0) {
@@ -909,6 +915,9 @@ class NetworkSimulator {
     }
     
     toggleTransmissionRanges(show) {
+        // First remove all existing transmission ranges to avoid duplicates
+        this.svg.selectAll('.transmission-range').remove();
+        
         if (show) {
             // Ensure we have up-to-date node data with correct positions
             const nodes = this.networkData.nodes.map(d => {
@@ -931,14 +940,23 @@ class NetworkSimulator {
                 .style('stroke-width', 1)
                 .style('stroke-dasharray', '5,5')
                 .style('opacity', 0.3);
-            
-            // Update existing ranges
-            ranges
-                .attr('cx', d => d.x)
-                .attr('cy', d => d.y)
-                .attr('r', d => d.transmission_range * this.scaleX);
-        } else {
-            this.svg.selectAll('.transmission-range').remove();
+                
+            // Highlight transmission range of selected node if any
+            if (this.selectedNodes.length > 0) {
+                const selectedNodeId = this.selectedNodes[0].id;
+                this.svg.selectAll('.transmission-range')
+                    .classed('selected', d => d.id === selectedNodeId);
+            }
+        }
+    }
+    
+    // Helper method to refresh transmission ranges if visible
+    refreshTransmissionRangesIfVisible() {
+        const showRangesCheckbox = document.getElementById('showRanges');
+        if (showRangesCheckbox && showRangesCheckbox.checked) {
+            // Toggle off and on to refresh the ranges
+            this.toggleTransmissionRanges(false);
+            this.toggleTransmissionRanges(true);
         }
     }
     
