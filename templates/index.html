@@ -6,6 +6,7 @@
     <title>Wireless Sensor Network Simulator - Web Console</title>
     <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -18,38 +19,69 @@
                 <span id="connectionText">Connecting...</span>
             </div>
         </header>
+        
+        <!-- Tutorial Section -->
+        <div class="tutorial-section" id="tutorialSection">
+            <h4><i class="fas fa-lightbulb"></i> Welcome to the Wireless Sensor Network Simulator</h4>
+            <p class="tutorial-text">This simulator allows you to create and study wireless sensor networks. Get started by creating a network in the left panel, then use the simulation controls to observe the network's behavior over time. Click on nodes for detailed information.</p>
+            <div class="tutorial-controls">
+                <div class="tutorial-nav">
+                    <button id="nextTutorialStep" class="btn btn-small">Next Tip</button>
+                </div>
+                <span class="dismiss-tutorial" id="dismissTutorial">Dismiss Tutorial</span>
+            </div>
+        </div>
 
         <!-- Control Panel -->
         <div class="control-panel">
             <!-- Network Creation Panel -->
             <div class="panel network-panel">
-                <h3>🏗️ Network Configuration</h3>
+                <div class="panel-header-with-info">
+                    <h3>🏗️ Network Configuration</h3>
+                    <div class="tooltip">
+                        <span class="help-icon">?</span>
+                        <span class="tooltiptext">Create your network here by specifying the number of nodes and the area size.</span>
+                    </div>
+                </div>
+                <p class="panel-description">Define the basic parameters of your wireless sensor network.</p>
                 <div class="form-group">
-                    <label for="nodeCount">Nodes:</label>
+                    <label for="nodeCount">Number of Nodes:</label>
                     <input type="number" id="nodeCount" value="10" min="3" max="50">
+                    <small>How many sensor nodes to create (3-50)</small>
                 </div>
                 <div class="form-group">
-                    <label for="areaSize">Area Size:</label>
+                    <label for="areaSize">Area Size (units):</label>
                     <input type="number" id="areaSize" value="10" min="5" max="20">
+                    <small>Size of the simulation area (5-20)</small>
                 </div>
                 <button id="createNetwork" class="btn btn-primary">Create Network</button>
             </div>
 
             <!-- Simulation Control Panel -->
             <div class="panel simulation-panel">
-                <h3>⚡ Simulation Controls</h3>
+                <div class="panel-header-with-info">
+                    <h3>⚡ Simulation Controls</h3>
+                    <div class="tooltip">
+                        <span class="help-icon">?</span>
+                        <span class="tooltiptext">Control simulation behavior with these parameters and advance through the simulation steps.</span>
+                    </div>
+                </div>
+                <p class="panel-description">Define event probabilities and control simulation flow.</p>
                 <div class="simulation-params">
                     <div class="form-group">
                         <label for="pRequest">P(Request):</label>
                         <input type="number" id="pRequest" value="0.3" min="0" max="1" step="0.1">
+                        <small>Probability of request generation</small>
                     </div>
                     <div class="form-group">
                         <label for="pFail">P(Fail):</label>
                         <input type="number" id="pFail" value="0.1" min="0" max="1" step="0.1">
+                        <small>Probability of node failure</small>
                     </div>
                     <div class="form-group">
                         <label for="pNew">P(New):</label>
                         <input type="number" id="pNew" value="0.1" min="0" max="1" step="0.1">
+                        <small>Probability of new node</small>
                     </div>
                 </div>
                 <div class="control-buttons">
@@ -61,37 +93,54 @@
 
             <!-- Navigation Panel -->
             <div class="panel navigation-panel">
-                <h3>🧭 Step Navigation</h3>
+                <div class="panel-header-with-info">
+                    <h3>🧭 Step Navigation</h3>
+                    <div class="tooltip">
+                        <span class="help-icon">?</span>
+                        <span class="tooltiptext">Navigate through simulation steps using these controls. You can go forward, backward, or jump to a specific step.</span>
+                    </div>
+                </div>
+                <p class="panel-description">Navigate through the timeline of your simulation.</p>
                 <div class="navigation-info">
-                    <span>Step: <span id="currentStep">0</span> / <span id="maxSteps">0</span></span>
+                    <span>Current Step: <span id="currentStep">0</span> / <span id="maxSteps">0</span></span>
                 </div>
                 <div class="navigation-controls">
-                    <button id="firstStep" class="btn btn-nav">⏮️</button>
-                    <button id="prevStep" class="btn btn-nav">⏪</button>
-                    <button id="nextStep" class="btn btn-nav">⏩</button>
-                    <button id="lastStep" class="btn btn-nav">⏭️</button>
+                    <button id="firstStep" class="btn btn-nav" title="Go to first step">⏮️</button>
+                    <button id="prevStep" class="btn btn-nav" title="Previous step">⏪</button>
+                    <button id="nextStep" class="btn btn-nav" title="Next step">⏩</button>
+                    <button id="lastStep" class="btn btn-nav" title="Go to last step">⏭️</button>
                 </div>
                 <div class="form-group">
-                    <label for="gotoStep">Go to step:</label>
-                    <input type="number" id="gotoStep" min="0" value="0">
-                    <button id="gotoStepBtn" class="btn btn-small">Go</button>
+                    <label for="gotoStep">Jump to specific step:</label>
+                    <div style="display: flex; gap: 5px;">
+                        <input type="number" id="gotoStep" min="0" value="0">
+                        <button id="gotoStepBtn" class="btn btn-small">Go</button>
+                    </div>
                 </div>
             </div>
 
             <!-- Topology Control Panel -->
             <div class="panel topology-panel">
-                <h3>🔗 Topology Controls</h3>
+                <div class="panel-header-with-info">
+                    <h3>🔗 Topology Controls</h3>
+                    <div class="tooltip">
+                        <span class="help-icon">?</span>
+                        <span class="tooltiptext">Manually adjust network topology by adding or removing links between nodes.</span>
+                    </div>
+                </div>
+                <p class="panel-description">Customize your network by adding or removing connections between nodes.</p>
                 <div class="form-group">
-                    <label for="nodeA">Node A:</label>
+                    <label for="nodeA">Source Node:</label>
                     <select id="nodeA"></select>
                 </div>
                 <div class="form-group">
-                    <label for="nodeB">Node B:</label>
+                    <label for="nodeB">Target Node:</label>
                     <select id="nodeB"></select>
                 </div>
                 <div class="form-group">
-                    <label for="linkDelay">Link Delay:</label>
+                    <label for="linkDelay">Link Delay (units):</label>
                     <input type="number" id="linkDelay" value="1.0" min="0.1" step="0.1">
+                    <small>Communication delay between nodes</small>
                 </div>
                 <div class="topology-buttons">
                     <button id="addLink" class="btn btn-success">Add Link</button>
@@ -100,88 +149,113 @@
             </div>
         </div>
 
-        <!-- Main Content Area -->
-        <div class="main-content">
-            <!-- Visualization Area -->
-            <div class="visualization-area">
+        <!-- Visualization Area -->
+        <div class="visualization-area">
+            <div class="panel-header-with-info">
                 <h3>📊 Network Visualization</h3>
-                <div class="visualization-controls">
-                    <button id="zoomIn" class="btn btn-small">🔍+</button>
-                    <button id="zoomOut" class="btn btn-small">🔍-</button>
-                    <button id="resetZoom" class="btn btn-small">↺</button>
-                    <label>
-                        <input type="checkbox" id="showLabels" checked> Show Labels
-                    </label>
-                    <label>
-                        <input type="checkbox" id="showRanges"> Show Ranges
-                    </label>
+                <div class="tooltip">
+                    <span class="help-icon">?</span>
+                    <span class="tooltiptext">Interactive visualization of your network. Click on nodes to view details, drag nodes to reposition them, and use the controls to adjust the view.</span>
                 </div>
-                <svg id="networkVisualization" width="800" height="600"></svg>
+            </div>
+            <p class="panel-description">Interactive network map showing nodes, connections, and message transmissions.</p>
+            <div class="visualization-controls">
+                <button id="zoomIn" class="btn btn-small" title="Zoom In">🔍+</button>
+                <button id="zoomOut" class="btn btn-small" title="Zoom Out">🔍-</button>
+                <button id="resetZoom" class="btn btn-small" title="Reset View">↺</button>
+                <label title="Show or hide node labels">
+                    <input type="checkbox" id="showLabels" checked> Show Labels
+                </label>
+                <label title="Show or hide transmission ranges">
+                    <input type="checkbox" id="showRanges"> Show Ranges
+                </label>
+            </div>
+            <svg id="networkVisualization" width="800" height="600"></svg>
+        </div>
+
+        <!-- Information Panels -->
+        <div class="info-panels">
+            <!-- Statistics Panel -->
+            <div class="info-panel stats-panel">
+                <div class="panel-header-with-info">
+                    <h4>📈 Network Statistics</h4>
+                    <div class="tooltip">
+                        <span class="help-icon">?</span>
+                        <span class="tooltiptext">Real-time statistics about network performance, including request success rates and delays.</span>
+                    </div>
+                </div>
+                <div id="statisticsContent">
+                    <div class="stat-item">
+                        <span class="stat-label">Total Requests:</span>
+                        <span class="stat-value" id="statRequests">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Successful Requests:</span>
+                        <span class="stat-value" id="statSuccessful">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Failed Requests:</span>
+                        <span class="stat-value" id="statFailed">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Success Rate:</span>
+                        <span class="stat-value" id="statSuccessRate">0%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Average Delay:</span>
+                        <span class="stat-value" id="statAvgDelay">0.000</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Links Added:</span>
+                        <span class="stat-value" id="statLinksAdded">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Links Removed:</span>
+                        <span class="stat-value" id="statLinksRemoved">0</span>
+                    </div>
+                </div>
             </div>
 
-            <!-- Information Panels -->
-            <div class="info-panels">
-                <!-- Statistics Panel -->
-                <div class="info-panel stats-panel">
-                    <h4>📈 Statistics</h4>
-                    <div id="statisticsContent">
-                        <div class="stat-item">
-                            <span class="stat-label">Requests:</span>
-                            <span class="stat-value" id="statRequests">0</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Successful:</span>
-                            <span class="stat-value" id="statSuccessful">0</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Failed:</span>
-                            <span class="stat-value" id="statFailed">0</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Success Rate:</span>
-                            <span class="stat-value" id="statSuccessRate">0%</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Avg Delay:</span>
-                            <span class="stat-value" id="statAvgDelay">0.000</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Links Added:</span>
-                            <span class="stat-value" id="statLinksAdded">0</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Links Removed:</span>
-                            <span class="stat-value" id="statLinksRemoved">0</span>
-                        </div>
+            <!-- Node Information Panel -->
+            <div class="info-panel node-panel">
+                <div class="panel-header-with-info">
+                    <h4>🔍 Node Details</h4>
+                    <div class="tooltip">
+                        <span class="help-icon">?</span>
+                        <span class="tooltiptext">Detailed information about the selected node, including its connections, state, and message statistics.</span>
                     </div>
                 </div>
-
-                <!-- Node Information Panel -->
-                <div class="info-panel node-panel">
-                    <h4>🔍 Node Information</h4>
-                    <div id="nodeInfoContent">
-                        <p>Click on a node to see details</p>
-                    </div>
+                <div id="nodeInfoContent">
+                    <p>Click on a node in the visualization to see its detailed information</p>
                 </div>
+            </div>
 
-                <!-- Event Log Panel -->
-                <div class="info-panel log-panel">
+            <!-- Event Log Panel -->
+            <div class="info-panel log-panel">
+                <div class="panel-header-with-info">
                     <h4>📝 Event Log</h4>
-                    <div id="eventLog" class="event-log">
-                        <div class="log-entry">Simulation ready. Create a network to begin.</div>
+                    <div class="tooltip">
+                        <span class="help-icon">?</span>
+                        <span class="tooltiptext">Chronological log of significant events occurring in the network during simulation.</span>
                     </div>
-                    <button id="clearLog" class="btn btn-small">Clear Log</button>
                 </div>
+                <div id="eventLog" class="event-log">
+                    <div class="log-entry">Simulation ready. Create a network to begin.</div>
+                </div>
+                <button id="clearLog" class="btn btn-small">Clear Log</button>
             </div>
         </div>
 
         <!-- Export Panel -->
         <div class="export-panel">
-            <h3>💾 Export & Reports</h3>
+            <div>
+                <h3>💾 Export & Reports</h3>
+                <p class="panel-description">Save your simulation results in various formats for further analysis.</p>
+            </div>
             <div class="export-buttons">
-                <button id="exportJSON" class="btn btn-secondary">Export JSON</button>
-                <button id="exportReport" class="btn btn-secondary">Generate Report</button>
-                <button id="exportImage" class="btn btn-secondary">Export Image</button>
+                <button id="exportJSON" class="btn btn-secondary" title="Export network data as JSON">Export JSON</button>
+                <button id="exportReport" class="btn btn-secondary" title="Generate detailed performance report">Generate Report</button>
+                <button id="exportImage" class="btn btn-secondary" title="Export network visualization as image">Export Image</button>
             </div>
         </div>
     </div>
@@ -191,6 +265,7 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h3>Routing Information</h3>
+            <p class="modal-description">Showing routing tables and paths between nodes in the network.</p>
             <div id="routingContent"></div>
         </div>
     </div>
@@ -200,6 +275,7 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h3>Export Data</h3>
+            <p class="modal-description">Preview of the data to be exported. Click Download to save it to your computer.</p>
             <div id="exportContent"></div>
             <div class="modal-actions">
                 <button id="downloadExport" class="btn btn-primary">Download</button>
@@ -207,7 +283,49 @@
             </div>
         </div>
     </div>
+    
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Wireless Sensor Network Simulator Guide</h3>
+            <div class="help-content">
+                <h4>Getting Started</h4>
+                <ol>
+                    <li>Configure your network using the Network Configuration panel</li>
+                    <li>Click "Create Network" to generate nodes and connections</li>
+                    <li>Use the Simulation Controls to advance the simulation step by step</li>
+                    <li>View detailed statistics and logs in the right panels</li>
+                </ol>
+                
+                <h4>Understanding the Interface</h4>
+                <ul>
+                    <li><strong>Network Configuration</strong>: Define basic parameters for your sensor network</li>
+                    <li><strong>Simulation Controls</strong>: Set probabilities and advance the simulation</li>
+                    <li><strong>Step Navigation</strong>: Move back and forth through simulation steps</li>
+                    <li><strong>Topology Controls</strong>: Manually add/remove links between nodes</li>
+                    <li><strong>Network Visualization</strong>: Interactive visual representation of your network</li>
+                    <li><strong>Network Statistics</strong>: Real-time performance metrics</li>
+                    <li><strong>Node Details</strong>: Information about selected nodes</li>
+                    <li><strong>Event Log</strong>: Chronological record of simulation events</li>
+                </ul>
+                
+                <h4>Tips for Effective Use</h4>
+                <ul>
+                    <li>Click on nodes in the visualization to view detailed information</li>
+                    <li>Use the Auto Play feature to run the simulation continuously</li>
+                    <li>Adjust P(Request), P(Fail), and P(New) to simulate different scenarios</li>
+                    <li>Export your results for further analysis</li>
+                    <li>Use the Step Navigation to analyze specific events in detail</li>
+                </ul>
+            </div>
+            <div class="modal-actions">
+                <button id="closeHelpModal" class="btn btn-primary">Close</button>
+            </div>
+        </div>
+    </div>
 
+    <script src="{{ url_for('static', filename='js/tutorial.js') }}"></script>
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
 </html>
