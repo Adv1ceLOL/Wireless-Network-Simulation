@@ -620,38 +620,25 @@ input:checked + .toggle-slider:before {
 
 .tooltip .tooltiptext {
     visibility: hidden;
-    width: 250px;
+    width: 280px;
     max-width: 90vw;
     background-color: #34495e;
     color: #fff;
     text-align: left;
-    border-radius: 6px;
-    padding: 10px 15px;
-    position: absolute;
-    z-index: 1000;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -125px;
+    border-radius: 8px;
+    padding: 12px 16px;
+    position: fixed;
+    z-index: 10000;
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.3s ease;
     font-size: 0.85rem;
-    line-height: 1.4;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    line-height: 1.5;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     pointer-events: none;
     word-wrap: break-word;
     overflow-wrap: break-word;
     hyphens: auto;
-}
-
-.tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #34495e transparent transparent transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .tooltip:hover .tooltiptext {
