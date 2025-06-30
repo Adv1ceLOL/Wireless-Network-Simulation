@@ -17,6 +17,11 @@ class NetworkSimulator {
         this.initUI();
         this.initVisualization();
         this.bindEvents();
+        
+        // Initialize tooltips after DOM is ready
+        setTimeout(() => {
+            this.initTooltips();
+        }, 100);
     }
     
     initSocket() {
@@ -307,6 +312,103 @@ class NetworkSimulator {
                 e.target.style.display = 'none';
             }
         });
+
+        // Tooltip positioning
+        this.initTooltips();
+    }
+
+    initTooltips() {
+        // Remove existing event listeners to avoid duplicates
+        document.removeEventListener('mousemove', this.tooltipMouseMoveHandler);
+        
+        // Create bound handler for reuse
+        this.tooltipMouseMoveHandler = (e) => {
+            const activeTooltips = document.querySelectorAll('.tooltip:hover .tooltiptext');
+            activeTooltips.forEach(tooltip => {
+                this.positionTooltip(tooltip, e);
+            });
+        };
+
+        // Add mouse move listener for tooltip positioning
+        document.addEventListener('mousemove', this.tooltipMouseMoveHandler);
+
+        // Add hover listeners for tooltips
+        document.querySelectorAll('.tooltip').forEach(tooltipContainer => {
+            const tooltip = tooltipContainer.querySelector('.tooltiptext');
+            if (tooltip && !tooltip.hasAttribute('data-positioned')) {
+                tooltip.setAttribute('data-positioned', 'true');
+                
+                tooltipContainer.addEventListener('mouseenter', (e) => {
+                    this.positionTooltip(tooltip, e);
+                });
+                
+                tooltipContainer.addEventListener('mousemove', (e) => {
+                    this.positionTooltip(tooltip, e);
+                });
+            }
+        });
+    }
+
+    positionTooltip(tooltip, event) {
+        if (!tooltip || !event) return;
+
+        // Ensure tooltip is visible to get accurate measurements
+        const wasVisible = tooltip.style.visibility !== 'hidden';
+        if (!wasVisible) {
+            tooltip.style.visibility = 'hidden';
+            tooltip.style.display = 'block';
+        }
+
+        const tooltipRect = tooltip.getBoundingClientRect();
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Offset from cursor
+        const offsetX = 15;
+        const offsetY = -10;
+        
+        // Start with cursor position
+        let x = event.clientX + scrollX + offsetX;
+        let y = event.clientY + scrollY + offsetY;
+        
+        // Check horizontal boundaries
+        if (x + tooltipRect.width > scrollX + viewportWidth) {
+            // Position to the left of cursor
+            x = event.clientX + scrollX - tooltipRect.width - offsetX;
+        }
+        
+        // Ensure tooltip doesn't go off left edge
+        if (x < scrollX + 10) {
+            x = scrollX + 10;
+        }
+        
+        // Check vertical boundaries
+        if (y < scrollY + 10) {
+            // Position below cursor
+            y = event.clientY + scrollY + Math.abs(offsetY) + 20;
+        } else if (y + tooltipRect.height > scrollY + viewportHeight - 10) {
+            // Position above cursor
+            y = event.clientY + scrollY - tooltipRect.height - Math.abs(offsetY);
+        }
+        
+        // Final check to ensure tooltip stays within viewport
+        if (y < scrollY + 10) {
+            y = scrollY + 10;
+        }
+        if (y + tooltipRect.height > scrollY + viewportHeight - 10) {
+            y = scrollY + viewportHeight - tooltipRect.height - 10;
+        }
+        
+        // Apply position
+        tooltip.style.left = `${x}px`;
+        tooltip.style.top = `${y}px`;
+        
+        // Restore visibility
+        if (!wasVisible) {
+            tooltip.style.visibility = 'visible';
+        }
     }
     
     createNetwork() {
@@ -789,6 +891,9 @@ class NetworkSimulator {
                 </div>
             </div>
         `;
+        
+        // Reinitialize tooltips for new content
+        this.initTooltips();
     }
     
     getRoutingInfo(nodeIds) {
