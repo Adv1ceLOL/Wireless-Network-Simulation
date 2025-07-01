@@ -913,7 +913,7 @@ class NetworkSimulator {
                         <div class="routing-table">
                             <h5>Routing Table</h5>
                             <table style="width: 100%; border-collapse: collapse;">
-                                <tr style="background: #f8f9fa;">
+                                <tr style="background: linear-gradient(120deg, hsla(268.6, 87.5%, 9.4%, 0.85) 60%, hsla(269.2, 36.6%, 19.8%, 0.85) 100%);">
                                     <th style="border: 1px solid #ddd; padding: 8px;">Destination</th>
                                     <th style="border: 1px solid #ddd; padding: 8px;">Next Hop</th>
                                     <th style="border: 1px solid #ddd; padding: 8px;">Cost</th>

@@ -1,23 +1,137 @@
-/* Wireless Sensor Network Simulator - Web Console Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* --- Modern Dark Theme Inspired by idea.css --- */
+:root {
+    --primary-bg: hsl(270, 50%, 8%);
+    --panel-bg: hsl(270, 50%, 11%);
+    --panel-bg-gradient: linear-gradient(120deg, hsla(268.6, 87.5%, 9.4%, 0.85) 60%, hsla(269.2, 36.6%, 19.8%, 0.85) 100%);
+    --accent-gradient: linear-gradient(135deg, hsl(270, 50%, 50%), hsl(290, 60%, 70%));
+    --header-shadow: 0 4px 12px hsla(270, 30%, 3%, .3);
+    --panel-shadow: 0 8px 32px 0 hsla(270, 30%, 3%, .5);
+    --card-shadow: 0 6px 24px hsla(270, 30%, 3%, .4);
+    --border-radius: 14px;
+    --border-strong: 1px solid hsla(270, 30%, 30%, 0.2);
+    --border-subtle: 1px solid hsla(270, 30%, 20%, 0.15);
+    --text-light: hsl(0, 0%, 100%);
+    --text-dark: hsl(270, 10%, 20%);
+    --btn-gradient: linear-gradient(135deg, #546FFF, #8A9CFF);
+    --btn-radius: 10px;
+    --input-bg: hsl(270, 50%, 16%);
+    --input-border: 2px solid hsl(220, 60%, 60%);
+    --input-focus: 0 0 0 2px hsla(220, 60%, 60%, 0.3);
+    --size: 20px; /* For the dotted background pattern */
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: hsl(0, 0%, 6%);
+    color: var(--text-light);
     min-height: 100vh;
-    color: #2c3e50;
+    padding: 0;
+    margin: 0;
     overflow-x: hidden;
+    position: relative;
+}
+
+/* Background effect with conic gradient and dotted pattern */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: conic-gradient(from 180deg at 50% 70%,hsla(0,0%,98%,1) 0deg,#eec32d 72.0000010728836deg,#ec4b4b 144.0000021457672deg,#709ab9 216.00000858306885deg,#4dffbf 288.0000042915344deg,hsla(0,0%,98%,1) 1turn);
+    mask: 
+        radial-gradient(circle at 50% 50%, white 2px, transparent 2.5px) 50% 50% / var(--size) var(--size),
+        url("https://assets.codepen.io/605876/noise-mask.png") 256px 50% / 256px 256px;
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in; /* For Safari */
+    animation: flicker 20s infinite linear;
+}
+
+@keyframes flicker {
+    to {
+        mask-position: 50% 50%, 0 50%;
+    }
+}
+
+.el {
+  background: conic-gradient(from 180deg at 50% 70%,hsla(0,0%,98%,1) 0deg,#eec32d 72.0000010728836deg,#ec4b4b 144.0000021457672deg,#709ab9 216.00000858306885deg,#4dffbf 288.0000042915344deg,hsla(0,0%,98%,1) 1turn);
+  width: 100%;
+  height: 100%;
+  mask:
+    radial-gradient(circle at 50% 50%, white 2px, transparent 2.5px) 50% 50% / var(--size) var(--size),
+    url("https://assets.codepen.io/605876/noise-mask.png") 256px 50% / 256px 256px;
+  mask-composite: intersect;
+  animation: flicker 20s infinite linear;
+}
+
+
+/* Global text color enforcement */
+body, p, h1, h2, h3, h4, h5, h6, span, div, label, button, input, select, textarea, small, a, li {
+    color: var(--text-light);
+}
+
+/* Exempt connectionStatus from global white text rule - this must appear after the global rule */
+#connectionStatus.status-indicator {
+    color: inherit !important;
+    /* Override with stronger values for different states to ensure visibility */
+}
+
+/* Override any specific color settings for text elements */
+.form-group small {
+    color: var(--text-light);
+}
+
+.panel-description, .modal-description, .tutorial-text {
+    color: var(--text-light);
+}
+
+/* Ensure headers have consistent color */
+.header h1, .panel h3, .info-panel h4, .panel-header-with-info h3 {
+    color: var(--text-light);
+}
+
+/* Special case for specific elements that should have different colors */
+.status-indicator.connected {
+    color: #27ae60;
+}
+
+.status-indicator.disconnected {
+    color: #e74c3c;
+}
+
+/* Specific overrides for connection status indicator with highest specificity */
+header .connection-status #connectionStatus.status-indicator.connected {
+    color: #27ae60 !important;
+}
+
+header .connection-status #connectionStatus.status-indicator.disconnected {
+    color: #e74c3c !important;
+}
+
+.log-entry.success {
+    color: #2ecc71;
+}
+
+.log-entry.error {
+    color: #e74c3c;
+}
+
+.log-entry.warning {
+    color: #f39c12;
 }
 
 .app-container {
+    /*background: hsla(270, 50%, 8%, 0.85);
+    backdrop-filter: blur(10px);*/
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    box-shadow: var(--panel-shadow);
+    padding: 24px 18px;
     max-width: 1920px;
-    margin: 0 auto;
-    padding: 20px;
-    min-height: 100vh;
+    margin: 32px auto;
+    min-height: 90vh;
     display: grid;
     grid-template-areas: 
         "header header header"
@@ -26,38 +140,54 @@ body {
     grid-template-columns: minmax(280px, 300px) minmax(400px, 1fr) minmax(280px, 320px);
     grid-template-rows: auto minmax(0, 1fr) auto;
     gap: 20px;
+    border: var(--border-subtle);
+    box-shadow: 0 8px 32px 0 hsla(270, 30%, 3%, 0.5);
+}
+
+.panel, .visualization-area, .info-panel, .export-panel {
+    border: var(--border-subtle);
+    border-radius: 14px;
+    box-shadow: var(--card-shadow);
+    /* Clean, subtle borders with depth from shadows instead */
 }
 
 /* Header */
 .header {
     grid-area: header;
-    background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(10px);
+    background: var(--panel-bg-gradient);
+    border-radius: 14px;
+    box-shadow: var(--header-shadow);
     padding: 20px 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 3px solid #3498db;
+    border-bottom: var(--border-subtle);
 }
 
 .header h1 {
-    color: #2c3e50;
+    color: var(--text-light);
     font-size: 1.8rem;
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px hsla(270, 30%, 3%, 0.3);
 }
 
 .connection-status {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-weight: 500;
+    font-weight: 600;
+    color: var(--text-light);
 }
 
 .status-indicator {
     font-size: 1.2rem;
     animation: pulse 2s infinite;
+}
+
+/* Force connectionStatus to always show its proper color */
+#connectionStatus.status-indicator {
+    color: #f39c12 !important; /* Default orange color before connection state is known */
 }
 
 .status-indicator.connected {
@@ -87,33 +217,38 @@ body {
 }
 
 .panel {
-    background: rgba(255, 255, 255, 0.98);
-    border-radius: 10px;
+    background: var(--panel-bg-gradient);
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    border: var(--border-subtle);
     padding: 20px;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
-    border: 1px solid #e6edf3;
+    margin-bottom: 18px;
+    color: var(--text-light);
     transition: box-shadow 0.3s ease, transform 0.2s ease;
     min-width: 0;
     word-wrap: break-word;
     overflow-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .panel:hover {
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 12px 36px hsla(270, 30%, 10%, 0.32);
+    transform: translateY(-2px) scale(1.012);
 }
 
 .panel h3 {
-    margin-bottom: 15px;
-    color: #2c3e50;
-    font-size: 1rem;
-    font-weight: 600;
-    border-bottom: 2px solid #3498db;
+    color: var(--text-light);
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-bottom: 2px solid var(--text-light);
     padding-bottom: 8px;
+    margin-bottom: 16px;
     display: flex;
     align-items: center;
     gap: 8px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
 }
 
 .form-group {
@@ -121,31 +256,37 @@ body {
 }
 
 .form-group label {
+    color: var(--text-light);
+    font-weight: 600;
     display: block;
     margin-bottom: 4px;
-    font-weight: 500;
-    color: #555;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
 }
 
 .form-group input,
 .form-group select {
-    width: 100%;
-    padding: 8px 12px;
-    border: 2px solid #e1e8ed;
+    background: var(--input-bg);
+    color: var(--text-light);
+    border: var(--input-border);
     border-radius: 8px;
-    font-size: 14px;
-    transition: all 0.3s ease;
+    font-size: 1rem;
+    padding: 8px 12px;
+    transition: border 0.2s, box-shadow 0.2s;
+    width: 100%;
     min-width: 0;
     box-sizing: border-box;
 }
-
 .form-group input:focus,
 .form-group select:focus {
+    border-color: var(--accent);
+    box-shadow: var(--input-focus);
     outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+.form-group small {
+    color: var(--text-light);
+    display: block;
+    font-size: 0.8rem;
+    margin-top: 4px;
+    line-height: 1.4;
 }
 
 /* Toggle Switch for Auto-Reconnect */
@@ -200,25 +341,19 @@ input:checked + .toggle-slider:before {
     transform: translateX(24px);
 }
 
-.form-group small {
-    display: block;
-    color: #888;
-    font-size: 0.8rem;
-    margin-top: 4px;
-    line-height: 1.4;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-
 /* Buttons */
 .btn {
-    padding: 10px 16px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 500;
+    background: var(--btn-gradient);
+    color: #fff;
+    border: 2px solid hsl(220, 60%, 60%);
+    border-radius: var(--btn-radius);
+    font-weight: 700;
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 10px 20px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 14px;
+    box-shadow: 0 2px 12px hsla(220, 60%, 60%, 0.10);
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -228,51 +363,34 @@ input:checked + .toggle-slider:before {
     overflow-wrap: break-word;
     hyphens: auto;
 }
-
 .btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, #8A9CFF, #546FFF);
+    border-color: hsl(290, 60%, 70%);
+    box-shadow: 0 4px 24px hsla(220, 60%, 60%, 0.18);
+    transform: translateY(-1px) scale(1.03);
 }
-
 .btn:active {
-    transform: translateY(0);
+    transform: scale(0.98);
 }
-
 .btn:disabled {
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: not-allowed;
-    transform: none;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #3498db, #2980b9);
-    color: white;
+    background: linear-gradient(135deg, #546FFF, #8A9CFF);
 }
-
 .btn-success {
     background: linear-gradient(135deg, #27ae60, #229954);
-    color: white;
 }
-
 .btn-warning {
     background: linear-gradient(135deg, #f39c12, #e67e22);
-    color: white;
 }
-
 .btn-danger {
     background: linear-gradient(135deg, #e74c3c, #c0392b);
-    color: white;
 }
-
 .btn-secondary {
     background: linear-gradient(135deg, #95a5a6, #7f8c8d);
-    color: white;
-}
-
-.btn-nav {
-    background: linear-gradient(135deg, #34495e, #2c3e50);
-    color: white;
-    padding: 8px 12px;
 }
 
 .btn-small {
@@ -298,35 +416,27 @@ input:checked + .toggle-slider:before {
 
 /* Main Content Area */
 .visualization-area {
-    grid-area: visualization;
-    background: rgba(255, 255, 255, 0.98);
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
-    border: 1px solid #e6edf3;
+    background: var(--panel-bg-gradient);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    border: var(--border-subtle);
+    color: var(--text-light);
     display: flex;
     flex-direction: column;
     min-width: 0;
     min-height: 0;
-}
-
-/* Info Panels Area */
-.info-panels {
-    grid-area: info;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-height: calc(100vh - 160px);
-    overflow-y: auto;
-    overflow-x: hidden;
-    scrollbar-width: thin;
-    min-width: 0;
+    padding: 20px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .visualization-area h3 {
-    margin-bottom: 15px;
-    color: #2c3e50;
+    color: var(--accent);
     font-size: 1.1rem;
+    font-weight: 700;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 8px;
+    margin-bottom: 15px;
 }
 
 .visualization-controls {
@@ -342,43 +452,52 @@ input:checked + .toggle-slider:before {
     align-items: center;
     gap: 4px;
     font-size: 14px;
-    color: #555;
+    color: var(--text-light);
 }
 
 #networkVisualization {
-    border: 1px solid #e1e8ed;
+    border: var(--border-subtle);
     border-radius: 8px;
-    background: #f9fafb;
+    background: var(--primary-bg);
     width: 100%;
     min-height: 400px;
     max-height: calc(100vh - 300px);
     flex: 1;
-    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 2px 10px hsla(270, 30%, 10%, 0.03);
+}
+
+/* Ensure SVG elements have white text */
+#networkVisualization text {
+    fill: white !important;
 }
 
 /* Information Panels */
 .info-panel {
-    background: rgba(255, 255, 255, 0.98);
-    border-radius: 10px;
+    background: var(--panel-bg-gradient);
+    border-radius: 12px;
     padding: 18px;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
-    border: 1px solid #e6edf3;
+    box-shadow: 0 6px 16px 0 hsla(270, 30%, 3%, .4);
+    border: 2px solid var(--accent);
+    color: var(--text-light);
+    margin-bottom: 18px;
     transition: box-shadow 0.3s ease;
     min-width: 0;
     word-wrap: break-word;
     overflow-wrap: break-word;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .info-panel:hover {
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 32px hsla(270, 30%, 10%, 0.25);
 }
 
 .info-panel h4 {
-    margin-bottom: 10px;
-    color: #2c3e50;
+    color: var(--accent);
     font-size: 0.9rem;
-    font-weight: 600;
-    border-bottom: 1px solid #3498db;
+    font-weight: 700;
+    margin-bottom: 10px;
+    border-bottom: 1.5px solid var(--accent);
     padding-bottom: 3px;
 }
 
@@ -407,7 +526,7 @@ input:checked + .toggle-slider:before {
     align-items: center;
     margin-bottom: 8px;
     padding: 4px 0;
-    border-bottom: 1px solid #ecf0f1;
+    border-bottom: 1px solid hsl(270, 50%, 18%);
     word-wrap: break-word;
     overflow-wrap: break-word;
     min-width: 0;
@@ -415,7 +534,7 @@ input:checked + .toggle-slider:before {
 
 .stat-label {
     font-weight: 500;
-    color: #555;
+    color: hsl(270, 10%, 70%);
     flex: 1;
     min-width: 0;
     margin-right: 8px;
@@ -423,7 +542,7 @@ input:checked + .toggle-slider:before {
 
 .stat-value {
     font-weight: 600;
-    color: #2c3e50;
+    color: var(--text-light);
     flex: 0 0 auto;
     text-align: right;
 }
@@ -432,10 +551,10 @@ input:checked + .toggle-slider:before {
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    border: 1px solid #e1e8ed;
+    border: var(--border-subtle);
     border-radius: 6px;
     padding: 10px;
-    background: #fafbfc;
+    background: var(--panel-bg);
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
     font-size: 12px;
     margin-bottom: 10px;
@@ -492,20 +611,14 @@ input:checked + .toggle-slider:before {
 /* Export Panel */
 .export-panel {
     grid-area: export;
-    background: rgba(255, 255, 255, 0.98);
-    border-radius: 10px;
+    background: var(--panel-bg-gradient);
+    border-radius: 12px;
+    box-shadow: 0 6px 16px 0 hsla(270, 30%, 3%, .4);
+    border: 2px solid var(--accent);
     padding: 20px;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
-    border: 1px solid #e6edf3;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.export-panel h3 {
-    margin-bottom: 10px;
-    color: #2c3e50;
-    font-size: 1rem;
+    margin-top: 10px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 /* Modal Styles */
@@ -522,7 +635,7 @@ input:checked + .toggle-slider:before {
 }
 
 .modal-content {
-    background: #fefefe;
+    background: var(--panel-bg-gradient);
     margin: 5% auto;
     padding: 20px;
     border-radius: 12px;
@@ -532,19 +645,24 @@ input:checked + .toggle-slider:before {
     overflow-y: auto;
     position: relative;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    color: var(--text-light);
 }
 
 .close {
-    color: #aaa;
+    color: var(--text-light);
     float: right;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
+    opacity: 0.8;
 }
 
 .close:hover,
 .close:focus {
-    color: #000;
+    color: var(--text-light);
+    opacity: 1;
 }
 
 .modal-actions {
@@ -570,16 +688,18 @@ input:checked + .toggle-slider:before {
     right: 20px;
     z-index: 100;
     padding: 15px 20px;
-    background: #fff;
+    background: var(--panel-bg-gradient);
     border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
     border-left: 4px solid #3498db;
     max-width: calc(100% - 40px);
     margin: 0 auto;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .tutorial-section h4 {
-    color: #2c3e50;
+    color: var(--text-light);
     font-size: 1rem;
     margin-bottom: 10px;
     display: flex;
@@ -607,7 +727,7 @@ input:checked + .toggle-slider:before {
 
 .dismiss-tutorial {
     font-size: 0.8rem;
-    color: #7f8c8d;
+    color: var(--text-light);
     cursor: pointer;
     text-decoration: underline;
 }
@@ -795,20 +915,20 @@ input:checked + .toggle-slider:before {
     justify-content: space-between;
     align-items: center;
     padding: 8px 12px;
-    background: #f8f9fa;
+    background: hsla(270, 50%, 15%, 0.7);
     border-radius: 6px;
     border-left: 3px solid #3498db;
 }
 
 .info-label {
     font-weight: 500;
-    color: #5a6c7d;
+    color: var(--text-light);
     font-size: 0.85rem;
 }
 
 .info-value {
     font-weight: 600;
-    color: #2c3e50;
+    color: var(--text-light);
     font-size: 0.85rem;
 }
 
@@ -823,19 +943,19 @@ input:checked + .toggle-slider:before {
     justify-content: space-between;
     align-items: center;
     padding: 6px 10px;
-    background: linear-gradient(90deg, #ecf0f1 0%, #bdc3c7 100%);
+    background: linear-gradient(90deg, hsla(270, 50%, 20%, 0.7) 0%, hsla(270, 50%, 25%, 0.7) 100%);
     border-radius: 4px;
     font-size: 0.8rem;
 }
 
 .stat-bar.total {
-    background: linear-gradient(90deg, #3498db 0%, #2980b9 100%);
+    background: linear-gradient(90deg, hsla(210, 65%, 40%, 0.8) 0%, hsla(210, 65%, 30%, 0.8) 100%);
     color: white;
     margin-top: 5px;
 }
 
 .stat-label {
-    color: #5a6c7d;
+    color: var(--text-light);
 }
 
 .stat-bar.total .stat-label {
@@ -844,7 +964,7 @@ input:checked + .toggle-slider:before {
 
 .stat-value {
     font-weight: 600;
-    color: #2c3e50;
+    color: var(--text-light);
 }
 
 .stat-bar.total .stat-value {
@@ -896,9 +1016,9 @@ input:checked + .toggle-slider:before {
 .neighbors-list {
     max-height: 120px;
     overflow-y: auto;
-    border: 1px solid #ddd;
+    border: 1px solid hsla(270, 30%, 30%, 0.3);
     border-radius: 6px;
-    background: #f8f9fa;
+    background: hsla(270, 50%, 15%, 0.7);
 }
 
 .neighbor-item {
@@ -906,7 +1026,7 @@ input:checked + .toggle-slider:before {
     justify-content: space-between;
     align-items: center;
     padding: 8px 12px;
-    border-bottom: 1px solid #e9ecef;
+    border-bottom: 1px solid hsla(270, 30%, 30%, 0.2);
     font-size: 0.8rem;
     min-width: 0;
 }
@@ -917,7 +1037,7 @@ input:checked + .toggle-slider:before {
 }
 
 .neighbor-item.clickable:hover {
-    background: #3498db;
+    background: hsla(210, 70%, 40%, 0.8);
     color: white;
 }
 
@@ -932,7 +1052,7 @@ input:checked + .toggle-slider:before {
 
 .neighbor-id {
     font-weight: 600;
-    color: #2c3e50;
+    color: var(--text-light);
     flex: 1;
     min-width: 0;
     margin-right: 8px;
@@ -942,8 +1062,8 @@ input:checked + .toggle-slider:before {
 
 .neighbor-delay {
     font-size: 0.75rem;
-    color: #6c757d;
-    background: #dee2e6;
+    color: var(--text-light);
+    background: hsla(270, 50%, 25%, 0.7);
     padding: 2px 6px;
     border-radius: 3px;
     flex: 0 0 auto;
@@ -953,7 +1073,7 @@ input:checked + .toggle-slider:before {
 .no-neighbors {
     padding: 12px;
     text-align: center;
-    color: #6c757d;
+    color: var(--text-light);
     font-style: italic;
     font-size: 0.8rem;
 }
@@ -964,17 +1084,17 @@ input:checked + .toggle-slider:before {
 }
 
 .neighbors-list::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: hsla(270, 50%, 15%, 0.3);
     border-radius: 2px;
 }
 
 .neighbors-list::-webkit-scrollbar-thumb {
-    background: #bdc3c7;
+    background: hsla(270, 30%, 40%, 0.7);
     border-radius: 2px;
 }
 
 .neighbors-list::-webkit-scrollbar-thumb:hover {
-    background: #95a5a6;
+    background: hsla(270, 40%, 50%, 0.8);
 }
 
 .neighbor-item:last-child {
@@ -1169,24 +1289,24 @@ input:checked + .toggle-slider:before {
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: hsla(270, 50%, 15%, 0.3);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #bdc3c7;
+    background: hsla(270, 30%, 40%, 0.7);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #95a5a6;
+    background: hsla(270, 40%, 50%, 0.8);
 }
 
 .node-detail-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #f0f4f8;
+    background: hsla(270, 50%, 15%, 0.8);
     padding: 10px 15px;
     border-radius: 6px;
     margin-bottom: 15px;
@@ -1198,7 +1318,7 @@ input:checked + .toggle-slider:before {
 .node-id {
     font-size: 1.2rem;
     font-weight: bold;
-    color: #2c3e50;
+    color: var(--text-light);
     min-width: 0;
     word-wrap: break-word;
     overflow-wrap: break-word;
@@ -1240,7 +1360,7 @@ input:checked + .toggle-slider:before {
 }
 
 .node-info-item {
-    background: #f8f9fa;
+    background: hsla(270, 50%, 15%, 0.7);
     padding: 8px 12px;
     border-radius: 6px;
     border-left: 3px solid #3498db;
@@ -1251,14 +1371,14 @@ input:checked + .toggle-slider:before {
 
 .node-info-label {
     font-size: 0.8rem;
-    color: #7f8c8d;
+    color: var(--text-light);
     margin-bottom: 4px;
 }
 
 .node-info-value {
-    font-size: 0.9rem;
     font-weight: 600;
-    color: #2c3e50;
+    color: var(--text-light);
+    font-size: 0.9rem;
 }
 
 .neighbors-header {
@@ -1290,4 +1410,96 @@ body.tutorial-visible .app-container {
     body.tutorial-visible {
         padding-top: 160px;
     }
+}
+
+/* Force white text on all elements EXCEPT connectionStatus */
+*:not(#connectionStatus) {
+    color: var(--text-light);
+}
+
+/* SVG text elements */
+svg text, .node-label, text.node-label, g text {
+    fill: var(--text-light) !important;
+    color: var(--text-light) !important;
+}
+
+/* Target any spans that might not be getting the color */
+span, .panel span, .visualization-area span, .info-panel span, 
+div span, label span, button span, p span, small span, a span {
+    color: var(--text-light) !important;
+}
+
+/* Override all default span colors */
+.dismiss-tutorial, .panel-description, .tooltip span, .tooltiptext,
+.stat-label, .stat-value, .node-info-label, .node-info-value,
+.neighbor-id, .neighbor-delay, .node-id, .node-type {
+    color: var(--text-light) !important;
+}
+
+/* Ensure all network visualization elements have white text */
+#networkVisualization text, 
+.node-label, 
+.nodes text, 
+.labels text {
+    fill: var(--text-light) !important;
+    color: var(--text-light) !important;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+/* Additional comprehensive white text enforcements */
+.event-log, .event-log *, .modal-content, .modal-content *, 
+.help-content, .help-content *, .tooltip *, .tooltiptext {
+    color: var(--text-light) !important;
+}
+
+/* Explicit exemption for connectionStatus from white text enforcement */
+#connectionStatus.status-indicator.connected {
+    color: #27ae60 !important;
+}
+
+#connectionStatus.status-indicator.disconnected {
+    color: #e74c3c !important;
+}
+
+/* Fix for any D3 or SVG text elements */
+#networkVisualization .node text,
+#networkVisualization text.node-label,
+#networkVisualization .node-label,
+.nodes text, 
+.nodes text * {
+    fill: white !important;
+    stroke: none;
+}
+
+/* Override any inline styles */
+[style*="color"] {
+    color: var(--text-light) !important;
+}
+
+/* Apply white text to any generated content */
+.tutorial-section, .panel, .info-panel, .export-panel, .modal-content {
+    color-scheme: dark;
+}
+
+/* Ensure all node and network info elements use white text */
+.node-info-details h5, .node-info-details h6, 
+.info-section h6, .node-info-grid, .node-info-item,
+.neighbor-item, .neighbor-id, .no-neighbors,
+.node-type, .stat-item, .stat-label, .stat-value {
+    color: var(--text-light) !important;
+}
+
+/* Fix specific elements that might still have light backgrounds */
+.node-info-grid, .message-stats, .neighbors-header {
+    color: var(--text-light);
+}
+
+/* Make tooltips readable with dark backgrounds */
+.tooltiptext, .tooltip span {
+    background-color: hsla(270, 50%, 15%, 0.9) !important;
+    color: var(--text-light) !important;
+    border: 1px solid hsla(270, 50%, 30%, 0.5);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
