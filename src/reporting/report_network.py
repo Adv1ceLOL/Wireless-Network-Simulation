@@ -223,6 +223,57 @@ def generate_network_report(network, output_file=None):
         else:
             report.append("Fastest link: N/A")
     
+    # Add Message Exchange Analysis
+    report.append("\n8. MESSAGE EXCHANGE ANALYSIS")
+    report.append("-----------------------------")
+    
+    # Get message counters using the functions from simulation.py
+    # Import the functions to avoid code duplication
+    from simulation import (
+        get_hello_msg_count, 
+        get_topology_msg_count, 
+        get_route_discovery_msg_count, 
+        get_data_packet_count,
+        get_total_message_count
+    )
+    
+    hello_msgs = get_hello_msg_count(network)
+    topology_msgs = get_topology_msg_count(network)
+    route_discovery_msgs = get_route_discovery_msg_count(network)
+    data_packets = get_data_packet_count(network)
+    total_packets = get_total_message_count(network)
+    
+    report.append(f"Hello Messages: {hello_msgs}")
+    report.append(f"Topology Discovery Messages: {topology_msgs}")
+    report.append(f"Route Discovery Control Packets: {route_discovery_msgs}")
+    report.append(f"Data Packets Forwarded: {data_packets}")
+    report.append(f"Total Message Exchanges: {total_packets}")
+    
+    # Add Protocol Efficiency Analysis
+    report.append("\n9. PROTOCOL EFFICIENCY ANALYSIS")
+    report.append("-" * 50)
+    report.append(f"{'Metric':<25} | {'Count':<8} | {'Percentage':<10}")
+    report.append(f"{'-'*25} | {'-'*8} | {'-'*10}")
+    
+    if total_packets > 0:
+        hello_pct = hello_msgs/total_packets*100
+        topology_pct = topology_msgs/total_packets*100
+        route_pct = route_discovery_msgs/total_packets*100
+        data_pct = data_packets/total_packets*100
+        efficiency = data_packets / total_packets
+    else:
+        hello_pct = topology_pct = route_pct = data_pct = efficiency = 0.0
+    
+    report.append(f"{'Hello Messages':<25} | {hello_msgs:<8} | {hello_pct:.2f}%")
+    report.append(f"{'Topology Messages':<25} | {topology_msgs:<8} | {topology_pct:.2f}%")
+    report.append(f"{'Route Discovery':<25} | {route_discovery_msgs:<8} | {route_pct:.2f}%")
+    report.append(f"{'Data Packets':<25} | {data_packets:<8} | {data_pct:.2f}%")
+    report.append(f"{'-'*25} | {'-'*8} | {'-'*10}")
+    report.append(f"{'Total Packets':<25} | {total_packets:<8} | {'100.00%':<10}")
+    report.append("")
+    report.append(f"Protocol Efficiency: {efficiency:.4f} ({efficiency*100:.2f}%)")
+    report.append("(Efficiency = Data Packets / Total Packets)")
+    
     # Join report lines and print or save
     report_text = "\n".join(report)
     

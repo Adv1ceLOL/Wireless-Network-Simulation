@@ -1,5 +1,5 @@
 ================================================================================
-WIRELESS SENSOR NETWORK DETAILED REPORT - Generated: 2025-07-31 08:29:22
+WIRELESS SENSOR NETWORK DETAILED REPORT - Generated: 2025-07-31 09:02:40
 ================================================================================
 
 1. NETWORK OVERVIEW
@@ -717,3 +717,25 @@ Sample shortest paths between random node pairs:
 
 Most congested link: 12-16 (delay: 1.92)
 Fastest link: 15-17 (delay: 0.03)
+
+8. MESSAGE EXCHANGE ANALYSIS
+-----------------------------
+Hello Messages: 0
+Topology Discovery Messages: 60
+Route Discovery Control Packets: 758
+Data Packets Forwarded: 6
+Total Message Exchanges: 824
+
+9. PROTOCOL EFFICIENCY ANALYSIS
+--------------------------------------------------
+Metric                    | Count    | Percentage
+------------------------- | -------- | ----------
+Hello Messages            | 0        | 0.00%
+Topology Messages         | 60       | 7.28%
+Route Discovery           | 758      | 91.99%
+Data Packets              | 6        | 0.73%
+------------------------- | -------- | ----------
+Total Packets             | 824      | 100.00%   
+
+Protocol Efficiency: 0.0073 (0.73%)
+(Efficiency = Data Packets / Total Packets)

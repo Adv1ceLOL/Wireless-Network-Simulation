@@ -425,11 +425,14 @@ class SensorNetwork:
                 if next_hop in path:
                     return [], float('inf'), f"Routing loop detected at node {current} - invalid routing tables"
                 
-                # Increment data packet count for the forwarding node
-                self.nodes[current].data_packet_count += 1
                 current = next_hop
                 
             path.append(target_id)
+            
+            # Count data packet only once at the source node (not for each forwarding hop)
+            if path:  # Only count if a valid path was found
+                self.nodes[source_id].data_packet_count += 1
+            
             total_delay: float = sum(self.nodes[path[i]].connections[path[i+1]] for i in range(len(path)-1))
             
             if verbose:
