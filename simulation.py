@@ -74,6 +74,7 @@ def run_dynamic_scenario(
     verbose: bool = True,
     hello_interval: int = 5,  # Send hello messages every N time steps
     ignore_initial_route_discovery: bool = True,  # Reset route discovery counters after initial convergence
+    seed: Optional[int] = None,  # Note: global random seed should be set before calling this function
 ) -> Dict[str, Any]:
     """Run a dynamic scenario simulation with probabilistic events.
 
@@ -88,6 +89,7 @@ def run_dynamic_scenario(
         verbose: Whether to print detailed information
         hello_interval: Send hello messages every N time steps (0 = never, 1 = every step)
         ignore_initial_route_discovery: Whether to reset route discovery counters after initial convergence for static networks
+        seed: Random seed for deterministic behavior (global random seed should be set before calling)
 
     Returns:
         Dictionary with simulation statistics
@@ -362,6 +364,7 @@ def run_simulation(
     delay_between_steps: float = 1.0,
     hello_interval: int = 5,
     ignore_initial_route_discovery: bool = True,
+    seed: Optional[int] = None,
 ) -> Union[SensorNetwork, Dict[str, Any]]:
     """Run a wireless sensor network simulation.
 
@@ -378,6 +381,7 @@ def run_simulation(
         delay_between_steps: Delay between time steps in dynamic scenario
         hello_interval: Send hello messages every N time steps
         ignore_initial_route_discovery: Whether to reset route discovery counters after initial convergence for static networks
+        seed: Random seed for deterministic behavior (global random seed should be set before calling)
     """
     # Main simulation header remains as print statement for user visibility
     print(f"\n{'='*70}")
@@ -391,11 +395,7 @@ def run_simulation(
 
     # Create and set up network
     network: SensorNetwork = SensorNetwork()
-    # Use current time as seed for different network topologies each run
-    # This ensures that different parameter combinations get different network topologies
-    import time
-    network_seed = int(time.time() * 1000) % 10000  # Use milliseconds, mod 10000 for reasonable range
-    network.create_random_network(n_nodes, area_size, seed=network_seed)  # type: ignore
+    network.create_random_network(n_nodes, area_size)  # type: ignore
 
     # If running dynamic scenario, hand off to that function
     if dynamic_scenario:
@@ -409,6 +409,7 @@ def run_simulation(
             delay_between_steps=delay_between_steps,
             hello_interval=hello_interval,
             ignore_initial_route_discovery=ignore_initial_route_discovery,
+            seed=seed,
         )
 
     print("Running proactive distance vector protocol for network discovery...")
@@ -724,6 +725,14 @@ if __name__ == "__main__":
         help="Maximum probability for random parameters (default: 0.3)",
     )
 
+    # Deterministic behavior parameters
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Random seed for deterministic behavior (default: None, uses time-based seed)",
+    )
+
     args: argparse.Namespace = parser.parse_args()
 
     # Extract arguments
@@ -739,6 +748,19 @@ if __name__ == "__main__":
     delay_between_steps: float = args.delay
     hello_interval: int = args.hello_interval
     ignore_initial_route_discovery: bool = args.ignore_initial_route_discovery
+    seed: Optional[int] = args.seed
+
+    # Set global random seed for deterministic behavior
+    if seed is not None:
+        random.seed(seed)
+        print(f"Using random seed: {seed} for deterministic behavior")
+        logger.info(f"Using random seed: {seed} for deterministic behavior")
+    else:
+        # Use time-based seed (current behavior)
+        time_based_seed = int(time.time() * 1000) % 10000
+        random.seed(time_based_seed)
+        print(f"Using time-based random seed: {time_based_seed}")
+        logger.info(f"Using time-based random seed: {time_based_seed}")
 
     # Auto-enable dynamic scenario if user provided time-steps > 20 or non-default probabilities
     # This ensures the probability parameters actually have an effect
@@ -793,6 +815,7 @@ if __name__ == "__main__":
             fixed_p_request=fixed_p_request,
             fixed_p_fail=eval_p_fail,
             fixed_p_new=eval_p_new,
+            seed=seed,
         )
     else:
         # Run the standard simulation
@@ -808,6 +831,7 @@ if __name__ == "__main__":
             delay_between_steps=delay_between_steps,
             hello_interval=hello_interval,
             ignore_initial_route_discovery=ignore_initial_route_discovery,
+            seed=seed,
         )
         # If it's a dynamic scenario, simulation_result is a dict, otherwise it's a SensorNetwork
         if isinstance(simulation_result, SensorNetwork):
@@ -885,6 +909,7 @@ if __name__ == "__main__":
     print(
         "  --max-prob=<float>        : Maximum probability for random parameters p_fail and p_new (default: 0.3)"
     )
+    print("  --seed=<number>           : Random seed for deterministic behavior (default: time-based)")
 
     # If in interactive mode, wait for user input to keep the windows open
     if interactive_mode:
