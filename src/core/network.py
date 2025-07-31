@@ -15,6 +15,7 @@ class SensorNetwork:
         self.nodes.append(node)
         return node
         
+        
     def create_random_network(self, n: int, area_size: Union[int, float] = 10, min_range: float = 1.0, max_range: float = 3.0) -> List[SensorNode]:
         """Create a network with n nodes randomly positioned with random transmission ranges.
         
@@ -30,6 +31,7 @@ class SensorNetwork:
         Returns:
             List of created nodes
         """
+        random.seed(1)
         self.nodes = []
         # Reset the class-level node tracking
         SensorNode._all_nodes = []  # type: ignore

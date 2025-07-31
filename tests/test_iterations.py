@@ -73,7 +73,7 @@ def run_test_iterations(num_iterations=5, nodes_range=(5, 20)):
             while target_id == source_id:
                 target_id = random.randint(0, num_nodes-1)
                 
-            path, delay = network.simulate_message_transmission(source_id, target_id, "Test message")
+            path, delay, _ = network.simulate_message_transmission(source_id, target_id, "Test message")
             if path:
                 success_count += 1
                 total_delay += delay

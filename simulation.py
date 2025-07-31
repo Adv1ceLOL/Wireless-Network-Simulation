@@ -198,6 +198,7 @@ def run_dynamic_scenario(
             )
             path: Optional[List[int]] = result[0]
             delay: float = result[1]
+            error_reason: Optional[str] = result[2] if len(result) > 2 else None
             stats["requests"] += 1
             if path:
                 stats["successful_transmissions"] += 1
@@ -277,6 +278,33 @@ def run_dynamic_scenario(
         )
         print(f"  Data Packets Forwarded: {get_data_packet_count(network)}")
         print(f"  Total Message Exchanges: {get_total_message_count(network)}")
+
+        # Calculate and display protocol efficiency table
+        print(f"\n{'-' * 50}")
+        print("PROTOCOL EFFICIENCY ANALYSIS")
+        print(f"{'-' * 50}")
+        
+        hello_msgs = get_hello_msg_count(network)
+        topology_msgs = get_topology_msg_count(network)
+        route_discovery_msgs = get_route_discovery_msg_count(network)
+        data_packets = get_data_packet_count(network)
+        total_packets = get_total_message_count(network)
+        
+        # Calculate efficiency
+        from src.core.evaluation import get_protocol_efficiency
+        efficiency = get_protocol_efficiency(network)
+        
+        # Display efficiency table
+        print(f"{'Metric':<25} | {'Count':<8} | {'Percentage':<10}")
+        print(f"{'-'*25} | {'-'*8} | {'-'*10}")
+        print(f"{'Hello Messages':<25} | {hello_msgs:<8} | {hello_msgs/total_packets*100:.2f}%" if total_packets > 0 else f"{'Hello Messages':<25} | {hello_msgs:<8} | {'0.00%':<10}")
+        print(f"{'Topology Messages':<25} | {topology_msgs:<8} | {topology_msgs/total_packets*100:.2f}%" if total_packets > 0 else f"{'Topology Messages':<25} | {topology_msgs:<8} | {'0.00%':<10}")
+        print(f"{'Route Discovery':<25} | {route_discovery_msgs:<8} | {route_discovery_msgs/total_packets*100:.2f}%" if total_packets > 0 else f"{'Route Discovery':<25} | {route_discovery_msgs:<8} | {'0.00%':<10}")
+        print(f"{'Data Packets':<25} | {data_packets:<8} | {data_packets/total_packets*100:.2f}%" if total_packets > 0 else f"{'Data Packets':<25} | {data_packets:<8} | {'0.00%':<10}")
+        print(f"{'-'*25} | {'-'*8} | {'-'*10}")
+        print(f"{'Total Packets':<25} | {total_packets:<8} | {'100.00%':<10}")
+        print(f"\nProtocol Efficiency: {efficiency:.4f} ({efficiency*100:.2f}%)")
+        print("(Efficiency = Data Packets / Total Packets)")
 
     return stats
 
@@ -368,6 +396,7 @@ def run_simulation(
         )
         path: Optional[List[int]] = result[0]
         delay: float = result[1]
+        error_reason: Optional[str] = result[2] if len(result) > 2 else None
 
         if path:
             successful_transmissions += 1
@@ -473,6 +502,33 @@ def run_simulation(
     )
     print(f"  Data Packets Forwarded: {get_data_packet_count(network)}")
     print(f"  Total Message Exchanges: {get_total_message_count(network)}")
+
+    # Calculate and display protocol efficiency table
+    print(f"\n{'-' * 50}")
+    print("PROTOCOL EFFICIENCY ANALYSIS")
+    print(f"{'-' * 50}")
+    
+    hello_msgs = get_hello_msg_count(network)
+    topology_msgs = get_topology_msg_count(network)
+    route_discovery_msgs = get_route_discovery_msg_count(network)
+    data_packets = get_data_packet_count(network)
+    total_packets = get_total_message_count(network)
+    
+    # Calculate efficiency
+    from src.core.evaluation import get_protocol_efficiency
+    efficiency = get_protocol_efficiency(network)
+    
+    # Display efficiency table
+    print(f"{'Metric':<25} | {'Count':<8} | {'Percentage':<10}")
+    print(f"{'-'*25} | {'-'*8} | {'-'*10}")
+    print(f"{'Hello Messages':<25} | {hello_msgs:<8} | {hello_msgs/total_packets*100:.2f}%" if total_packets > 0 else f"{'Hello Messages':<25} | {hello_msgs:<8} | {'0.00%':<10}")
+    print(f"{'Topology Messages':<25} | {topology_msgs:<8} | {topology_msgs/total_packets*100:.2f}%" if total_packets > 0 else f"{'Topology Messages':<25} | {topology_msgs:<8} | {'0.00%':<10}")
+    print(f"{'Route Discovery':<25} | {route_discovery_msgs:<8} | {route_discovery_msgs/total_packets*100:.2f}%" if total_packets > 0 else f"{'Route Discovery':<25} | {route_discovery_msgs:<8} | {'0.00%':<10}")
+    print(f"{'Data Packets':<25} | {data_packets:<8} | {data_packets/total_packets*100:.2f}%" if total_packets > 0 else f"{'Data Packets':<25} | {data_packets:<8} | {'0.00%':<10}")
+    print(f"{'-'*25} | {'-'*8} | {'-'*10}")
+    print(f"{'Total Packets':<25} | {total_packets:<8} | {'100.00%':<10}")
+    print(f"\nProtocol Efficiency: {efficiency:.4f} ({efficiency*100:.2f}%)")
+    print("(Efficiency = Data Packets / Total Packets)")
 
     # Generate detailed network report
     print("\nGenerating detailed network report...")
@@ -645,6 +701,11 @@ if __name__ == "__main__":
     simulation_result: Union[SensorNetwork, Dict[str, Any], None] = None
     if evaluation_mode:
         # Run the evaluation mode
+        # If user specified non-default values for p_fail or p_new, use them as fixed values
+        # This allows users to override the random behavior with fixed values
+        eval_p_fail = p_fail if p_fail != 0.1 else None  # Use fixed if not default
+        eval_p_new = p_new if p_new != 0.1 else None    # Use fixed if not default
+        
         results: Dict[str, Any] = run_evaluation(  # type: ignore
             n_topologies=n_topologies,
             iterations_per_topology=iterations_per_topology,
@@ -652,6 +713,8 @@ if __name__ == "__main__":
             n_nodes=n_nodes,
             area_size=10,
             fixed_p_request=fixed_p_request,
+            fixed_p_fail=eval_p_fail,
+            fixed_p_new=eval_p_new,
         )
     else:
         # Run the standard simulation

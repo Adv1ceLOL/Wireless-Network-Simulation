@@ -154,7 +154,7 @@ def test_message_transmission():
     network.run_distance_vector_protocol()
     
     # Send a message from node 0 to node 2
-    path, delay = network.simulate_message_transmission(0, 2, "Test message")
+    path, delay, _ = network.simulate_message_transmission(0, 2, "Test message")
     
     # Verify the path and delay
     assert path == [0, 1, 2], f"Path is {path}, expected [0, 1, 2]"

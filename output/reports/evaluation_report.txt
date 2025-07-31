@@ -1,0 +1,41 @@
+PROTOCOL EVALUATION REPORT
+======================================================================
+
+Evaluation Parameters:
+  Number of topologies: 1
+  Iterations per topology: 1
+  Maximum probability value: 0.3
+  Fixed p_request value: 0.3
+  Nodes per topology: 15
+
+Detailed Results:
+Topology   Iteration  p_request  p_fail     p_new      Efficiency Links Removed   Links Added     Data Messages   Reconnects
+------------------------------------------------------------------------------------------------------------------------
+1          1          0.300      0.060      0.169      0.0000     0               0               0               0         
+
+SUMMARY TABLE (TRANSPOSED - TOPOLOGY AS COLUMNS):
+----------------------------------------------------------------------
+Metric | Topology 1
+-------------------
+Mean Efficiency      |       0.0000
+Mean p_request       |       0.3000
+Mean p_fail          |       0.0602
+Mean p_new           |       0.1692
+Mean Reconnections   |         0.00
+Links Removed        |            0
+Links Added          |            0
+Total Data Messages  |            0
+Avg Hops/Message     |         0.00
+Avg Delay/Message    |       0.0000
+
+Overall average efficiency: 0.0000
+
+Note on network reconnections:
+  The 'Reconnects' column shows how many times the network needed to be
+  reconnected after a link failure caused disconnected components.
+  This is an important resilience feature of the protocol.
+
+Note on statistics:
+  - Links Removed/Added: The total number of links that were removed/added during evaluation
+  - Total Data Messages: The total number of data packets transmitted (excluding control messages)
+  - Mean Efficiency: The ratio of data packets to total packets (higher is better)

@@ -60,7 +60,8 @@ def run_evaluation_scenario(network, time_steps=5, p_request=0.3, p_fail=0.1, p_
         node.topology_msg_count = 0
         node.route_discovery_msg_count = 0
         node.data_packet_count = 0
-      # Statistics tracking
+        
+    # Statistics tracking
     stats = {
         "requests": 0,
         "successful_transmissions": 0,
@@ -82,7 +83,44 @@ def run_evaluation_scenario(network, time_steps=5, p_request=0.3, p_fail=0.1, p_
     # Save original network connectivity state
     original_links = network.get_all_links()
     
-    # Simulate time steps
+    # Apply topology changes (link failure or addition) - only once per iteration
+    
+    # 1. Randomly remove links with probability p_fail (max one per iteration)
+    if random.random() < p_fail and len(network.get_all_links()) > 0:
+        # Select a random existing link
+        links = network.get_all_links()
+        if links:
+            node_a_id, node_b_id, _ = random.choice(links)
+            # Note: handle_topology_change may reconnect the network if it becomes disconnected
+            iterations = network.handle_topology_change(node_a_id, node_b_id, new_delay=None, verbose=False)
+            stats["links_removed"] += 1
+            stats["reconvergence_iterations"] += iterations
+            
+            # Check if the network needed reconnection (this indicates handle_topology_change had to fix connectivity)
+            new_links = network.get_all_links()
+            if len(new_links) >= len(links):  # If we didn't actually lose a link (it was reconnected)
+                stats["reconnections_needed"] += 1
+    
+    # 2. Randomly add new links with probability p_new (max one per iteration)
+    if random.random() < p_new:
+        # Find nodes that aren't connected
+        unconnected_pairs = []
+        for i in range(n_nodes):
+            for j in range(i+1, n_nodes):
+                if j not in network.nodes[i].connections:
+                    # Check if they're mutually within range
+                    node_a = network.nodes[i]
+                    node_b = network.nodes[j]
+                    if node_a.can_reach(node_b) and node_b.can_reach(node_a):
+                        unconnected_pairs.append((i, j))
+        if unconnected_pairs:                
+            node_a_id, node_b_id = random.choice(unconnected_pairs)
+            delay = random.uniform(0.1, 1.0)
+            iterations = network.handle_topology_change(node_a_id, node_b_id, new_delay=delay, verbose=False)
+            stats["links_added"] += 1
+            stats["reconvergence_iterations"] += iterations
+    
+    # Now simulate time steps (hello messages + packet requests per time step)
     for t in range(time_steps):
         # 1. Hello message exchange 
         for node in network.nodes:
@@ -90,50 +128,15 @@ def run_evaluation_scenario(network, time_steps=5, p_request=0.3, p_fail=0.1, p_
             hello_msgs = len(node.connections)
             node.hello_msg_count += hello_msgs
         
-        # 2. Randomly remove links with probability p_fail
-        if random.random() < p_fail and len(network.get_all_links()) > 0:
-            # Select a random existing link
-            links = network.get_all_links()
-            if links:
-                node_a_id, node_b_id, _ = random.choice(links)
-                # Note: handle_topology_change may reconnect the network if it becomes disconnected
-                iterations = network.handle_topology_change(node_a_id, node_b_id, new_delay=None, verbose=False)
-                stats["links_removed"] += 1
-                stats["reconvergence_iterations"] += iterations
-                
-                # Check if the network needed reconnection (this indicates handle_topology_change had to fix connectivity)
-                new_links = network.get_all_links()
-                if len(new_links) >= len(links):  # If we didn't actually lose a link (it was reconnected)
-                    stats["reconnections_needed"] += 1
-        
-        # 3. Randomly add new links with probability p_new
-        if random.random() < p_new:
-            # Find nodes that aren't connected
-            unconnected_pairs = []
-            for i in range(n_nodes):
-                for j in range(i+1, n_nodes):
-                    if j not in network.nodes[i].connections:
-                        # Check if they're mutually within range
-                        node_a = network.nodes[i]
-                        node_b = network.nodes[j]
-                        if node_a.can_reach(node_b) and node_b.can_reach(node_a):
-                            unconnected_pairs.append((i, j))
-            if unconnected_pairs:                
-                node_a_id, node_b_id = random.choice(unconnected_pairs)
-                delay = random.uniform(0.1, 1.0)
-                iterations = network.handle_topology_change(node_a_id, node_b_id, new_delay=delay, verbose=False)
-                stats["links_added"] += 1
-                stats["reconvergence_iterations"] += iterations
-        
-        # 4. Process random packet requests with probability p_request
+        # 2. Process random packet request with probability p_request (max one per time step)
         if random.random() < p_request:
             source_id = random.randint(0, n_nodes-1)
             dest_id = random.randint(0, n_nodes-1)
             while dest_id == source_id:
                 dest_id = random.randint(0, n_nodes-1)
-            message = f"Packet at t={t+1}"
+            message = f"Packet request at t={t+1}"
             
-            path, delay = network.simulate_message_transmission(source_id, dest_id, message, verbose=False)
+            path, delay, error = network.simulate_message_transmission(source_id, dest_id, message, verbose=False)
             stats["requests"] += 1
             if path:
                 stats["successful_transmissions"] += 1
@@ -144,7 +147,7 @@ def run_evaluation_scenario(network, time_steps=5, p_request=0.3, p_fail=0.1, p_
                     stats["total_hops"] = stats.get("total_hops", 0) + hop_count
             else:
                 stats["failed_transmissions"] += 1
-      # Calculate efficiency metrics
+    # Calculate efficiency metrics
     data_packets = 0
     hello_msgs = 0
     topology_msgs = 0
@@ -173,7 +176,7 @@ def run_evaluation_scenario(network, time_steps=5, p_request=0.3, p_fail=0.1, p_
     
     return stats
 
-def run_evaluation(n_topologies=5, iterations_per_topology=10, max_probability=0.3, n_nodes=15, area_size=10, fixed_p_request=0.5):
+def run_evaluation(n_topologies=1, iterations_per_topology=100, max_probability=0.3, n_nodes=20, area_size=10, fixed_p_request=0.5, fixed_p_fail=None, fixed_p_new=None):
     """Run a comprehensive evaluation of the protocol with varying parameters.
     
     Args:
@@ -183,6 +186,8 @@ def run_evaluation(n_topologies=5, iterations_per_topology=10, max_probability=0
         n_nodes: Number of nodes in each network topology
         area_size: Size of the simulation area
         fixed_p_request: Fixed probability for packet requests (static parameter)
+        fixed_p_fail: If provided, use this fixed value for p_fail instead of random values
+        fixed_p_new: If provided, use this fixed value for p_new instead of random values
         
     Returns:
         Dictionary with evaluation statistics
@@ -192,6 +197,14 @@ def run_evaluation(n_topologies=5, iterations_per_topology=10, max_probability=0
     print(f"Topologies: {n_topologies}, Iterations per topology: {iterations_per_topology}")
     print(f"Maximum probability value for dynamic parameters: {max_probability}")
     print(f"Fixed p_request value: {fixed_p_request}")
+    if fixed_p_fail is not None:
+        print(f"Fixed p_fail value: {fixed_p_fail}")
+    else:
+        print(f"Random p_fail values: 0.01 to {max_probability}")
+    if fixed_p_new is not None:
+        print(f"Fixed p_new value: {fixed_p_new}")
+    else:
+        print(f"Random p_new values: 0.01 to {max_probability}")
     print(f"{'='*70}\n")
     
     # Store results for final report
@@ -221,13 +234,25 @@ def run_evaluation(n_topologies=5, iterations_per_topology=10, max_probability=0
         
         # Run iterations with different parameters
         for iter_idx in range(iterations_per_topology):
-            # Keep p_request fixed, but vary p_fail and p_new
-            p_request = fixed_p_request  # Use fixed value
-            p_fail = random.uniform(0.01, max_probability)
-            p_new = random.uniform(0.01, max_probability)
+            # Use fixed values if provided, otherwise use random values
+            p_request = fixed_p_request  # Always use fixed value for p_request
+            
+            if fixed_p_fail is not None:
+                p_fail = fixed_p_fail  # Use fixed value
+            else:
+                p_fail = random.uniform(0.01, max_probability)  # Use random value
+                
+            if fixed_p_new is not None:
+                p_new = fixed_p_new  # Use fixed value
+            else:
+                p_new = random.uniform(0.01, max_probability)  # Use random value
+            
+            # Determine parameter status for display
+            p_fail_status = "fixed" if fixed_p_fail is not None else "random"
+            p_new_status = "fixed" if fixed_p_new is not None else "random"
             
             # Run one simulation step with the parameters
-            print(f"\nIteration {iter_idx+1}/{iterations_per_topology}: p_request={p_request:.3f} (fixed), p_fail={p_fail:.3f}, p_new={p_new:.3f}")
+            print(f"\nIteration {iter_idx+1}/{iterations_per_topology}: p_request={p_request:.3f} (fixed), p_fail={p_fail:.3f} ({p_fail_status}), p_new={p_new:.3f} ({p_new_status})")
             
             # Run a mini evaluation scenario with these parameters
             time_steps = 5
