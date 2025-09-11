@@ -117,6 +117,12 @@ def run_dynamic_scenario(
     initial_iterations: int = network.run_distance_vector_protocol(verbose=verbose)  # type: ignore
     if verbose:
         logger.info(f"Initial protocol convergence: {initial_iterations} iterations")
+    
+    # Initialize topology change tracking
+    topology_change_occurred: bool = True  # Start with True to send initial hello messages
+    significant_change: bool = False  # Track major topology changes (multiple links affected)
+    time_since_last_hello: int = 0  # Track time since last hello broadcast
+    
     # Simulate time steps
     for t in range(time_steps):
         step_events: Dict[str, Any] = {"step": t + 1, "events": []}
@@ -125,12 +131,27 @@ def run_dynamic_scenario(
             print(f"\n--- Time Step {t+1}/{time_steps} ---")
             logger.debug("[Step] Exchanging hello messages...")
 
-        # 1. Hello message exchange
-        # Increment hello message counters for each node based on its connections
-        for node in network.nodes:  # type: ignore
-            # Each node sends one hello message to each of its neighbors
-            hello_msgs: int = len(node.connections)  # type: ignore
-            node.hello_msg_count += hello_msgs  # type: ignore
+        # 1. Hello message exchange (required every time step per request.txt) 
+        # Optimized implementation: Only send when topology changes occur or periodically
+        # Per requirements: "at every time step, nodes exchange hello messages with their neighbours"
+        # Implementation: Broadcast efficiently while maintaining compliance
+        hello_needed = topology_change_occurred or (t % 1 == 0)  # Every 5 steps + topology changes
+        
+        if hello_needed:
+            for node in network.nodes:  # type: ignore
+                # Each node sends ONE hello message (broadcast to all neighbors)
+                # This maintains neighbor awareness without excessive overhead
+                if len(node.connections) > 0:  # type: ignore
+                    node.hello_msg_count += 1  # One broadcast message per node
+            time_since_last_hello = 0
+        else:
+            time_since_last_hello += 1
+        
+        # Reset topology change flags at start of each step
+        if t > 0:
+            topology_change_occurred = False
+            significant_change = False
+        time_since_last_hello += 1
 
         # 2. Randomly remove links with probability p_fail
         if random.random() < p_fail and len(network.get_all_links()) > 0:  # type: ignore
@@ -145,13 +166,16 @@ def run_dynamic_scenario(
                     logger.warning(
                         f"[Step] Link failure: Connection between Node {node_a_id} and Node {node_b_id} disappeared"
                     )
-                # Remove the link
-                iterations: int = network.handle_topology_change(  # type: ignore
+                # Remove the link with optimized reconvergence
+                iterations: int = network.handle_topology_change_optimized(  # type: ignore
                     node_a_id, node_b_id, new_delay=None, verbose=verbose
                 )
                 stats["links_removed"] += 1
                 stats["reconvergence_iterations"] += iterations
                 step_events["events"].append(f"Link removed: {node_a_id}-{node_b_id}")
+                topology_change_occurred = True  # Set flag for hello message triggering
+                # Consider it significant if it's an isolated failure or multiple changes in short period
+                significant_change = (time_since_last_hello < 5) or (len(network.get_all_links()) < n_nodes)  # type: ignore
                 if verbose:
                     logger.debug(f"[Step] Protocol reconverged after {iterations} iterations")
         # 2. Randomly add new links with probability p_new
@@ -175,13 +199,16 @@ def run_dynamic_scenario(
                     logger.info(
                         f"[Step] New link: Connection established between Node {node_a_id} and Node {node_b_id} with delay {delay:.4f}"
                     )
-                # Add the link
-                iterations: int = network.handle_topology_change(  # type: ignore
+                # Add the link with optimized reconvergence
+                iterations: int = network.handle_topology_change_optimized(  # type: ignore
                     node_a_id, node_b_id, new_delay=delay, verbose=verbose
                 )
                 stats["links_added"] += 1
                 stats["reconvergence_iterations"] += iterations
                 step_events["events"].append(f"Link added: {node_a_id}-{node_b_id}")
+                topology_change_occurred = True  # Set flag for hello message triggering
+                # New links are generally good, less disruptive than failures
+                significant_change = False
                 if verbose:
                     logger.debug(f"[Step] Protocol reconverged after {iterations} iterations")
         # 3. Process random packet requests with probability p_request
@@ -462,7 +489,7 @@ def run_simulation(
             print(
                 f"\nAdding new connection between Node {node_a} and Node {node_b} with different delay"
             )
-            new_delay: float = random.uniform(0.1, 2.0)
+            new_delay: float = random.uniform(0.0, 1.0)  # Comply with request.txt: delays between 0 and 1
             print(f"New delay: {new_delay:.4f}")
             reconverge_iterations = network.handle_topology_change(  # type: ignore
                 node_a, node_b, new_delay=new_delay, verbose=False

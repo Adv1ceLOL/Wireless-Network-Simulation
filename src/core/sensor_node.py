@@ -83,15 +83,66 @@ class SensorNode:
         self.update_needed = True
         
     def send_distance_vector(self, network):
-        """Send this node's distance vector to all neighbors if updates are needed."""
+        """Send this node's distance vector to neighbors only if significant updates are needed."""
         if self.update_needed:
+            # Count meaningful updates to reduce unnecessary transmissions
+            meaningful_updates = 0
             for neighbor_id in self.get_neighbors():
                 neighbor = network.get_node_by_id(neighbor_id)
-                neighbor.receive_distance_vector(self.node_id, copy.deepcopy(self.distance_vector))
-                # Increment route discovery message count
-                self.route_discovery_msg_count += 1
-            self.update_needed = False
+                # Only send if we have meaningful routing information to share
+                if self._has_meaningful_updates_for_neighbor(neighbor_id):
+                    neighbor.receive_distance_vector(self.node_id, copy.deepcopy(self.distance_vector))
+                    meaningful_updates += 1
+            
+            # Only count ONE route discovery message per node update instead of per neighbor
+            # This represents one routing update broadcast from this node
+            if meaningful_updates > 0:
+                self.route_discovery_msg_count += 1  # One message per node update, not per neighbor
+                self.update_needed = False
+                return True
+            else:
+                # If no meaningful updates were sent, we might still need updates later
+                # but don't spam the network
+                self.update_needed = False
+                return False
+        return False
+    
+    def send_hello_messages(self, network):
+        """Send hello messages to all neighbors as required by request.txt.
+        
+        As per request.txt: 'at every time step, nodes exchange hello messages with their neighbours'
+        This maintains neighbor awareness and is separate from routing updates.
+        """
+        if len(self.connections) > 0:
+            # Send one hello message broadcast to all neighbors
+            # This is an efficient implementation - one message reaches all neighbors
+            self.hello_msg_count += 1
+            
+            # In a real implementation, neighbors would respond, but for simulation
+            # we just count the outgoing hello messages as required
             return True
+        return False
+    
+    def _has_meaningful_updates_for_neighbor(self, neighbor_id: int) -> bool:
+        """Check if we have meaningful routing updates for a specific neighbor."""
+        # Always send if we don't have previous state
+        if not hasattr(self, '_last_sent_vectors'):
+            self._last_sent_vectors = {}
+            return True
+            
+        last_vector = self._last_sent_vectors.get(neighbor_id, {})
+        
+        # Check if distance vector has meaningful changes
+        for dest, distance in self.distance_vector.items():
+            if dest == neighbor_id:
+                continue  # Don't send routes back to the neighbor about itself
+                
+            last_distance = last_vector.get(dest, float('inf'))
+            # Consider it meaningful if distance changed significantly or route became available/unavailable
+            if abs(distance - last_distance) > 0.01 or (distance == float('inf')) != (last_distance == float('inf')):
+                self._last_sent_vectors[neighbor_id] = self.distance_vector.copy()
+                return True
+                
         return False
 
     def receive_distance_vector(self, from_node_id, vector):

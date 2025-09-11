@@ -1,0 +1,324 @@
+{
+  "scenario_id": "dynamic_topology",
+  "topology": {
+    "nodes": [
+      [
+        5.795738053684028,
+        7.323597679392383,
+        1.1802667514924379
+      ],
+      [
+        2.9511045162915526,
+        7.474808649383715,
+        1.3512801408886133
+      ],
+      [
+        1.3215979774678355,
+        5.39407758984421,
+        2.94297916242268
+      ],
+      [
+        5.30852373702785,
+        9.13486974481697,
+        2.6609452391347945
+      ],
+      [
+        2.569700845632623,
+        8.246898125424073,
+        1.9636956597474824
+      ],
+      [
+        8.064884937937665,
+        7.465593507170451,
+        1.6774305076037725
+      ],
+      [
+        1.151697074497594,
+        9.628932928688776,
+        1.2815140300117653
+      ],
+      [
+        9.665002094627521,
+        8.601405968988217,
+        2.4484334241510366
+      ],
+      [
+        9.799422427819035,
+        9.672697473000323,
+        2.609175288041124
+      ],
+      [
+        3.657750494055664,
+        7.906819685889374,
+        1.0278373102018024
+      ],
+      [
+        5.365723082690591,
+        4.547860277338747,
+        2.345656763747507
+      ],
+      [
+        6.723407973510131,
+        5.8456009165216605,
+        2.6448346024535487
+      ]
+    ],
+    "initial_links": [
+      [
+        1,
+        4,
+        0.9462627026015987
+      ],
+      [
+        1,
+        9,
+        0.19751149197930762
+      ],
+      [
+        7,
+        8,
+        0.31043971199042486
+      ],
+      [
+        10,
+        11,
+        0.1225221846818341
+      ]
+    ]
+  },
+  "events": [
+    {
+      "time_step": 1,
+      "event_type": "packet_request",
+      "parameters": {
+        "source_id": 1,
+        "dest_id": 10,
+        "message": "Packet at t=2"
+      }
+    },
+    {
+      "time_step": 2,
+      "event_type": "packet_request",
+      "parameters": {
+        "source_id": 6,
+        "dest_id": 1,
+        "message": "Packet at t=3"
+      }
+    },
+    {
+      "time_step": 2,
+      "event_type": "link_failure",
+      "parameters": {
+        "selection_seed": 992227
+      }
+    },
+    {
+      "time_step": 2,
+      "event_type": "link_addition",
+      "parameters": {
+        "selection_seed": 516554,
+        "delay": 0.20450843265259855
+      }
+    },
+    {
+      "time_step": 3,
+      "event_type": "packet_request",
+      "parameters": {
+        "source_id": 8,
+        "dest_id": 2,
+        "message": "Packet at t=4"
+      }
+    },
+    {
+      "time_step": 8,
+      "event_type": "packet_request",
+      "parameters": {
+        "source_id": 7,
+        "dest_id": 3,
+        "message": "Packet at t=9"
+      }
+    },
+    {
+      "time_step": 8,
+      "event_type": "link_addition",
+      "parameters": {
+        "selection_seed": 718987,
+        "delay": 0.43060146264746246
+      }
+    },
+    {
+      "time_step": 9,
+      "event_type": "link_addition",
+      "parameters": {
+        "selection_seed": 289282,
+        "delay": 0.27082770594497163
+      }
+    },
+    {
+      "time_step": 10,
+      "event_type": "packet_request",
+      "parameters": {
+        "source_id": 7,
+        "dest_id": 1,
+        "message": "Packet at t=11"
+      }
+    },
+    {
+      "time_step": 11,
+      "event_type": "link_failure",
+      "parameters": {
+        "selection_seed": 825013
+      }
+    },
+    {
+      "time_step": 17,
+      "event_type": "link_failure",
+      "parameters": {
+        "selection_seed": 908536
+      }
+    },
+    {
+      "time_step": 17,
+      "event_type": "link_addition",
+      "parameters": {
+        "selection_seed": 15582,
+        "delay": 0.4224180512948795
+      }
+    },
+    {
+      "time_step": 18,
+      "event_type": "link_addition",
+      "parameters": {
+        "selection_seed": 278258,
+        "delay": 0.14715911607505888
+      }
+    },
+    {
+      "time_step": 21,
+      "event_type": "packet_request",
+      "parameters": {
+        "source_id": 8,
+        "dest_id": 3,
+        "message": "Packet at t=22"
+      }
+    },
+    {
+      "time_step": 21,
+      "event_type": "link_addition",
+      "parameters": {
+        "selection_seed": 821273,
+        "delay": 0.9178765191158861
+      }
+    },
+    {
+      "time_step": 23,
+      "event_type": "packet_request",
+      "parameters": {
+        "source_id": 7,
+        "dest_id": 6,
+        "message": "Packet at t=24"
+      }
+    },
+    {
+      "time_step": 23,
+      "event_type": "link_addition",
+      "parameters": {
+        "selection_seed": 747006,
+        "delay": 0.9187307462037064
+      }
+    },
+    {
+      "time_step": 24,
+      "event_type": "packet_request",
+      "parameters": {
+        "source_id": 1,
+        "dest_id": 5,
+        "message": "Packet at t=25"
+      }
+    },
+    {
+      "time_step": 24,
+      "event_type": "link_addition",
+      "parameters": {
+        "selection_seed": 288375,
+        "delay": 0.661885744853087
+      }
+    },
+    {
+      "time_step": 27,
+      "event_type": "link_addition",
+      "parameters": {
+        "selection_seed": 686516,
+        "delay": 0.6858249983931749
+      }
+    },
+    {
+      "time_step": 30,
+      "event_type": "link_addition",
+      "parameters": {
+        "selection_seed": 447494,
+        "delay": 0.38127121402768105
+      }
+    },
+    {
+      "time_step": 31,
+      "event_type": "packet_request",
+      "parameters": {
+        "source_id": 2,
+        "dest_id": 10,
+        "message": "Packet at t=32"
+      }
+    },
+    {
+      "time_step": 31,
+      "event_type": "link_addition",
+      "parameters": {
+        "selection_seed": 872176,
+        "delay": 0.17682792159845745
+      }
+    },
+    {
+      "time_step": 33,
+      "event_type": "packet_request",
+      "parameters": {
+        "source_id": 0,
+        "dest_id": 9,
+        "message": "Packet at t=34"
+      }
+    },
+    {
+      "time_step": 36,
+      "event_type": "packet_request",
+      "parameters": {
+        "source_id": 4,
+        "dest_id": 9,
+        "message": "Packet at t=37"
+      }
+    },
+    {
+      "time_step": 36,
+      "event_type": "link_addition",
+      "parameters": {
+        "selection_seed": 532060,
+        "delay": 0.2914649251048055
+      }
+    },
+    {
+      "time_step": 37,
+      "event_type": "link_addition",
+      "parameters": {
+        "selection_seed": 886438,
+        "delay": 0.6006389284938942
+      }
+    },
+    {
+      "time_step": 38,
+      "event_type": "packet_request",
+      "parameters": {
+        "source_id": 4,
+        "dest_id": 9,
+        "message": "Packet at t=39"
+      }
+    }
+  ]
+}
