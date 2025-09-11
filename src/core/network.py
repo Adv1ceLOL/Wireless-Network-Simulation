@@ -16,7 +16,7 @@ class SensorNetwork:
         return node
         
         
-    def create_random_network(self, n: int, area_size: Union[int, float] = 10, min_range: float = 1.0, max_range: float = 3.0, seed: Optional[int] = None) -> List[SensorNode]:
+    def create_random_network(self, n: int, area_size: Union[int, float] = 10, min_range: float = 1.0, max_range: float = 3.0) -> List[SensorNode]:
         """Create a network with n nodes randomly positioned with random transmission ranges.
         
         The network created will have the following properties:
@@ -27,13 +27,11 @@ class SensorNetwork:
             n: Number of nodes
             area_size: Size of the square area
             min_range, max_range: Min/max transmission range for nodes
-            seed: Random seed for reproducible networks (if None, uses current random state)
             
         Returns:
             List of created nodes
         """
-        if seed is not None:
-            random.seed(seed)
+        random.seed(1)
         self.nodes = []
         # Reset the class-level node tracking
         SensorNode._all_nodes = []  # type: ignore
@@ -44,7 +42,6 @@ class SensorNetwork:
             transmission_range: float = random.uniform(min_range, max_range)
             node: SensorNode = SensorNode(node_id=i, x=x, y=y, transmission_range=transmission_range)  # type: ignore
             self.nodes.append(node)
-              # Generate weighted connections
         self._generate_connections()
         return self.nodes
         
@@ -59,24 +56,19 @@ class SensorNetwork:
             for j in range(i + 1, n):
                 node_a: SensorNode = self.nodes[i]
                 node_b: SensorNode = self.nodes[j]
-                # Check if nodes are mutually within range
                 if node_a.can_reach(node_b) and node_b.can_reach(node_a):  # type: ignore
                     delay: float = random.uniform(0, 1)
                     node_a.add_connection(node_b.node_id, delay)  # type: ignore
                     node_b.add_connection(node_a.node_id, delay)  # type: ignore
         
         if ensure_connected:
-            # Ensure no isolated nodes (nodes without connections)
             self._ensure_no_isolated_nodes()
-            
-            # Ensure the network is fully connected (any node can reach any other)
             self._ensure_fully_connected_network()
                     
     def _ensure_no_isolated_nodes(self) -> None:
         """Ensure that every node has at least one connection."""
         isolated_nodes: List[SensorNode] = []
         
-        # Find all isolated nodes
         for node in self.nodes:
             if len(node.connections) == 0:  # type: ignore
                 isolated_nodes.append(node)
@@ -86,23 +78,19 @@ class SensorNetwork:
             
         print(f"Found {len(isolated_nodes)} isolated nodes, connecting them to the network...")
         
-        # For each isolated node, find the closest non-isolated node and connect them
         for isolated_node in isolated_nodes:
             closest_node: Optional[SensorNode] = None
             min_distance: float = float('inf')
             
-            # Find the closest non-isolated node
             for other_node in self.nodes:
                 if other_node is isolated_node or other_node in isolated_nodes:
-                    continue  # Skip self and other isolated nodes
+                    continue
                     
                 distance: float = isolated_node.distance_to(other_node)  # type: ignore
                 if distance < min_distance:
                     min_distance = distance
                     closest_node = other_node
             
-            # If there are no non-isolated nodes (all nodes are isolated),
-            # connect to another isolated node instead
             if closest_node is None and len(isolated_nodes) > 1:
                 for other_node in isolated_nodes:
                     if other_node is isolated_node:
@@ -113,14 +101,11 @@ class SensorNetwork:
                         min_distance = distance
                         closest_node = other_node
             
-            # If we found a node to connect to, create a bidirectional connection
             if closest_node is not None:
-                # Increase the transmission range of both nodes to reach each other
                 distance = isolated_node.distance_to(closest_node)  # type: ignore
                 isolated_node.transmission_range = max(isolated_node.transmission_range, distance * 1.1)  # type: ignore
                 closest_node.transmission_range = max(closest_node.transmission_range, distance * 1.1)  # type: ignore
                 
-                # Create the connection with a random delay
                 delay: float = random.uniform(0, 1)
                 isolated_node.add_connection(closest_node.node_id, delay)  # type: ignore
                 closest_node.add_connection(isolated_node.node_id, delay)  # type: ignore
@@ -478,11 +463,6 @@ class SensorNetwork:
             iteration += 1
             if verbose:
                 print(f"\nIteration {iteration}")
-            
-            # As per request.txt: "at every time step, nodes exchange hello messages with their neighbours"
-            # Send hello messages every iteration to maintain neighbor awareness
-            for node in self.nodes:
-                node.send_hello_messages(self)  # type: ignore
             
             # Phase 1: All nodes send their current distance vectors to neighbors
             updates_sent: bool = False
@@ -899,11 +879,6 @@ class SensorNetwork:
             iteration += 1
             if verbose:
                 print(f"\nIteration {iteration}")
-            
-            # As per request.txt: "at every time step, nodes exchange hello messages with their neighbours"
-            # Send hello messages every iteration to maintain neighbor awareness
-            for node in self.nodes:
-                node.send_hello_messages(self)  # type: ignore
             
             # Phase 1: All nodes send their current distance vectors to neighbors
             updates_sent: bool = False

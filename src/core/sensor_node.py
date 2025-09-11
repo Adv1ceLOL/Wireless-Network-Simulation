@@ -4,7 +4,7 @@ import copy
 class SensorNode:
     """A node in a wireless sensor network with position and connection capabilities."""
     
-    _all_nodes = []  # Keep track of all nodes in the network
+    _all_nodes = []
     
     def __init__(self, node_id, x=0, y=0, transmission_range=1.0):
         """Initialize a sensor node.
@@ -18,18 +18,17 @@ class SensorNode:
         self.x = x
         self.y = y
         self.transmission_range = transmission_range
-        self.connections = {}  # {neighbor_node_id: delay}
-        self.routing_table = {}  # {destination: (next_hop, cost)}
-        self.distance_vector = {}  # {destination: cost}
-        self.neighbor_vectors = {}  # {neighbor_id: their distance vector}
-        self.updates_to_process = []  # [(from_node_id, distance_vector), ...]
-        self.update_needed = False  # Flag to indicate if this node needs to send updates
+        self.connections = {}
+        self.routing_table = {}
+        self.distance_vector = {}
+        self.neighbor_vectors = {}
+        self.updates_to_process = []
+        self.update_needed = False
         
-        # Message counters
-        self.hello_msg_count = 0  # Count of hello messages
-        self.topology_msg_count = 0  # Count of topology discovery messages
-        self.route_discovery_msg_count = 0  # Count of control packets for route discovery
-        self.data_packet_count = 0  # Count of data packets forwarded
+        self.hello_msg_count = 0
+        self.topology_msg_count = 0
+        self.route_discovery_msg_count = 0
+        self.data_packet_count = 0
         
         SensorNode._all_nodes.append(self)
         
@@ -64,13 +63,11 @@ class SensorNode:
         """Initialize the distance vector for this node."""
         n_nodes = len(network.nodes)
         self.distance_vector = {i: float('inf') for i in range(n_nodes)}
-        self.distance_vector[self.node_id] = 0  # Distance to self is 0
+        self.distance_vector[self.node_id] = 0
         
-        # Distance to direct neighbors is the connection delay
         for neighbor_id, delay in self.connections.items():
             self.distance_vector[neighbor_id] = delay
             
-        # Initialize routing table
         self.routing_table = {}
         for dest_id in range(n_nodes):
             if dest_id == self.node_id:
@@ -85,7 +82,6 @@ class SensorNode:
     def send_distance_vector(self, network):
         """Send this node's distance vector to neighbors only if significant updates are needed."""
         if self.update_needed:
-            # Count meaningful updates to reduce unnecessary transmissions
             meaningful_updates = 0
             for neighbor_id in self.get_neighbors():
                 neighbor = network.get_node_by_id(neighbor_id)
@@ -94,48 +90,26 @@ class SensorNode:
                     neighbor.receive_distance_vector(self.node_id, copy.deepcopy(self.distance_vector))
                     meaningful_updates += 1
             
-            # Only count ONE route discovery message per node update instead of per neighbor
-            # This represents one routing update broadcast from this node
             if meaningful_updates > 0:
-                self.route_discovery_msg_count += 1  # One message per node update, not per neighbor
+                self.route_discovery_msg_count += 1
                 self.update_needed = False
                 return True
             else:
-                # If no meaningful updates were sent, we might still need updates later
-                # but don't spam the network
                 self.update_needed = False
                 return False
         return False
     
-    def send_hello_messages(self, network):
-        """Send hello messages to all neighbors as required by request.txt.
-        
-        As per request.txt: 'at every time step, nodes exchange hello messages with their neighbours'
-        This maintains neighbor awareness and is separate from routing updates.
-        """
-        if len(self.connections) > 0:
-            # Send one hello message broadcast to all neighbors
-            # This is an efficient implementation - one message reaches all neighbors
-            self.hello_msg_count += 1
-            
-            # In a real implementation, neighbors would respond, but for simulation
-            # we just count the outgoing hello messages as required
-            return True
-        return False
-    
     def _has_meaningful_updates_for_neighbor(self, neighbor_id: int) -> bool:
         """Check if we have meaningful routing updates for a specific neighbor."""
-        # Always send if we don't have previous state
         if not hasattr(self, '_last_sent_vectors'):
             self._last_sent_vectors = {}
             return True
             
         last_vector = self._last_sent_vectors.get(neighbor_id, {})
         
-        # Check if distance vector has meaningful changes
         for dest, distance in self.distance_vector.items():
             if dest == neighbor_id:
-                continue  # Don't send routes back to the neighbor about itself
+                continue
                 
             last_distance = last_vector.get(dest, float('inf'))
             # Consider it meaningful if distance changed significantly or route became available/unavailable

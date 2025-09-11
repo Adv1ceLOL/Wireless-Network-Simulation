@@ -9,19 +9,16 @@ import time
 import logging
 import argparse
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
 )
 logger: logging.Logger = logging.getLogger('wireless_network_sim')
 
-# Add these functions to count messages
 def get_hello_msg_count(network: SensorNetwork) -> int:
     """Count all hello messages across all nodes"""
     count: int = 0
     for node in network.nodes:  # type: ignore
-        # Adding a default of 0 if the attribute doesn't exist
         count += getattr(node, "hello_msg_count", 0)  # type: ignore
     return count
 
@@ -30,7 +27,6 @@ def get_topology_msg_count(network: SensorNetwork) -> int:
     """Count all topology discovery messages across all nodes"""
     count: int = 0
     for node in network.nodes:  # type: ignore
-        # Adding a default of 0 if the attribute doesn't exist
         count += getattr(node, "topology_msg_count", 0)  # type: ignore
     return count
 
@@ -39,7 +35,6 @@ def get_route_discovery_msg_count(network: SensorNetwork) -> int:
     """Count all route discovery control packets across all nodes"""
     count: int = 0
     for node in network.nodes:  # type: ignore
-        # Adding a default of 0 if the attribute doesn't exist
         count += getattr(node, "route_discovery_msg_count", 0)  # type: ignore
     return count
 
@@ -48,7 +43,6 @@ def get_data_packet_count(network: SensorNetwork) -> int:
     """Count all data packets forwarded across all nodes"""
     count: int = 0
     for node in network.nodes:  # type: ignore
-        # Adding a default of 0 if the attribute doesn't exist
         count += getattr(node, "data_packet_count", 0)  # type: ignore
     return count
 
@@ -73,8 +67,8 @@ def run_dynamic_scenario(
     delay_between_steps: float = 1.0,
     verbose: bool = True,
     hello_interval: int = 5,  # Send hello messages every N time steps
-    ignore_initial_route_discovery: bool = True,  # Reset route discovery counters after initial convergence
-    seed: Optional[int] = None,  # Note: global random seed should be set before calling this function
+    ignore_initial_route_discovery: bool = True,
+    seed: Optional[int] = None,
 ) -> Dict[str, Any]:
     """Run a dynamic scenario simulation with probabilistic events.
 
@@ -87,7 +81,7 @@ def run_dynamic_scenario(
         interactive: Whether to show visualizations during simulation
         delay_between_steps: Delay between time steps (seconds)
         verbose: Whether to print detailed information
-        hello_interval: Send hello messages every N time steps (0 = never, 1 = every step)
+        hello_interval: Legacy parameter (hello messages now sent every step as per request.txt)
         ignore_initial_route_discovery: Whether to reset route discovery counters after initial convergence for static networks
         seed: Random seed for deterministic behavior (global random seed should be set before calling)
 
@@ -95,13 +89,12 @@ def run_dynamic_scenario(
         Dictionary with simulation statistics
     """
     if verbose:
-        # Main simulation header is important info for the user
         print(f"\n{'='*70}")
         print("DYNAMIC SCENARIO SIMULATION")
         print(
             f"Time steps: {time_steps}, P(request): {p_request}, P(fail): {p_fail}, P(new): {p_new}"
         )
-        print(f"Hello interval: {hello_interval} time steps")
+        print("Hello messages: Sent every time step (as per request.txt requirement)")
         print(f"{'='*70}\n")
         # Log the same information
         logger.info(f"Starting dynamic scenario simulation - Time steps: {time_steps}, P(request): {p_request}, P(fail): {p_fail}, P(new): {p_new}")
@@ -121,35 +114,42 @@ def run_dynamic_scenario(
 
     n_nodes: int = len(network.nodes)  # type: ignore
 
-    # Run the protocol initially to ensure routing tables are built
     initial_iterations: int = network.run_distance_vector_protocol(verbose=verbose)  # type: ignore
     if verbose:
         logger.info(f"Initial protocol convergence: {initial_iterations} iterations")
     
-    # Initialize topology change tracking
-    topology_change_occurred: bool = True  # Start with True to send initial hello messages
-    significant_change: bool = False  # Track major topology changes (multiple links affected)
-    time_since_last_hello: int = 0  # Track time since last hello broadcast
+    if ignore_initial_route_discovery:
+        if verbose:
+            logger.debug("Resetting route discovery counters after initial convergence for efficiency analysis")
+        for node in network.nodes:  # type: ignore
+            node.route_discovery_msg_count = 0  # type: ignore
     
-    # Simulate time steps
+    significant_change: bool = False
+    
     for t in range(time_steps):
         step_events: Dict[str, Any] = {"step": t + 1, "events": []}
         topology_changed: bool = False
+        send_hello_this_step: bool = False
 
         if verbose:
             print(f"\n--- Time Step {t+1}/{time_steps} ---")
-            logger.debug("[Step] Exchanging hello messages...")
 
-        # 1. Hello message exchange
-        # Increment hello message counters for each node based on its connections
-        for node in network.nodes:  # type: ignore
-            # Each node sends one hello message to each of its neighbors
-            hello_msgs: int = len(node.connections)  # type: ignore
-            node.hello_msg_count += hello_msgs  # type: ignore
+        send_hello_this_step = True
+        if verbose:
+            logger.debug("[Step] Sending hello messages (required every time step)...")
+        
+        if send_hello_this_step:
+            hello_messages_sent = 0
+            for node in network.nodes:  # type: ignore
+                if len(node.connections) > 0:  # type: ignore
+                    node.hello_msg_count += 1  # type: ignore
+                    hello_messages_sent += 1
+            stats["hello_exchanges"] += hello_messages_sent
+            
+            if verbose:
+                logger.debug(f"[Step] {hello_messages_sent} hello broadcasts sent")
 
-        # 2. Randomly remove links with probability p_fail
         if random.random() < p_fail and len(network.get_all_links()) > 0:  # type: ignore
-            # Select a random existing link
             links: List[Tuple[int, int, float]] = network.get_all_links()  # type: ignore
             if links:
                 node_a_id: int
@@ -161,35 +161,21 @@ def run_dynamic_scenario(
                     logger.warning(
                         f"[Step] Link failure: Connection between Node {node_a_id} and Node {node_b_id} disappeared"
                     )
-                # Remove the link with optimized reconvergence
                 iterations: int = network.handle_topology_change_optimized(  # type: ignore
                     node_a_id, node_b_id, new_delay=None, verbose=verbose
                 )
                 stats["links_removed"] += 1
                 stats["reconvergence_iterations"] += iterations
                 step_events["events"].append(f"Link removed: {node_a_id}-{node_b_id}")
-                topology_change_occurred = True  # Set flag for hello message triggering
-                # Consider it significant if it's an isolated failure or multiple changes in short period
-                significant_change = (time_since_last_hello < 5) or (len(network.get_all_links()) < n_nodes)  # type: ignore
+                significant_change = (len(network.get_all_links()) < n_nodes)  # type: ignore
                 if verbose:
                     logger.debug(f"[Step] Protocol reconverged after {iterations} iterations")
                     
-                # Send hello messages after topology change to inform neighbors
-                if verbose:
-                    logger.debug("[Step] Sending hello messages due to topology change...")
-                for node in network.nodes:  # type: ignore
-                    hello_msgs: int = len(node.connections)  # type: ignore
-                    node.hello_msg_count += hello_msgs  # type: ignore
-                    stats["hello_exchanges"] += hello_msgs
-                    
-        # 3. Randomly add new links with probability p_new
         if random.random() < p_new:
-            # Find nodes that aren't connected
             unconnected_pairs: List[Tuple[int, int]] = []
             for i in range(n_nodes):
                 for j in range(i + 1, n_nodes):
                     if j not in network.nodes[i].connections:  # type: ignore
-                        # Check if they're mutually within range
                         node_a = network.nodes[i]  # type: ignore
                         node_b = network.nodes[j]  # type: ignore
                         if node_a.can_reach(node_b) and node_b.can_reach(node_a):  # type: ignore
@@ -211,19 +197,10 @@ def run_dynamic_scenario(
                 stats["links_added"] += 1
                 stats["reconvergence_iterations"] += iterations
                 step_events["events"].append(f"Link added: {node_a_id}-{node_b_id}")
-                topology_change_occurred = True  # Set flag for hello message triggering
                 # New links are generally good, less disruptive than failures
                 significant_change = False
                 if verbose:
                     logger.debug(f"[Step] Protocol reconverged after {iterations} iterations")
-                    
-                # Send hello messages after topology change to inform neighbors
-                if verbose:
-                    logger.debug("[Step] Sending hello messages due to topology change...")
-                for node in network.nodes:  # type: ignore
-                    hello_msgs: int = len(node.connections)  # type: ignore
-                    node.hello_msg_count += hello_msgs  # type: ignore
-                    stats["hello_exchanges"] += hello_msgs
                     
         # 4. Process random packet requests with probability p_request
         if random.random() < p_request:
@@ -252,7 +229,7 @@ def run_dynamic_scenario(
                 step_events["events"].append(
                     f"Transmission: {source_id}→{dest_id} failed"
                 )
-        if verbose and not topology_changed and not send_hello_this_step:
+        if verbose and not topology_changed:
             logger.debug("[Step] Using cached routing tables - no topology changes")
 
         # Visualize the network state if in interactive mode
@@ -415,6 +392,13 @@ def run_simulation(
     print("Running proactive distance vector protocol for network discovery...")
     iterations: int = network.run_distance_vector_protocol(verbose=True)  # type: ignore
     print(f"Protocol converged after {iterations} iterations")
+
+    # EFFICIENCY OPTIMIZATION: Reset route discovery counters after initial convergence
+    # This implements the optimization requested in request.txt to improve protocol efficiency
+    if ignore_initial_route_discovery:
+        logger.debug("Resetting route discovery counters after initial convergence for efficiency analysis")
+        for node in network.nodes:  # type: ignore
+            node.route_discovery_msg_count = 0  # type: ignore
 
     # Print network information
     print(f"\nNetwork created with {len(network.nodes)} nodes:")  # type: ignore
@@ -689,7 +673,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--hello-interval",
         type=int,
-        default=1,
+        default=5,
         help="Send hello messages every N time steps (0=never, 1=every step) (default: 5)",
     )
     parser.add_argument(

@@ -176,19 +176,18 @@ def run_evaluation_scenario(network, time_steps=5, p_request=0.3, p_fail=0.1, p_
     
     return stats
 
-def run_evaluation(n_topologies=1, iterations_per_topology=100, max_probability=0.3, n_nodes=20, area_size=10, fixed_p_request=0.5, fixed_p_fail=None, fixed_p_new=None, time_steps=5, seed=None):
+def run_evaluation(n_topologies=1, iterations_per_topology=100, max_probability=0.3, n_nodes=20, area_size=10, fixed_p_request=0.5, fixed_p_fail=None, fixed_p_new=None):
     """Run a comprehensive evaluation of the protocol with varying parameters.
     
     Args:
         n_topologies: Number of random network topologies to evaluate
         iterations_per_topology: Number of iterations with different parameters per topology
         max_probability: Maximum value for random probability parameters (p_fail, p_new)
-        n_nodes: Number of nodes in each topology
+        n_nodes: Number of nodes in each network topology
         area_size: Size of the simulation area
-        fixed_p_request: Fixed probability for packet requests (if None, uses random values)
-        fixed_p_fail: Fixed probability for link failures (if None, uses random values)
-        fixed_p_new: Fixed probability for new links (if None, uses random values)  
-        time_steps: Number of time steps to simulate per iteration
+        fixed_p_request: Fixed probability for packet requests (static parameter)
+        fixed_p_fail: If provided, use this fixed value for p_fail instead of random values
+        fixed_p_new: If provided, use this fixed value for p_new instead of random values
         
     Returns:
         Dictionary with evaluation statistics
@@ -256,6 +255,7 @@ def run_evaluation(n_topologies=1, iterations_per_topology=100, max_probability=
             print(f"\nIteration {iter_idx+1}/{iterations_per_topology}: p_request={p_request:.3f} (fixed), p_fail={p_fail:.3f} ({p_fail_status}), p_new={p_new:.3f} ({p_new_status})")
             
             # Run a mini evaluation scenario with these parameters
+            time_steps = 5
             stats = run_evaluation_scenario(
                 network, 
                 time_steps=time_steps, 

@@ -1,5 +1,3 @@
-# Add this to your implementation of the SensorNetwork class in network.py
-
 def simulate_message_transmission(self, source_id, target_id, message="Test message", verbose=True):
     """Simulate sending a message from source to target using current routing tables."""
     try:
@@ -7,7 +5,6 @@ def simulate_message_transmission(self, source_id, target_id, message="Test mess
             print(f"\nSimulating message transmission from Node {source_id} to Node {target_id}")
             print(f"Message: '{message}'")
         
-        # Check if source and target nodes exist
         source_node = self.get_node_by_id(source_id)
         target_node = self.get_node_by_id(target_id)
         
@@ -25,13 +22,11 @@ def simulate_message_transmission(self, source_id, target_id, message="Test mess
             
         path = []
         current = source_id
-        max_hops = len(self.nodes) + 1  # Prevent infinite loops
+        max_hops = len(self.nodes) + 1
         
-        # Trace the path from source to destination using routing tables
         while current != target_id and len(path) < max_hops:
             path.append(current)
             
-            # Get current node
             current_node = self.get_node_by_id(current)
             if not current_node:
                 error_msg = f"Node {current} not found during path traversal"
@@ -39,7 +34,6 @@ def simulate_message_transmission(self, source_id, target_id, message="Test mess
                     print(error_msg)
                 return [], float('inf'), error_msg
             
-            # Get next hop from routing table
             next_hop, cost = current_node.routing_table.get(target_id, (None, float('inf')))
             
             if next_hop is None:
@@ -73,7 +67,6 @@ def simulate_message_transmission(self, source_id, target_id, message="Test mess
             
         path.append(target_id)
         
-        # Calculate total delay using get_node_by_id for each node in path
         try:
             total_delay = 0.0
             for i in range(len(path) - 1):
