@@ -80,7 +80,7 @@ python simulation.py --interactive
 - Node positions and connections visualized
 - Real-time updates as protocol converges
 
-## �️ Quick Start Guide
+## ⚙️ Quick Start Guide
 
 ### Basic Testing
 ```bash
