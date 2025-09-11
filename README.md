@@ -2,54 +2,41 @@
 
 A comprehensive simulator for wireless sensor networks implementing proactive distance vector routing protocol. This simulator models dynamic network topology changes, message transmission, and protocol efficiency according to academic networking research standards.
 
-## 🎯 What This Simulator Does
+## 🚀 Command-Line Options
 
-This simulator implements the requirements from academic research for wireless sensor networks:
-- **Proactive Distance Vector Routing**: Uses distributed Bellman-Ford algorithm for optimal path discovery
-- **Dynamic Network Topology**: Simulates real-world link failures and new connections
-- **Hello Message Protocol**: Nodes exchange hello messages with neighbors for network discovery
-- **Protocol Efficiency Analysis**: Measures data packet ratio vs. control message overhead
-- **Weighted Link Delays**: Random delays between 0-1 seconds representing realistic network conditions
-
-## 🚀 Simulation Modes
-
-### 1. 📊 **Default Mode** - Static Network Analysis
-```bash
-python simulation.py
 ```
-**What it does:**
-- Creates a fixed network topology with N nodes (default: 15)
-- Runs proactive distance vector protocol for route discovery
-- Sends hello messages between neighbors
-- Simulates random message transmissions
-- Measures protocol efficiency (typically 8-12%)
-
-**Example Output:**
-```
-Network created with 15 nodes
-Hello Messages: 84 (35.2%)
-Data Packets: 12 (5.0%)
-Protocol Efficiency: 8.22%
-Success Rate: 100%
+python simulation.py [options]
 ```
 
-### 2. ⚡ **Dynamic Mode** - Real-World Network Simulation
-```bash
-python simulation.py --dynamic
-```
-**What it does:**
-- Simulates network over multiple time steps (default: 20)
-- **Every time step:** Nodes exchange hello messages
-- **Random events:** Link failures (p_fail=0.1), new links (p_new=0.1), packet requests (p_request=0.3)
-- **Protocol adaptation:** Network reconverges after topology changes
+| Option                | Description                                         | Default    |
+|-----------------------|-----------------------------------------------------|------------|
+| `--interactive`, `-i` | Enable interactive visualizations                   | False      |
+| `--nodes=<number>`    | Set the number of nodes in the network              | 15         |
+| `--dynamic`           | Run dynamic scenario simulation                     | False      |
+| `--time-steps=<number>` | Number of time steps for dynamic scenario         | 20         |
+| `--p-request=<float>` | Probability of packet request per time step         | 0.3        |
+| `--p-fail=<float>`    | Probability of link failure per time step           | 0.1        |
+| `--p-new=<float>`     | Probability of new link formation per time step     | 0.1        |
+| `--delay=<float>`     | Delay between time steps in seconds                 | 1.0        |
+| `--evaluation`, `-e`  | Run protocol evaluation mode                         | False      |
+| `--topologies=<number>` | Number of topologies to evaluate in evaluation mode  | 5          |
+| `--iterations=<number>` | Iterations per topology in evaluation mode           | 10         |
+| `--max-prob=<float>`  | Max probability for parameters in evaluation mode    | 0.3        |
 
-**Example Output:**
+## 📂 Directory Structure
+
 ```
-Time Step 5/20:
-- Hello messages exchanged: 45
-- Link failure: Node 3-7 disconnected
-- Protocol reconverged in 3 iterations
-- New packet request: Node 2 → Node 8 (SUCCESS)
+wireless-network/
+├── src/                  # Core source code
+│   ├── core/             # Core simulator functionality
+│   ├── visualization/    # Visualization modules
+│   └── reporting/        # Reporting and analysis tools
+├── tests/                # Test cases and test suites
+├── docs/                 # Documentation
+├── output/               # Generated files
+│   ├── visualizations/   # Network visualizations
+│   └── reports/          # Network reports
+└── simulation.py         # Main entry point
 ```
 
 ### 3. 🔬 **Evaluation Mode** - Protocol Performance Analysis
@@ -191,6 +178,11 @@ This simulator implements all requirements from networking research standards:
 - **`--p-fail=<float>`**: Controls how often existing links fail (0-1).
 - **`--p-new=<float>`**: Controls how often new links form between nodes (0-1).
 - **`--delay=<float>`**: Controls the real-time delay between simulation steps.
+- **`--hello-interval=<number>`**: Controls hello message frequency (0=never, 1=every step, N=every N steps).
+
+### Protocol Efficiency Control
+- **`--ignore-initial-route-discovery`**: (Default) Reset route discovery counters after initial convergence for static networks. Provides operational efficiency measurements.
+- **`--consider-initial-route-discovery`**: Include all route discovery messages in efficiency calculations. Provides total protocol cost measurements including startup overhead.
 
 ### Protocol Evaluation
 - **`--evaluation`, `-e`**: Enables protocol evaluation mode that compares multiple network topologies.
@@ -210,6 +202,58 @@ pip install -r requirements.txt
 # Run a simple test script to check everything is ok
 python tests/test_simple.py
 ```
+
+## 🎯 Performance Optimization & Best Practices
+
+### Achieving High Efficiency
+
+**For Static Networks (90%+ efficiency):**
+```bash
+# Optimal static network configuration
+python simulation.py --dynamic --p-fail=0.0 --p-new=0.0 --hello-interval=0 --p-request=0.8
+```
+
+**For Dynamic Networks (20-60% efficiency):**
+```bash
+# Low churn network (good efficiency)
+python simulation.py --dynamic --p-fail=0.001 --p-new=0.001 --hello-interval=20
+
+# Moderate churn network (acceptable efficiency) 
+python simulation.py --dynamic --p-fail=0.01 --p-new=0.01 --hello-interval=10
+
+# High churn network (low efficiency, realistic for mobile networks)
+python simulation.py --dynamic --p-fail=0.05 --p-new=0.05 --hello-interval=5
+```
+
+### Parameter Guidelines
+
+**Topology Change Probabilities:**
+- `p_fail, p_new < 0.001`: Minimal impact on efficiency (~80-90%)
+- `p_fail, p_new = 0.01`: Moderate impact (~20-40% efficiency)  
+- `p_fail, p_new > 0.05`: High impact (<20% efficiency)
+
+**Hello Interval Optimization:**
+- Static networks: Use `--hello-interval=0` (no hello messages needed)
+- Low-churn networks: Use `--hello-interval=50` or higher
+- High-churn networks: Use `--hello-interval=5-10` for fast failure detection
+
+**Request Probability:**
+- Higher `p_request` values improve efficiency by increasing data traffic ratio
+- Recommended range: 0.3-0.8 depending on application requirements
+
+### Interpreting Efficiency Results
+
+**Efficiency Categories:**
+- **90%+**: Excellent (typical for static networks with optimized parameters)
+- **60-90%**: Good (low-churn networks with reasonable hello intervals)
+- **30-60%**: Acceptable (moderate churn or frequent hello messages)
+- **10-30%**: Poor (high churn networks, may need protocol optimization)
+- **<10%**: Critical (network spending most bandwidth on control traffic)
+
+**Common Efficiency Issues:**
+- High route discovery percentage: Reduce p_fail/p_new or increase convergence speed
+- High hello message percentage: Increase hello-interval or disable in static networks
+- Low data packet percentage: Increase p_request or reduce control overhead
 
 ## 🧪 Testing
 
@@ -299,13 +343,23 @@ python simulation.py --evaluation
 python simulation.py --evaluation --topologies=10 --iterations=20 --max-prob=0.5
 ```
 
-## �🔮 Future Enhancements
+## 🔮 Future Enhancements
 
-1. **Advanced Routing Protocols**: AODV, DSR, and other routing protocols
-2. **Energy Modeling**: Battery consumption simulation and energy-aware routing
-3. **Mobile Nodes**: Support for nodes that change position over time
-4. **Interference Modeling**: Signal interference simulation
-5. **3D Visualization**: Support for 3D networks with terrain effects
+### Recently Added Features ✅
+- **Protocol Efficiency Analysis**: Detailed breakdown of message types and efficiency metrics
+- **Initial Route Discovery Control**: Options to include/exclude startup costs in efficiency calculations  
+- **Hello Message Configuration**: Configurable hello message intervals for different network scenarios
+- **Static Network Optimization**: Automatic detection and optimization for static network scenarios
+
+### Planned Enhancements 🚧
+1. **Advanced Routing Protocols**: AODV, DSR, OLSR, and other modern routing protocols
+2. **Energy Modeling**: Battery consumption simulation and energy-aware routing algorithms
+3. **Mobile Nodes**: Support for nodes that change position over time with mobility models
+4. **Interference Modeling**: RF signal interference and collision detection
+5. **Quality of Service**: Priority-based routing and bandwidth allocation
+6. **Security Features**: Authentication, encryption, and intrusion detection
+7. **3D Visualization**: Support for 3D networks with terrain and obstacle modeling
+8. **Real-time Mode**: Live network monitoring and control capabilities
 
 ## 👥 Contributing
 

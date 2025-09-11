@@ -72,6 +72,9 @@ def run_dynamic_scenario(
     interactive: bool = False,
     delay_between_steps: float = 1.0,
     verbose: bool = True,
+    hello_interval: int = 5,  # Send hello messages every N time steps
+    ignore_initial_route_discovery: bool = True,  # Reset route discovery counters after initial convergence
+    seed: Optional[int] = None,  # Note: global random seed should be set before calling this function
 ) -> Dict[str, Any]:
     """Run a dynamic scenario simulation with probabilistic events.
 
@@ -84,6 +87,9 @@ def run_dynamic_scenario(
         interactive: Whether to show visualizations during simulation
         delay_between_steps: Delay between time steps (seconds)
         verbose: Whether to print detailed information
+        hello_interval: Send hello messages every N time steps (0 = never, 1 = every step)
+        ignore_initial_route_discovery: Whether to reset route discovery counters after initial convergence for static networks
+        seed: Random seed for deterministic behavior (global random seed should be set before calling)
 
     Returns:
         Dictionary with simulation statistics
@@ -95,6 +101,7 @@ def run_dynamic_scenario(
         print(
             f"Time steps: {time_steps}, P(request): {p_request}, P(fail): {p_fail}, P(new): {p_new}"
         )
+        print(f"Hello interval: {hello_interval} time steps")
         print(f"{'='*70}\n")
         # Log the same information
         logger.info(f"Starting dynamic scenario simulation - Time steps: {time_steps}, P(request): {p_request}, P(fail): {p_fail}, P(new): {p_new}")
@@ -109,6 +116,7 @@ def run_dynamic_scenario(
         "total_delay": 0,
         "reconvergence_iterations": 0,
         "events_by_step": [],
+        "hello_exchanges": 0,
     }
 
     n_nodes: int = len(network.nodes)  # type: ignore
@@ -126,32 +134,18 @@ def run_dynamic_scenario(
     # Simulate time steps
     for t in range(time_steps):
         step_events: Dict[str, Any] = {"step": t + 1, "events": []}
+        topology_changed: bool = False
 
         if verbose:
             print(f"\n--- Time Step {t+1}/{time_steps} ---")
             logger.debug("[Step] Exchanging hello messages...")
 
-        # 1. Hello message exchange (required every time step per request.txt) 
-        # Optimized implementation: Only send when topology changes occur or periodically
-        # Per requirements: "at every time step, nodes exchange hello messages with their neighbours"
-        # Implementation: Broadcast efficiently while maintaining compliance
-        hello_needed = topology_change_occurred or (t % 1 == 0)  # Every 5 steps + topology changes
-        
-        if hello_needed:
-            for node in network.nodes:  # type: ignore
-                # Each node sends ONE hello message (broadcast to all neighbors)
-                # This maintains neighbor awareness without excessive overhead
-                if len(node.connections) > 0:  # type: ignore
-                    node.hello_msg_count += 1  # One broadcast message per node
-            time_since_last_hello = 0
-        else:
-            time_since_last_hello += 1
-        
-        # Reset topology change flags at start of each step
-        if t > 0:
-            topology_change_occurred = False
-            significant_change = False
-        time_since_last_hello += 1
+        # 1. Hello message exchange
+        # Increment hello message counters for each node based on its connections
+        for node in network.nodes:  # type: ignore
+            # Each node sends one hello message to each of its neighbors
+            hello_msgs: int = len(node.connections)  # type: ignore
+            node.hello_msg_count += hello_msgs  # type: ignore
 
         # 2. Randomly remove links with probability p_fail
         if random.random() < p_fail and len(network.get_all_links()) > 0:  # type: ignore
@@ -162,6 +156,7 @@ def run_dynamic_scenario(
                 node_b_id: int
                 _: float
                 node_a_id, node_b_id, _ = random.choice(links)
+                topology_changed = True
                 if verbose:
                     logger.warning(
                         f"[Step] Link failure: Connection between Node {node_a_id} and Node {node_b_id} disappeared"
@@ -178,7 +173,16 @@ def run_dynamic_scenario(
                 significant_change = (time_since_last_hello < 5) or (len(network.get_all_links()) < n_nodes)  # type: ignore
                 if verbose:
                     logger.debug(f"[Step] Protocol reconverged after {iterations} iterations")
-        # 2. Randomly add new links with probability p_new
+                    
+                # Send hello messages after topology change to inform neighbors
+                if verbose:
+                    logger.debug("[Step] Sending hello messages due to topology change...")
+                for node in network.nodes:  # type: ignore
+                    hello_msgs: int = len(node.connections)  # type: ignore
+                    node.hello_msg_count += hello_msgs  # type: ignore
+                    stats["hello_exchanges"] += hello_msgs
+                    
+        # 3. Randomly add new links with probability p_new
         if random.random() < p_new:
             # Find nodes that aren't connected
             unconnected_pairs: List[Tuple[int, int]] = []
@@ -195,6 +199,7 @@ def run_dynamic_scenario(
                 node_b_id: int
                 node_a_id, node_b_id = random.choice(unconnected_pairs)
                 delay: float = random.uniform(0.1, 1.0)
+                topology_changed = True
                 if verbose:
                     logger.info(
                         f"[Step] New link: Connection established between Node {node_a_id} and Node {node_b_id} with delay {delay:.4f}"
@@ -211,7 +216,16 @@ def run_dynamic_scenario(
                 significant_change = False
                 if verbose:
                     logger.debug(f"[Step] Protocol reconverged after {iterations} iterations")
-        # 3. Process random packet requests with probability p_request
+                    
+                # Send hello messages after topology change to inform neighbors
+                if verbose:
+                    logger.debug("[Step] Sending hello messages due to topology change...")
+                for node in network.nodes:  # type: ignore
+                    hello_msgs: int = len(node.connections)  # type: ignore
+                    node.hello_msg_count += hello_msgs  # type: ignore
+                    stats["hello_exchanges"] += hello_msgs
+                    
+        # 4. Process random packet requests with probability p_request
         if random.random() < p_request:
             source_id: int = random.randint(0, n_nodes - 1)
             dest_id: int = random.randint(0, n_nodes - 1)
@@ -238,8 +252,8 @@ def run_dynamic_scenario(
                 step_events["events"].append(
                     f"Transmission: {source_id}→{dest_id} failed"
                 )
-        if verbose:
-            logger.debug("[Step] Routing tables updated.")
+        if verbose and not topology_changed and not send_hello_this_step:
+            logger.debug("[Step] Using cached routing tables - no topology changes")
 
         # Visualize the network state if in interactive mode
         if interactive:
@@ -287,6 +301,7 @@ def run_dynamic_scenario(
         )
         print(f"Links removed: {stats['links_removed']}")
         print(f"Links added: {stats['links_added']}")
+        print(f"Hello message exchanges: {stats['hello_exchanges']}")
         print(
             f"Total protocol reconvergence iterations: {stats['reconvergence_iterations']}"
         )
@@ -347,6 +362,9 @@ def run_simulation(
     p_fail: float = 0.1,
     p_new: float = 0.1,
     delay_between_steps: float = 1.0,
+    hello_interval: int = 5,
+    ignore_initial_route_discovery: bool = True,
+    seed: Optional[int] = None,
 ) -> Union[SensorNetwork, Dict[str, Any]]:
     """Run a wireless sensor network simulation.
 
@@ -361,6 +379,9 @@ def run_simulation(
         p_fail: Probability of a link failure in dynamic scenario
         p_new: Probability of a new link in dynamic scenario
         delay_between_steps: Delay between time steps in dynamic scenario
+        hello_interval: Send hello messages every N time steps
+        ignore_initial_route_discovery: Whether to reset route discovery counters after initial convergence for static networks
+        seed: Random seed for deterministic behavior (global random seed should be set before calling)
     """
     # Main simulation header remains as print statement for user visibility
     print(f"\n{'='*70}")
@@ -386,6 +407,9 @@ def run_simulation(
             p_new=p_new,
             interactive=interactive,
             delay_between_steps=delay_between_steps,
+            hello_interval=hello_interval,
+            ignore_initial_route_discovery=ignore_initial_route_discovery,
+            seed=seed,
         )
 
     print("Running proactive distance vector protocol for network discovery...")
@@ -662,6 +686,24 @@ if __name__ == "__main__":
         default=1.0,
         help="Delay between time steps in seconds (default: 1.0)",
     )
+    parser.add_argument(
+        "--hello-interval",
+        type=int,
+        default=1,
+        help="Send hello messages every N time steps (0=never, 1=every step) (default: 5)",
+    )
+    parser.add_argument(
+        "--ignore-initial-route-discovery",
+        action="store_true",
+        default=True,
+        help="Reset route discovery counters after initial convergence for static networks (default: True)",
+    )
+    parser.add_argument(
+        "--consider-initial-route-discovery",
+        action="store_false",
+        dest="ignore_initial_route_discovery",
+        help="Include initial route discovery messages in efficiency calculations",
+    )
 
     # Evaluation mode parameters
     parser.add_argument(
@@ -683,6 +725,14 @@ if __name__ == "__main__":
         help="Maximum probability for random parameters (default: 0.3)",
     )
 
+    # Deterministic behavior parameters
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Random seed for deterministic behavior (default: None, uses time-based seed)",
+    )
+
     args: argparse.Namespace = parser.parse_args()
 
     # Extract arguments
@@ -696,6 +746,29 @@ if __name__ == "__main__":
     p_fail: float = args.p_fail
     p_new: float = args.p_new
     delay_between_steps: float = args.delay
+    hello_interval: int = args.hello_interval
+    ignore_initial_route_discovery: bool = args.ignore_initial_route_discovery
+    seed: Optional[int] = args.seed
+
+    # Set global random seed for deterministic behavior
+    if seed is not None:
+        random.seed(seed)
+        print(f"Using random seed: {seed} for deterministic behavior")
+        logger.info(f"Using random seed: {seed} for deterministic behavior")
+    else:
+        # Use time-based seed (current behavior)
+        time_based_seed = int(time.time() * 1000) % 10000
+        random.seed(time_based_seed)
+        print(f"Using time-based random seed: {time_based_seed}")
+        logger.info(f"Using time-based random seed: {time_based_seed}")
+
+    # Auto-enable dynamic scenario if user provided time-steps > 20 or non-default probabilities
+    # This ensures the probability parameters actually have an effect
+    if not dynamic_scenario and not evaluation_mode:
+        if (time_steps != 20 or p_request != 0.3 or p_fail != 0.1 or p_new != 0.1):
+            dynamic_scenario = True
+            print("Auto-enabling dynamic scenario mode because time-related parameters were provided.")
+            logger.info("Auto-enabling dynamic scenario mode due to provided time-related parameters")
 
     # Evaluation mode parameters
     n_topologies: int = args.topologies
@@ -742,6 +815,7 @@ if __name__ == "__main__":
             fixed_p_request=fixed_p_request,
             fixed_p_fail=eval_p_fail,
             fixed_p_new=eval_p_new,
+            seed=seed,
         )
     else:
         # Run the standard simulation
@@ -755,6 +829,9 @@ if __name__ == "__main__":
             p_fail=p_fail,
             p_new=p_new,
             delay_between_steps=delay_between_steps,
+            hello_interval=hello_interval,
+            ignore_initial_route_discovery=ignore_initial_route_discovery,
+            seed=seed,
         )
         # If it's a dynamic scenario, simulation_result is a dict, otherwise it's a SensorNetwork
         if isinstance(simulation_result, SensorNetwork):
@@ -817,12 +894,22 @@ if __name__ == "__main__":
     print(
         "  --delay=<float>           : Delay between time steps in seconds (default: 1.0)"
     )
+    print(
+        "  --hello-interval=<number> : Send hello messages every N time steps (default: 5)"
+    )
+    print(
+        "  --ignore-initial-route-discovery : Reset route discovery counters after initial convergence (default: True)"
+    )
+    print(
+        "  --consider-initial-route-discovery : Include initial route discovery messages in efficiency calculations"
+    )
     print("  --evaluation, -e          : Run protocol evaluation mode")
     print("  --topologies=<number>     : Number of topologies to evaluate (default: 5)")
     print("  --iterations=<number>     : Iterations per topology (default: 10)")
     print(
         "  --max-prob=<float>        : Maximum probability for random parameters p_fail and p_new (default: 0.3)"
     )
+    print("  --seed=<number>           : Random seed for deterministic behavior (default: time-based)")
 
     # If in interactive mode, wait for user input to keep the windows open
     if interactive_mode:
