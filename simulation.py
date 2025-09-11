@@ -815,6 +815,7 @@ if __name__ == "__main__":
             fixed_p_request=fixed_p_request,
             fixed_p_fail=eval_p_fail,
             fixed_p_new=eval_p_new,
+            time_steps=time_steps,
             seed=seed,
         )
     else:

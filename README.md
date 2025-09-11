@@ -1,175 +1,232 @@
 # 🌐 Wireless Sensor Network Simulator
 
-A comprehensive simulator for wireless sensor networks implementing proactive distance vector routing protocol. This simulator models dynamic network topology changes, message transmission, and protocol efficiency according to academic networking research standards.
+A comprehensive simulator implementing **proactive distance vector routing protocol** for wireless sensor networks. This simulator tracks hello messages, models dynamic topology changes, and measures protocol efficiency according to academic networking research standards.
 
-## 🚀 Command-Line Options
+## 🎯 Four Simulation Modes Explained
 
+### 1. 🔧 **Basic Mode** (Default) - Protocol Testing
+```bash
+python simulation.py
 ```
-python simulation.py [options]
+**What it does:**
+- Creates a 15-node wireless network with random topology
+- Runs distance vector routing protocol with hello messages
+- Tracks all message types: hello, topology, route discovery, and data packets
+- Calculates protocol efficiency (data packets / total packets)
+
+**What to expect:**
 ```
-
-| Option                | Description                                         | Default    |
-|-----------------------|-----------------------------------------------------|------------|
-| `--interactive`, `-i` | Enable interactive visualizations                   | False      |
-| `--nodes=<number>`    | Set the number of nodes in the network              | 15         |
-| `--dynamic`           | Run dynamic scenario simulation                     | False      |
-| `--time-steps=<number>` | Number of time steps for dynamic scenario         | 20         |
-| `--p-request=<float>` | Probability of packet request per time step         | 0.3        |
-| `--p-fail=<float>`    | Probability of link failure per time step           | 0.1        |
-| `--p-new=<float>`     | Probability of new link formation per time step     | 0.1        |
-| `--delay=<float>`     | Delay between time steps in seconds                 | 1.0        |
-| `--evaluation`, `-e`  | Run protocol evaluation mode                         | False      |
-| `--topologies=<number>` | Number of topologies to evaluate in evaluation mode  | 5          |
-| `--iterations=<number>` | Iterations per topology in evaluation mode           | 10         |
-| `--max-prob=<float>`  | Max probability for parameters in evaluation mode    | 0.3        |
-
-## 📂 Directory Structure
-
-```
-wireless-network/
-├── src/                  # Core source code
-│   ├── core/             # Core simulator functionality
-│   ├── visualization/    # Visualization modules
-│   └── reporting/        # Reporting and analysis tools
-├── tests/                # Test cases and test suites
-├── docs/                 # Documentation
-├── output/               # Generated files
-│   ├── visualizations/   # Network visualizations
-│   └── reports/          # Network reports
-└── simulation.py         # Main entry point
+Message Breakdown:
+- Hello Messages: 52 (35.4%) - neighbor discovery
+- Topology Messages: 36 (24.5%) - route updates  
+- Route Discovery: 45 (30.6%) - initial convergence
+- Data Packets: 14 (9.5%) - actual payload
+Protocol Efficiency: 9.52%
 ```
 
-### 3. 🔬 **Evaluation Mode** - Protocol Performance Analysis
+### 2. ⚡ **Dynamic Mode** - Network Changes Over Time
+```bash
+python simulation.py --dynamic --time-steps=20
+```
+**What it does:**
+- Network topology changes every time step (links fail/appear)
+- Protocol automatically reconverges after each change
+- Simulates real wireless environment with connectivity issues
+- Tracks network adaptation performance
+
+**What to expect:**
+```
+Dynamic Scenario Summary:
+Time steps: 20
+Link failures: 3 (p_fail=0.1)
+New links: 2 (p_new=0.1) 
+Data requests: 6/20 (p_request=0.3)
+Average reconvergence: 2.1 iterations
+Final efficiency: 3.45%
+```
+
+### 3. � **Evaluation Mode** - Research Analysis
 ```bash
 python simulation.py --evaluation
 ```
 **What it does:**
-- Tests protocol across multiple random topologies
-- Varies parameters (p_request, p_fail, p_new) to stress-test the network
-- Generates comprehensive efficiency reports
-- Compares network performance metrics
+- Tests multiple random network topologies (default: 5)
+- Runs multiple iterations per topology with varied parameters
+- Compares efficiency across different network configurations
+- Generates academic research-style performance reports
 
-**Example Output:**
+**What to expect:**
 ```
-PROTOCOL EVALUATION REPORT
-Topologies tested: 5
-Average efficiency: 2.5%
-Best topology efficiency: 4.8%
-Network resilience score: 8.2/10
+Protocol Evaluation Report:
+Topology 1: 3.50% efficiency (200 total packets)
+Topology 2: 4.12% efficiency (185 total packets)
+Topology 3: 2.87% efficiency (210 total packets)
+Overall average: 3.50% efficiency
+Best performing topology saved for analysis
 ```
 
-### 4. 🎨 **Interactive Mode** - Visual Network Exploration
+### 4. 🎨 **Interactive Mode** - Visual Network Display
 ```bash
 python simulation.py --interactive
 ```
 **What it does:**
-- All features of default mode PLUS interactive network visualizations
-- Real-time network topology graphs
-- Visual routing table displays
+- Same as Basic Mode PLUS real-time network visualizations
+- Shows network topology graphs as they update
+- Displays routing tables and message flows visually
+- Great for understanding how the protocol works
 
-## 📋 Command-Line Options
+**What to expect:**
+- Pop-up windows with network graphs
+- Node positions and connections visualized
+- Real-time updates as protocol converges
 
-| Option | Description | Default | Example |
-|--------|-------------|---------|---------|
-| `--nodes=<N>` | Number of network nodes | 15 | `--nodes=25` |
-| `--dynamic` | Enable dynamic topology changes | False | `--dynamic` |
-| `--time-steps=<N>` | Steps for dynamic simulation | 20 | `--time-steps=50` |
-| `--p-request=<0-1>` | Probability of packet request per step | 0.3 | `--p-request=0.7` |
-| `--p-fail=<0-1>` | Probability of link failure per step | 0.1 | `--p-fail=0.05` |
-| `--p-new=<0-1>` | Probability of new link per step | 0.1 | `--p-new=0.15` |
-| `--evaluation` | Run protocol evaluation analysis | False | `--evaluation` |
-| `--topologies=<N>` | Number of topologies to evaluate | 5 | `--topologies=10` |
-| `--iterations=<N>` | Iterations per topology | 10 | `--iterations=20` |
-| `--interactive` | Enable visual network displays | False | `--interactive` |
+## �️ Quick Start Guide
 
-## 🔬 Understanding the Protocol
-
-### Distance Vector Routing
-- **Initialization**: Each node knows only its direct neighbors
-- **Convergence**: Nodes exchange routing information until network-wide optimal paths are found
-- **Adaptation**: When topology changes, protocol automatically reconverges
-
-### Message Types Tracked
-1. **Hello Messages**: Neighbor discovery and maintenance
-2. **Topology Messages**: Distance vector exchanges for route discovery  
-3. **Route Discovery**: Control packets for path establishment
-4. **Data Packets**: Actual payload transmissions
-
-### Protocol Efficiency Formula
-```
-Efficiency = Data Packets / Total Packets
-```
-- **Higher efficiency** = More data, less control overhead
-- **Typical range**: 5-15% (academic networking standards)
-
-## 📊 What to Expect
-
-### Default Mode Results
-```
-Message Exchange Analysis:
-Hello Messages: 84 (35.2%)
-Topology Messages: 36 (15.1%) 
-Route Discovery: 105 (44.0%)
-Data Packets: 14 (5.9%)
-Protocol Efficiency: 5.86%
-```
-
-### Dynamic Mode Results
-```
-Dynamic Scenario Summary:
-Time steps completed: 20
-Link failures: 3
-New links added: 2
-Successful transmissions: 18/22
-Network adaptation time: avg 2.1 iterations
-```
-
-### Evaluation Mode Results
-```
-Topology Performance Comparison:
-Best network efficiency: 4.8%
-Network resilience: 85%
-Average convergence: 2.3 iterations
-Recommendation: Topology 3 (score: 8.7/10)
-```
-
-## 💻 Quick Start Examples
-
-### Test Basic Protocol
+### Basic Testing
 ```bash
-# Simple 10-node network
+# Test with 10 nodes (faster)
 python simulation.py --nodes=10
+
+# Test basic protocol efficiency
+python simulation.py --nodes=5
 ```
 
-### Stress Test Network
+### Dynamic Network Testing  
 ```bash
-# High-activity dynamic scenario  
-python simulation.py --dynamic --p-request=0.8 --p-fail=0.2 --time-steps=30
+# High activity network (more events)
+python simulation.py --dynamic --p-request=0.8 --time-steps=10
+
+# Low activity network (stable)
+python simulation.py --dynamic --p-request=0.1 --p-fail=0.05
 ```
 
 ### Research Analysis
 ```bash
-# Comprehensive protocol evaluation
-python simulation.py --evaluation --topologies=10 --iterations=50
+# Quick evaluation (3 topologies, 2 iterations each)
+python simulation.py --evaluation --topologies=3 --iterations=2
+
+# Comprehensive evaluation (10 topologies, 10 iterations each)  
+python simulation.py --evaluation --topologies=10 --iterations=10
 ```
 
-## 📁 Output Files
+## 📊 Understanding Protocol Efficiency
 
-The simulator generates:
-- **Network Reports**: `output/reports/network_report.txt`
-- **Evaluation Analysis**: `output/reports/evaluation_report.txt`  
-- **Network Visualizations**: `output/visualizations/network_*.png`
+**What is Protocol Efficiency?**
+```
+Efficiency = Data Packets / Total Packets
+```
 
-## 🧪 Academic Compliance
+**Message Types Tracked:**
+1. **Hello Messages** - Neighbor discovery (sent regularly)
+2. **Topology Messages** - Distance vector updates  
+3. **Route Discovery** - Path establishment
+4. **Data Packets** - Actual payload transmission
 
-This simulator implements all requirements from networking research standards:
-- ✅ Proactive routing protocol (Distance Vector)
-- ✅ Dynamic topology changes (link failures/additions)
-- ✅ Hello message exchanges
-- ✅ Weighted links (0-1 second delays)
-- ✅ Protocol efficiency measurement
-- ✅ Message counting (all types)
-- ✅ Parameter variation analysis
+**Typical Efficiency Ranges:**
+- **5-15%**: Normal for research protocols with hello messages
+- **20-30%**: Good efficiency (optimized parameters)
+- **<5%**: High control overhead (frequent topology changes)
+
+## ⚙️ Command-Line Options Reference
+
+| Parameter | Description | Default | Example |
+|-----------|-------------|---------|---------|
+| `--nodes=N` | Network size (number of nodes) | 15 | `--nodes=25` |
+| `--dynamic` | Enable topology changes over time | Off | `--dynamic` |
+| `--time-steps=N` | Duration of dynamic simulation | 20 | `--time-steps=50` |
+| `--p-request=X` | Data request probability (0.0-1.0) | 0.3 | `--p-request=0.7` |
+| `--p-fail=X` | Link failure probability (0.0-1.0) | 0.1 | `--p-fail=0.05` |
+| `--p-new=X` | New link probability (0.0-1.0) | 0.1 | `--p-new=0.15` |
+| `--evaluation` | Run research analysis mode | Off | `--evaluation` |
+| `--topologies=N` | Number of networks to test | 5 | `--topologies=10` |
+| `--iterations=N` | Tests per topology | 10 | `--iterations=20` |
+| `--interactive` | Show visual network graphs | Off | `--interactive` |
+
+## 🔬 Protocol Implementation Details
+
+### Distance Vector Routing Protocol
+- **Hello Messages**: Sent every iteration to discover and maintain neighbors
+- **Convergence**: Protocol finds shortest paths using distributed Bellman-Ford
+- **Dynamic Adaptation**: Automatically reconverges when topology changes
+- **Link Weights**: All delays constrained to 0.0-1.0 second range
+
+### Key Requirements Implemented
+✅ **Proactive routing** - Distance vector with hello messages  
+✅ **Dynamic topology** - Links can fail and appear during simulation  
+✅ **Message counting** - All packet types tracked separately  
+✅ **Protocol efficiency** - Data packets vs total packets ratio  
+✅ **Delay constraints** - All link delays between 0.0-1.0 seconds  
+✅ **Academic compliance** - Follows networking research standards
+
+## � Output Files Generated
+
+After running simulations, check these directories:
+
+**Reports:**
+- `output/reports/network_report.txt` - Basic simulation results
+- `output/reports/evaluation_report.txt` - Multi-topology analysis
+
+**Visualizations:**
+- `output/visualizations/network_visualization_*.png` - Network graphs
+- `output/visualizations/network_adjacency_list.png` - Connection diagrams
+
+## 🧪 Installation & Testing
+
+### Setup
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Verify installation
+python tests/test_simple.py
+```
+
+### Run Test Suite
+```bash
+# Basic functionality tests
+python tests/test_simulator.py
+
+# Full test suite
+python tests/test_suite.py
+```
+
+## 🎯 Example Usage Scenarios
+
+### Academic Research
+```bash
+# Generate data for research paper
+python simulation.py --evaluation --topologies=20 --iterations=50
+```
+
+### Protocol Debugging
+```bash
+# Small network with visualization
+python simulation.py --nodes=5 --interactive
+```
+
+### Stress Testing
+```bash
+# High-churn dynamic network
+python simulation.py --dynamic --p-fail=0.3 --p-new=0.3 --time-steps=30
+```
+
+### Performance Optimization
+```bash
+# Test different parameters
+python simulation.py --dynamic --p-request=0.8 --p-fail=0.01
+```
+
+---
+
+## � Tips for New Users
+
+1. **Start Simple**: Run `python simulation.py` first to see basic operation
+2. **Use Interactive Mode**: Add `--interactive` to see what's happening visually  
+3. **Check Outputs**: Look in `output/reports/` for detailed results
+4. **Small Networks**: Use `--nodes=5` for faster testing and debugging
+5. **Academic Use**: Use `--evaluation` mode for research and comparative analysis
+
+**Need help?** All simulation modes generate detailed console output explaining what's happening step-by-step.
 
 ### Dynamic Simulation
 - **`--dynamic`**: Enables dynamic network behavior where topology changes over time.

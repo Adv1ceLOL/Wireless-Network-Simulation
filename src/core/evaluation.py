@@ -176,8 +176,7 @@ def run_evaluation_scenario(network, time_steps=5, p_request=0.3, p_fail=0.1, p_
     
     return stats
 
-def run_evaluation(n_topologies=1, iterations_per_topology=100, max_probability=0.3, n_nodes=20, area_size=10, fixed_p_request=0.5, fixed_p_fail=None, fixed_p_new=None, time_steps=5):
-def run_evaluation(n_topologies=1, iterations_per_topology=100, max_probability=0.3, n_nodes=20, area_size=10, fixed_p_request=0.5, fixed_p_fail=None, fixed_p_new=None, seed=None):
+def run_evaluation(n_topologies=1, iterations_per_topology=100, max_probability=0.3, n_nodes=20, area_size=10, fixed_p_request=0.5, fixed_p_fail=None, fixed_p_new=None, time_steps=5, seed=None):
     """Run a comprehensive evaluation of the protocol with varying parameters.
     
     Args:

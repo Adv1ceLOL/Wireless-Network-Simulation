@@ -11,25 +11,25 @@ Evaluation Parameters:
 Detailed Results:
 Topology   Iteration  p_request  p_fail     p_new      Efficiency Links Removed   Links Added     Data Messages   Reconnects
 ------------------------------------------------------------------------------------------------------------------------
-1          1          0.300      0.019      0.017      0.0161     0               0               1               0         
-1          2          0.300      0.170      0.110      0.0000     0               0               0               0         
+1          1          0.300      0.172      0.061      0.0446     0               0               9               0         
+1          2          0.300      0.151      0.044      0.0203     0               0               4               0         
 
 SUMMARY TABLE (TRANSPOSED - TOPOLOGY AS COLUMNS):
 ----------------------------------------------------------------------
 Metric | Topology 1
 -------------------
-Mean Efficiency      |       0.0081
+Mean Efficiency      |       0.0324
 Mean p_request       |       0.3000
-Mean p_fail          |       0.0946
-Mean p_new           |       0.0638
+Mean p_fail          |       0.1615
+Mean p_new           |       0.0529
 Mean Reconnections   |         0.00
 Links Removed        |            0
 Links Added          |            0
-Total Data Messages  |            1
-Avg Hops/Message     |         1.00
-Avg Delay/Message    |       0.7215
+Total Data Messages  |           13
+Avg Hops/Message     |         2.00
+Avg Delay/Message    |       1.1152
 
-Overall average efficiency: 0.0081
+Overall average efficiency: 0.0324
 
 Note on network reconnections:
   The 'Reconnects' column shows how many times the network needed to be
