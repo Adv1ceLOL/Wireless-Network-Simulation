@@ -864,19 +864,20 @@ input:checked + .toggle-slider:before {
 }
 
 .transmission-range {
-    fill: none;
-    stroke: #3498db;
-    stroke-width: 1px;
-    stroke-dasharray: 5,5;
-    opacity: 0.3;
+    fill: none !important;
+    stroke: #3498db !important;
+    stroke-width: 2px !important;
+    stroke-dasharray: 8,4 !important;
+    opacity: 0.6 !important;
+    pointer-events: none !important;
 }
 
 /* Transmission range highlighting */
 .transmission-range.selected {
     stroke: #e74c3c !important;
-    stroke-width: 2px !important;
-    opacity: 0.6 !important;
-    filter: drop-shadow(0 0 6px rgba(231, 76, 60, 0.4));
+    stroke-width: 3px !important;
+    opacity: 0.8 !important;
+    filter: drop-shadow(0 0 6px rgba(231, 76, 60, 0.4)) !important;
 }
 
 /* Enhanced Node Information Display */

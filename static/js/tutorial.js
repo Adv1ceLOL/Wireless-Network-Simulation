@@ -22,10 +22,6 @@ class TutorialSystem {
                 title: "Customizing the Topology",
                 text: "Use the Topology Controls to manually add or remove links between nodes. This lets you test specific network configurations and observe their behavior."
             },
-            {
-                title: "Exporting Results",
-                text: "When you've finished your simulation, use the Export & Reports panel to save your results as JSON data, generate a detailed report, or export the network visualization as an image."
-            }
         ];
         
         this.currentStep = 0;

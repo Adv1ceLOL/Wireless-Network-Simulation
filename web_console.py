@@ -12,7 +12,6 @@ import threading
 import time
 import copy
 import random
-import platform
 import argparse
 from typing import Union, Dict, List, Tuple, Optional, Any
 import logging
@@ -264,9 +263,11 @@ def handle_create_network(data: Dict[str, Any]) -> None:
         # Create new network
         logger.info("Creating new SensorNetwork...")
         simulation.network = SensorNetwork()
+        seed = simulation.simulation_params.get('seed') if 'seed' in simulation.simulation_params else None
         simulation.network.create_random_network(
             n=simulation.simulation_params['n_nodes'],
-            area_size=simulation.simulation_params['area_size']
+            area_size=simulation.simulation_params['area_size'],
+            seed=seed
         )
         logger.info(f"Network created with {len(simulation.network.nodes)} nodes")
         

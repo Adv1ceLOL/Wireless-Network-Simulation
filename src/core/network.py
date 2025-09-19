@@ -16,7 +16,14 @@ class SensorNetwork:
         return node
         
         
-    def create_random_network(self, n: int, area_size: Union[int, float] = 10, min_range: float = 1.0, max_range: float = 3.0) -> List[SensorNode]:
+    def create_random_network(
+        self,
+        n: int,
+        area_size: Union[int, float] = 10,
+        min_range: float = 1.0,
+        max_range: float = 3.0,
+        seed: Optional[int] = None,
+    ) -> List[SensorNode]:
         """Create a network with n nodes randomly positioned with random transmission ranges.
         
         The network created will have the following properties:
@@ -31,7 +38,8 @@ class SensorNetwork:
         Returns:
             List of created nodes
         """
-        random.seed(1)
+        if seed is not None:
+            random.seed(seed)
         self.nodes = []
         # Reset the class-level node tracking
         SensorNode._all_nodes = []  # type: ignore

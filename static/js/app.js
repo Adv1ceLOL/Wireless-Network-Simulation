@@ -67,8 +67,7 @@ class NetworkSimulator {
                 this.updateStatistics(data.statistics);
                 this.log(data.message, 'success');
                 
-                // Refresh transmission ranges if they are being shown
-                this.refreshTransmissionRangesIfVisible();
+                this.updateRanges();
             } else {
                 this.log('Failed to create network', 'error');
             }
@@ -120,14 +119,18 @@ class NetworkSimulator {
         });
         
         this.socket.on('auto_play_started', (data) => {
-            document.getElementById('autoPlay').disabled = true;
-            document.getElementById('stopAutoPlay').disabled = false;
+            const autoPlayBtn = document.getElementById('autoPlay');
+            const stopAutoPlayBtn = document.getElementById('stopAutoPlay');
+            if (autoPlayBtn) autoPlayBtn.disabled = true;
+            if (stopAutoPlayBtn) stopAutoPlayBtn.disabled = false;
             this.log(`Auto-play started with ${data.delay}s delay`, 'info');
         });
         
         this.socket.on('auto_play_stopped', () => {
-            document.getElementById('autoPlay').disabled = false;
-            document.getElementById('stopAutoPlay').disabled = true;
+            const autoPlayBtn = document.getElementById('autoPlay');
+            const stopAutoPlayBtn = document.getElementById('stopAutoPlay');
+            if (autoPlayBtn) autoPlayBtn.disabled = false;
+            if (stopAutoPlayBtn) stopAutoPlayBtn.disabled = true;
             this.log('Auto-play stopped', 'info');
         });
         
@@ -225,27 +228,45 @@ class NetworkSimulator {
             this.updateParameters();
         });
         
-        // Navigation controls
-        document.getElementById('firstStep').addEventListener('click', () => {
-            this.navigate('first');
-        });
+        // Navigation controls - with safety checks
+        const firstStepBtn = document.getElementById('firstStep');
+        if (firstStepBtn) {
+            firstStepBtn.addEventListener('click', () => {
+                this.navigate('first');
+            });
+        }
         
-        document.getElementById('prevStep').addEventListener('click', () => {
-            this.navigate('backward');
-        });
+        const prevStepBtn = document.getElementById('prevStep');
+        if (prevStepBtn) {
+            prevStepBtn.addEventListener('click', () => {
+                this.navigate('backward');
+            });
+        }
         
-        document.getElementById('nextStep').addEventListener('click', () => {
-            this.navigate('forward');
-        });
+        const nextStepBtn = document.getElementById('nextStep');
+        if (nextStepBtn) {
+            nextStepBtn.addEventListener('click', () => {
+                this.navigate('forward');
+            });
+        }
         
-        document.getElementById('lastStep').addEventListener('click', () => {
-            this.navigate('last');
-        });
+        const lastStepBtn = document.getElementById('lastStep');
+        if (lastStepBtn) {
+            lastStepBtn.addEventListener('click', () => {
+                this.navigate('last');
+            });
+        }
         
-        document.getElementById('gotoStepBtn').addEventListener('click', () => {
-            const step = parseInt(document.getElementById('gotoStep').value);
-            this.navigate('goto', step);
-        });
+        const gotoStepBtn = document.getElementById('gotoStepBtn');
+        if (gotoStepBtn) {
+            gotoStepBtn.addEventListener('click', () => {
+                const gotoStepInput = document.getElementById('gotoStep');
+                if (gotoStepInput) {
+                    const step = parseInt(gotoStepInput.value);
+                    this.navigate('goto', step);
+                }
+            });
+        }
         
         // Topology controls
         document.getElementById('addLink').addEventListener('click', () => {
@@ -273,9 +294,7 @@ class NetworkSimulator {
             this.toggleLabels(e.target.checked);
         });
         
-        document.getElementById('showRanges').addEventListener('change', (e) => {
-            this.toggleTransmissionRanges(e.target.checked);
-        });
+        // (Show Ranges checkbox removed; ranges always visible)
         
         // Export controls
         document.getElementById('exportJSON').addEventListener('click', () => {
@@ -600,6 +619,7 @@ class NetworkSimulator {
         
         // Update positions immediately (no animation/force simulation)
         this.updatePositions(nodes, links);
+            // this.updateRanges(); // Removed the call to updateRanges
     }
     
     updatePositions(nodes, links) {
@@ -638,14 +658,8 @@ class NetworkSimulator {
             .attr('x', d => d.x)
             .attr('y', d => d.y);
         
-        // Update transmission range positions if they exist
-        this.svg.selectAll('.transmission-range')
-            .attr('cx', d => d.x)
-            .attr('cy', d => d.y)
-            .attr('r', d => d.transmission_range * this.scaleX);
-            
-        // Refresh transmission ranges if they are visible
-        this.refreshTransmissionRangesIfVisible();
+        // Sync range positions (reuse node-bound data).
+    this.updateRanges();
         
         // Update node information panel if a node is selected
         if (this.selectedNodes.length > 0) {
@@ -655,9 +669,7 @@ class NetworkSimulator {
                 this.showNodeInfo(updatedNode);
                 // Maintain neighbor highlighting
                 this.highlightNeighbors(updatedNode);
-                // Maintain transmission range highlighting
-                this.svg.selectAll('.transmission-range')
-                    .classed('selected', d => d.id === selectedNodeId);
+                this.applyRangeHighlight();
             }
         }
     }
@@ -762,9 +774,8 @@ class NetworkSimulator {
         this.svg.selectAll('.node')
             .classed('selected', d => this.selectedNodes.some(n => n.id === d.id));
         
-        // Update transmission range selection
-        this.svg.selectAll('.transmission-range')
-            .classed('selected', d => this.selectedNodes.some(n => n.id === d.id));
+        // Update transmission range highlighting
+        this.highlightSelectedNodeRange();
     }
     
     selectNodeById(nodeId) {
@@ -830,10 +841,10 @@ class NetworkSimulator {
         
         content.innerHTML = `
             <div class="node-info-details">
-                <h5>🔌 Node ${node.id}</h5>
+                <h5>Node ${node.id}</h5>
                 
                 <div class="info-section">
-                    <h6>📍 Location & Network</h6>
+                    <h6>Location & Network</h6>
                     <div class="info-grid">
                         <div class="info-item">
                             <span class="info-label">Position:</span>
@@ -851,14 +862,14 @@ class NetworkSimulator {
                 </div>
                 
                 <div class="info-section">
-                    <h6>🔗 Connected Neighbors</h6>
+                    <h6>Connected Neighbors</h6>
                     <div class="neighbors-list">
                         ${neighborsHtml}
                     </div>
                 </div>
                 
                 <div class="info-section">
-                    <h6>📊 Message Statistics</h6>
+                    <h6>Message Statistics</h6>
                     <div class="message-stats">
                         <div class="stat-bar">
                             <span class="stat-label">Hello Messages:</span>
@@ -884,9 +895,9 @@ class NetworkSimulator {
                 </div>
                 
                 <div class="info-section">
-                    <h6>🔍 Actions</h6>
+                    <h6>Actions</h6>
                     <button class="btn btn-small btn-routing" onclick="simulator.getRoutingInfo([${node.id}])">
-                        📋 Show Routing Table
+                        Show Routing Table
                     </button>
                 </div>
             </div>
@@ -980,19 +991,37 @@ class NetworkSimulator {
     }
     
     updateSimulationState(state) {
-        document.getElementById('currentStep').textContent = state.current_step;
-        document.getElementById('maxSteps').textContent = state.max_steps;
-        document.getElementById('gotoStep').max = state.max_steps;
+        // Safely update elements that exist
+        const currentStepEl = document.getElementById('currentStep');
+        if (currentStepEl) currentStepEl.textContent = state.current_step;
         
-        // Update button states
-        document.getElementById('stepSimulation').disabled = !state.has_network;
-        document.getElementById('addLink').disabled = !state.has_network;
-        document.getElementById('removeLink').disabled = !state.has_network;
+        const maxStepsEl = document.getElementById('maxSteps');
+        if (maxStepsEl) maxStepsEl.textContent = state.max_steps;
         
-        document.getElementById('prevStep').disabled = state.current_step <= 0;
-        document.getElementById('nextStep').disabled = state.current_step >= state.max_steps;
-        document.getElementById('firstStep').disabled = state.current_step <= 0;
-        document.getElementById('lastStep').disabled = state.current_step >= state.max_steps;
+        const gotoStepEl = document.getElementById('gotoStep');
+        if (gotoStepEl) gotoStepEl.max = state.max_steps;
+        
+        // Update button states - only if buttons exist
+        const stepSimulationBtn = document.getElementById('stepSimulation');
+        if (stepSimulationBtn) stepSimulationBtn.disabled = !state.has_network;
+        
+        const addLinkBtn = document.getElementById('addLink');
+        if (addLinkBtn) addLinkBtn.disabled = !state.has_network;
+        
+        const removeLinkBtn = document.getElementById('removeLink');
+        if (removeLinkBtn) removeLinkBtn.disabled = !state.has_network;
+        
+        const prevStepBtn = document.getElementById('prevStep');
+        if (prevStepBtn) prevStepBtn.disabled = state.current_step <= 0;
+        
+        const nextStepBtn = document.getElementById('nextStep');
+        if (nextStepBtn) nextStepBtn.disabled = state.current_step >= state.max_steps;
+        
+        const firstStepBtn = document.getElementById('firstStep');
+        if (firstStepBtn) firstStepBtn.disabled = state.current_step <= 0;
+        
+        const lastStepBtn = document.getElementById('lastStep');
+        if (lastStepBtn) lastStepBtn.disabled = state.current_step >= state.max_steps;
     }
     
     updateConnectionStatus(text, connected) {
@@ -1019,51 +1048,53 @@ class NetworkSimulator {
         this.svg.selectAll('.node-label').style('display', show ? 'block' : 'none');
     }
     
-    toggleTransmissionRanges(show) {
-        // First remove all existing transmission ranges to avoid duplicates
-        this.svg.selectAll('.transmission-range').remove();
-        
-        if (show) {
-            // Ensure we have up-to-date node data with correct positions
-            const nodes = this.networkData.nodes.map(d => {
-                const position = this.nodePositions.get(d.id);
-                return position ? { ...d, x: position.x, y: position.y } : d;
-            });
-            
-            const ranges = this.svg.select('.transmission-ranges')
-                .selectAll('.transmission-range')
-                .data(nodes, d => d.id);
-            
-            ranges.enter()
-                .append('circle')
-                .attr('class', 'transmission-range')
-                .attr('cx', d => d.x)
-                .attr('cy', d => d.y)
-                .attr('r', d => d.transmission_range * this.scaleX) // Use same scale as nodes
-                .style('fill', 'none')
-                .style('stroke', '#3498db')
-                .style('stroke-width', 1)
-                .style('stroke-dasharray', '5,5')
-                .style('opacity', 0.3);
-                
-            // Highlight transmission range of selected node if any
-            if (this.selectedNodes.length > 0) {
-                const selectedNodeId = this.selectedNodes[0].id;
-                this.svg.selectAll('.transmission-range')
-                    .classed('selected', d => d.id === selectedNodeId);
-            }
-        }
+    updateRanges() {
+        if (!this.networkData || !this.networkData.nodes.length) return;
+
+        // Ensure container exists (it was created first in initVisualization)
+        const container = this.svg.select('.transmission-ranges');
+
+        // Use the same node data currently bound to circles in .nodes group
+        const nodeData = this.svg.select('.nodes').selectAll('.node').data();
+        const data = nodeData.filter(d => d && d.transmission_range && d.transmission_range > 0);
+
+        const MIN_RADIUS = 10;
+        const ranges = container.selectAll('circle.transmission-range')
+            .data(data, d => d.id);
+
+        ranges.exit().remove();
+
+        const enter = ranges.enter()
+            .append('circle')
+            .attr('class', 'transmission-range')
+            .style('fill', 'none')
+            .style('stroke', '#3498db')
+            .style('stroke-width', 2)
+            .style('stroke-dasharray', '8,4')
+            .style('opacity', 0.55)
+            .style('pointer-events', 'none');
+
+        enter.merge(ranges)
+            .attr('data-node-id', d => d.id)
+            .attr('cx', d => d.x)
+            .attr('cy', d => d.y)
+            .attr('r', d => Math.max(d.transmission_range * this.scaleX, MIN_RADIUS))
+            .classed('selected', d => this.selectedNodes.length && d.id === this.selectedNodes[0].id);
+
+        this.applyRangeHighlight();
     }
     
-    // Helper method to refresh transmission ranges if visible
-    refreshTransmissionRangesIfVisible() {
-        const showRangesCheckbox = document.getElementById('showRanges');
-        if (showRangesCheckbox && showRangesCheckbox.checked) {
-            // Toggle off and on to refresh the ranges
-            this.toggleTransmissionRanges(false);
-            this.toggleTransmissionRanges(true);
-        }
+    applyRangeHighlight() {
+        const selectedId = this.selectedNodes.length ? this.selectedNodes[0].id : null;
+        this.svg.select('.transmission-ranges').selectAll('.transmission-range')
+            .classed('selected', function() {
+                if (selectedId === null) return false;
+                const nodeId = parseInt(this.getAttribute('data-node-id'));
+                return nodeId === selectedId;
+            });
     }
+    
+    // (Removed old refreshTransmissionRangesIfVisible; dynamic updates now handled by data join)
     
     showExportModal(data) {
         const modal = document.getElementById('exportModal');

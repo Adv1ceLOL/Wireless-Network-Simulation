@@ -37,11 +37,7 @@
             <!-- Network Creation Panel -->
             <div class="panel network-panel">
                 <div class="panel-header-with-info">
-                    <h3>🏗️ Network Configuration</h3>
-                    <div class="tooltip">
-                        <span class="help-icon">?</span>
-                        <span class="tooltiptext">Create your network here by specifying the number of nodes and the area size.</span>
-                    </div>
+                    <h3>Network Configuration</h3>
                 </div>
                 <p class="panel-description">Define the basic parameters of your wireless sensor network.</p>
                 <div class="form-group">
@@ -60,11 +56,7 @@
             <!-- Simulation Control Panel -->
             <div class="panel simulation-panel">
                 <div class="panel-header-with-info">
-                    <h3>⚡ Simulation Controls</h3>
-                    <div class="tooltip">
-                        <span class="help-icon">?</span>
-                        <span class="tooltiptext">Control simulation behavior with these parameters and advance through the simulation steps.</span>
-                    </div>
+                    <h3>Simulation Controls</h3>
                 </div>
                 <p class="panel-description">Define event probabilities and control simulation flow.</p>
                 <div class="simulation-params">
@@ -95,10 +87,6 @@
             <div class="panel topology-panel">
                 <div class="panel-header-with-info">
                     <h3>🔗 Topology Controls</h3>
-                    <div class="tooltip">
-                        <span class="help-icon">?</span>
-                        <span class="tooltiptext">Manually adjust network topology by adding or removing links between nodes.</span>
-                    </div>
                 </div>
                 <p class="panel-description">Customize your network by adding or removing connections between nodes.</p>
                 <div class="form-group">
@@ -125,18 +113,11 @@
         <div class="visualization-area">
             <div class="panel-header-with-info">
                 <h3>Network Visualization</h3>
-                <div class="tooltip">
-                    <span class="help-icon">?</span>
-                    <span class="tooltiptext">Interactive visualization of your network. Click on nodes to view details, drag nodes to reposition them, and use the controls to adjust the view.</span>
-                </div>
             </div>
             <p class="panel-description">Interactive network map showing nodes, connections, and message transmissions.</p>
             <div class="visualization-controls">
                 <label title="Show or hide node labels">
                     <input type="checkbox" id="showLabels" checked> Show Labels
-                </label>
-                <label title="Show or hide transmission ranges">
-                    <input type="checkbox" id="showRanges"> Show Ranges
                 </label>
             </div>
             <svg id="networkVisualization" width="800" height="600"></svg>
@@ -147,11 +128,7 @@
             <!-- Statistics Panel -->
             <div class="info-panel stats-panel">
                 <div class="panel-header-with-info">
-                    <h4>📈 Network Statistics</h4>
-                    <div class="tooltip">
-                        <span class="help-icon">?</span>
-                        <span class="tooltiptext">Real-time statistics about network performance, including request success rates and delays.</span>
-                    </div>
+                    <h4>Network Statistics</h4>
                 </div>
                 <div id="statisticsContent">
                     <div class="stat-item">
@@ -189,10 +166,6 @@
             <div class="info-panel node-panel">
                 <div class="panel-header-with-info">
                     <h4>Node Details</h4>
-                    <div class="tooltip">
-                        <span class="help-icon">?</span>
-                        <span class="tooltiptext">Detailed information about the selected node, including its connections, state, and message statistics.</span>
-                    </div>
                 </div>
                 <div id="nodeInfoContent">
                     <p>Click on a node in the visualization to see its detailed information</p>
@@ -202,11 +175,7 @@
             <!-- Event Log Panel -->
             <div class="info-panel log-panel">
                 <div class="panel-header-with-info">
-                    <h4>📝 Event Log</h4>
-                    <div class="tooltip">
-                        <span class="help-icon">?</span>
-                        <span class="tooltiptext">Chronological log of significant events occurring in the network during simulation.</span>
-                    </div>
+                    <h4>Event Log</h4>
                 </div>
                 <div id="eventLog" class="event-log">
                     <div class="log-entry">Simulation ready. Create a network to begin.</div>
