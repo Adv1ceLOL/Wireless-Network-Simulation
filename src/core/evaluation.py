@@ -12,6 +12,47 @@ import random
 import os
 import math
 
+
+def get_hello_msg_count(network):
+    """Count all hello messages across all nodes"""
+    count = 0
+    for node in network.nodes:
+        count += getattr(node, "hello_msg_count", 0)
+    return count
+
+
+def get_topology_msg_count(network):
+    """Count all topology discovery messages across all nodes"""
+    count = 0
+    for node in network.nodes:
+        count += getattr(node, "topology_msg_count", 0)
+    return count
+
+
+def get_route_discovery_msg_count(network):
+    """Count all route discovery messages across all nodes"""
+    count = 0
+    for node in network.nodes:
+        count += getattr(node, "route_discovery_msg_count", 0)
+    return count
+
+
+def get_data_packet_count(network):
+    """Count all data packets across all nodes"""
+    count = 0
+    for node in network.nodes:
+        count += getattr(node, "data_packet_count", 0)
+    return count
+
+
+def get_total_message_count(network):
+    """Count all messages across all nodes"""
+    return (get_hello_msg_count(network) + 
+            get_topology_msg_count(network) + 
+            get_route_discovery_msg_count(network) + 
+            get_data_packet_count(network))
+
+
 def get_protocol_efficiency(network):
     """Calculate protocol efficiency as data packets / total packets.
     
