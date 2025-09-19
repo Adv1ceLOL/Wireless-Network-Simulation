@@ -46,19 +46,11 @@ Once started, open your web browser and navigate to:
 - **Parameter Control**: Adjust probabilities for packet requests, link failures, and new links
 - **Real-time Statistics**: Monitor success rates, delays, and network changes
 
-### 🧭 Navigation & History
-- **Step Navigation**: Forward, backward, first, last step controls
-- **History Management**: Complete simulation history with state snapshots
-- **Go-to-Step**: Jump directly to any simulation step
-- **State Restoration**: Full network state restoration at any point
-
 ### 📨 Message Transmission
 - **Path Visualization**: Visual highlighting of message transmission paths (automatic during simulation)
 - **Transmission Statistics**: Success rates, delays, and failure tracking (automatic during simulation)
 
 ### 📊 Visualization Features
-- **Zoom Controls**: Zoom in, zoom out, and reset view
-- **Interactive Nodes**: Drag nodes, click for information, double-click for details
 - **Visual Options**: Toggle node labels and transmission ranges
 - **Path Highlighting**: Visualization of active transmission paths during simulation
 - **Network Statistics**: Real-time display of network metrics
@@ -73,12 +65,6 @@ Once started, open your web browser and navigate to:
 - **Event Log**: Chronological log of all simulation events
 - **Routing Tables**: View routing information for any node
 
-### 💾 Export & Reports
-- **JSON Export**: Complete simulation data in JSON format
-- **Report Generation**: Detailed text reports with network analysis
-- **Image Export**: Export network visualization as PNG
-- **Downloadable Files**: All exports can be downloaded directly
-
 ## 🎮 Controls Guide
 
 ### Network Creation
@@ -89,7 +75,6 @@ Once started, open your web browser and navigate to:
 ### Running Simulations
 1. **Single Step**: Click "Step Forward" to execute one simulation step
 2. **Auto Play**: Click "Auto Play" for continuous stepping (use "Stop Auto" to pause)
-3. **Navigation**: Use ⏮️⏪⏩⏭️ buttons to navigate through history
 
 ### Topology Modification
 1. Select two nodes (Node A and Node B)
@@ -116,21 +101,6 @@ The auto-play feature automatically executes simulation steps with a configurabl
 - Random link failures
 - Random new link formation
 - Automatic hello message exchanges
-
-### Export Options
-1. **JSON Export**: Complete simulation state including:
-   - Network topology
-   - Full simulation history
-   - Statistics and parameters
-   - Event logs
-
-2. **Report Export**: Human-readable reports including:
-   - Network parameters and statistics
-   - Node-by-node analysis
-   - Topology information
-   - Message exchange details
-
-3. **Image Export**: PNG image of current network visualization
 
 ### Routing Information
 Access detailed routing information including:
@@ -182,8 +152,6 @@ pip install -r requirements.txt
 3. **History Navigation**: Go back and forth through simulation steps
 4. **Real-time Monitoring**: Live statistics and event logging
 5. **Easy Experimentation**: Quick parameter changes and immediate results
-6. **Export Capabilities**: Save data and visualizations for analysis
-7. **User-Friendly**: No command line knowledge required
 
 ## 🔮 Advanced Usage
 
@@ -191,19 +159,16 @@ pip install -r requirements.txt
 1. Create a network with specific parameters
 2. Use topology controls to create desired network shapes
 3. Test different routing scenarios with message transmission
-4. Export results for analysis
 
 ### Protocol Analysis
 1. Run step-by-step simulations
 2. Monitor routing table changes
 3. Analyze convergence behavior
-4. Export routing information for detailed study
 
 ### Performance Testing
 1. Create networks of different sizes
 2. Test with varying failure rates
 3. Monitor success rates and delays
-4. Export statistics for comparison
 
 ## 📞 Support
 
