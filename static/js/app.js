@@ -198,35 +198,56 @@ class NetworkSimulator {
     
     bindEvents() {
         // Network creation
-        document.getElementById('createNetwork').addEventListener('click', () => {
-            this.createNetwork();
-        });
+        const createNetworkBtn = document.getElementById('createNetwork');
+        if (createNetworkBtn) {
+            createNetworkBtn.addEventListener('click', () => {
+                this.createNetwork();
+            });
+        }
         
         // Simulation controls
-        document.getElementById('stepSimulation').addEventListener('click', () => {
-            this.stepSimulation();
-        });
+        const stepSimulationBtn = document.getElementById('stepSimulation');
+        if (stepSimulationBtn) {
+            stepSimulationBtn.addEventListener('click', () => {
+                this.stepSimulation();
+            });
+        }
         
-        document.getElementById('autoPlay').addEventListener('click', () => {
-            this.startAutoPlay();
-        });
+        const autoPlayBtn = document.getElementById('autoPlay');
+        if (autoPlayBtn) {
+            autoPlayBtn.addEventListener('click', () => {
+                this.startAutoPlay();
+            });
+        }
         
-        document.getElementById('stopAutoPlay').addEventListener('click', () => {
-            this.stopAutoPlay();
-        });
+        const stopAutoPlayBtn = document.getElementById('stopAutoPlay');
+        if (stopAutoPlayBtn) {
+            stopAutoPlayBtn.addEventListener('click', () => {
+                this.stopAutoPlay();
+            });
+        }
         
         // Parameter change events
-        document.getElementById('pRequest').addEventListener('change', () => {
-            this.updateParameters();
-        });
+        const pRequestInput = document.getElementById('pRequest');
+        if (pRequestInput) {
+            pRequestInput.addEventListener('change', () => {
+                this.updateParameters();
+            });
+        }
         
-        document.getElementById('pFail').addEventListener('change', () => {
-            this.updateParameters();
-        });
+        const pFailInput = document.getElementById('pFail');
+        if (pFailInput) {
+            pFailInput.addEventListener('change', () => {
+                this.updateParameters();
+            });
+        }
         
-        document.getElementById('pNew').addEventListener('change', () => {
-            this.updateParameters();
-        });
+        const pNewInput = document.getElementById('pNew');
+        if (pNewInput) {
+            pNewInput.addEventListener('change', () => {
+                this.updateParameters();
+            });
+        }
         
         // Navigation controls - with safety checks
         const firstStepBtn = document.getElementById('firstStep');
@@ -269,50 +290,80 @@ class NetworkSimulator {
         }
         
         // Topology controls
-        document.getElementById('addLink').addEventListener('click', () => {
-            this.modifyTopology('add_link');
-        });
+        const addLinkBtn = document.getElementById('addLink');
+        if (addLinkBtn) {
+            addLinkBtn.addEventListener('click', () => {
+                this.modifyTopology('add_link');
+            });
+        }
         
-        document.getElementById('removeLink').addEventListener('click', () => {
-            this.modifyTopology('remove_link');
-        });
+        const removeLinkBtn = document.getElementById('removeLink');
+        if (removeLinkBtn) {
+            removeLinkBtn.addEventListener('click', () => {
+                this.modifyTopology('remove_link');
+            });
+        }
         
         // Visualization controls
-        document.getElementById('zoomIn').addEventListener('click', () => {
-            this.zoom(1.5);
-        });
+        const zoomInBtn = document.getElementById('zoomIn');
+        if (zoomInBtn) {
+            zoomInBtn.addEventListener('click', () => {
+                this.zoom(1.5);
+            });
+        }
         
-        document.getElementById('zoomOut').addEventListener('click', () => {
-            this.zoom(0.75);
-        });
+        const zoomOutBtn = document.getElementById('zoomOut');
+        if (zoomOutBtn) {
+            zoomOutBtn.addEventListener('click', () => {
+                this.zoom(0.75);
+            });
+        }
         
-        document.getElementById('resetZoom').addEventListener('click', () => {
-            this.resetZoom();
-        });
+        const resetZoomBtn = document.getElementById('resetZoom');
+        if (resetZoomBtn) {
+            resetZoomBtn.addEventListener('click', () => {
+                this.resetZoom();
+            });
+        }
         
-        document.getElementById('showLabels').addEventListener('change', (e) => {
-            this.toggleLabels(e.target.checked);
-        });
+        const showLabelsCheckbox = document.getElementById('showLabels');
+        if (showLabelsCheckbox) {
+            showLabelsCheckbox.addEventListener('change', (e) => {
+                this.toggleLabels(e.target.checked);
+            });
+        }
         
         // (Show Ranges checkbox removed; ranges always visible)
         
         // Export controls
-        document.getElementById('exportJSON').addEventListener('click', () => {
-            this.exportData('json');
-        });
+        const exportJSONBtn = document.getElementById('exportJSON');
+        if (exportJSONBtn) {
+            exportJSONBtn.addEventListener('click', () => {
+                this.exportData('json');
+            });
+        }
         
-        document.getElementById('exportReport').addEventListener('click', () => {
-            this.exportData('report');
-        });
+        const exportReportBtn = document.getElementById('exportReport');
+        if (exportReportBtn) {
+            exportReportBtn.addEventListener('click', () => {
+                this.exportData('report');
+            });
+        }
         
-        document.getElementById('exportImage').addEventListener('click', () => {
-            this.exportImage();
-        });
+        const exportImageBtn = document.getElementById('exportImage');
+        if (exportImageBtn) {
+            exportImageBtn.addEventListener('click', () => {
+                this.exportImage();
+            });
+        }
         
         // Clear log
-        document.getElementById('clearLog').addEventListener('click', () => {
-            this.clearLog();
-        });
+        const clearLogBtn = document.getElementById('clearLog');
+        if (clearLogBtn) {
+            clearLogBtn.addEventListener('click', () => {
+                this.clearLog();
+            });
+        }
 
         // Modal events
         document.querySelectorAll('.close').forEach(close => {
@@ -321,9 +372,15 @@ class NetworkSimulator {
             });
         });
         
-        document.getElementById('closeExportModal').addEventListener('click', () => {
-            document.getElementById('exportModal').style.display = 'none';
-        });
+        const closeExportModalBtn = document.getElementById('closeExportModal');
+        if (closeExportModalBtn) {
+            closeExportModalBtn.addEventListener('click', () => {
+                const exportModal = document.getElementById('exportModal');
+                if (exportModal) {
+                    exportModal.style.display = 'none';
+                }
+            });
+        }
         
         // Click outside modal to close
         window.addEventListener('click', (e) => {
@@ -775,7 +832,7 @@ class NetworkSimulator {
             .classed('selected', d => this.selectedNodes.some(n => n.id === d.id));
         
         // Update transmission range highlighting
-        this.highlightSelectedNodeRange();
+        this.updateRanges();
     }
     
     selectNodeById(nodeId) {
@@ -896,7 +953,7 @@ class NetworkSimulator {
                 
                 <div class="info-section">
                     <h6>Actions</h6>
-                    <button class="btn btn-small btn-routing" onclick="simulator.getRoutingInfo([${node.id}])">
+                    <button class="btn btn-small btn-routing" onclick="window.simulator.getRoutingInfo([${node.id}])">
                         Show Routing Table
                     </button>
                 </div>
@@ -1142,15 +1199,27 @@ class NetworkSimulator {
     }
     
     clearLog() {
-        document.getElementById('eventLog').innerHTML = '';
-        this.log('Log cleared', 'info');
+        const eventLog = document.getElementById('eventLog');
+        if (eventLog) {
+            eventLog.innerHTML = '';
+            this.log('Log cleared', 'info');
+        }
     }
     
     updateParameters() {
+        const pRequestEl = document.getElementById('pRequest');
+        const pFailEl = document.getElementById('pFail');
+        const pNewEl = document.getElementById('pNew');
+        
+        if (!pRequestEl || !pFailEl || !pNewEl) {
+            console.warn('Parameter elements not found, skipping update');
+            return;
+        }
+        
         const params = {
-            p_request: parseFloat(document.getElementById('pRequest').value),
-            p_fail: parseFloat(document.getElementById('pFail').value),
-            p_new: parseFloat(document.getElementById('pNew').value)
+            p_request: parseFloat(pRequestEl.value),
+            p_fail: parseFloat(pFailEl.value),
+            p_new: parseFloat(pNewEl.value)
         };
         
         this.socket.emit('update_parameters', { params });
