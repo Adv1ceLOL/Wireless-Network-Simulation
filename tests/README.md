@@ -1,52 +1,49 @@
-# Test Suite Documentation
+## Test Suite Overview
 
-This directory contains all test files for the Wireless Sensor Network Simulation project.
+This directory contains Python scripts exercising core simulation, routing, evaluation scoring, efficiency measurement, and convergence behaviour. No external test framework is required; each file is directly executable with the Python interpreter.
 
-## Test Categories
+### Categories
+Efficiency and Protocol:
+- `test_efficiency_optimization.py` – validates optimisation logic (incremental updates, reduced unnecessary route discovery messages).
+- `test_efficiency_simple.py` – basic sanity checks of efficiency accounting.
+- `test_efficiency_summary.py` – summarises efficiency related outcomes over representative parameter sets.
+- `test_protocol_efficiency.py` – verifies efficiency ratio under controlled probability inputs.
 
-### Efficiency Optimization Tests
-- `test_efficiency_optimization.py` - Comprehensive test suite for efficiency optimization feature
-- `test_efficiency_simple.py` - Simple verification test for efficiency optimization
-- `test_efficiency_summary.py` - Summary and documentation of efficiency optimization tests
-- `test_protocol_efficiency.py` - Protocol efficiency analysis tests
+Routing and Scoring:
+- `test_routing_score.py` – evaluates routing quality metrics used in evaluation scoring.
+- `test_scoring.py` – checks composite scoring consistency.
 
-### Integration Tests
-- `test_integration.py` - Integration tests for the complete system
-- `test_suite.py` - Main test suite runner
+Network / Simulator Integrity:
+- `test_network_simulator.py` – network generation, connectivity, link invariants.
+- `test_simulator.py` – end‑to‑end single simulation flow.
+- `test_integration.py` – broader integration covering message counters and path formation.
 
-### Network and Routing Tests
-- `test_network_simulator.py` - Network simulation tests
-- `test_routing_score.py` - Routing algorithm scoring tests
-- `test_scoring.py` - General scoring mechanism tests
-- `test_simulator.py` - Simulator functionality tests
+Convergence / Iterations:
+- `test_iterations.py` – convergence iteration counts and reconvergence after topology changes.
 
-### Utility Tests
-- `test_simple.py` - Simple unit tests
-- `test_iterations.py` - Iteration and convergence tests
-- `test_fix.py` - Bug fix verification tests
+Utility / Regression:
+- `test_simple.py` – minimal structural assertions.
+- `test_fix.py` – regression for previously identified issues.
+- `test_suite.py` – orchestration script invoking a representative subset / all tests.
 
-## Running Tests
-
-To run all tests from the project root directory:
-
-```bash
-# Run individual test files
+### Running Tests
+Examples (from project root):
+```
+python tests/test_simple.py
+python tests/test_network_simulator.py
 python tests/test_efficiency_optimization.py
-python tests/test_efficiency_simple.py
-python tests/test_integration.py
-
-# Run the main test suite
+```
+Run aggregated suite:
+```
 python tests/test_suite.py
 ```
 
-## Test Requirements
+### Requirements
+- Dependency installation via `pip install -r requirements.txt` beforehand.
+- Source directory layout unchanged (`src/core/`, main `simulation.py`).
 
-All tests assume the following project structure:
-- `src/` - Source code directory
-- `simulation.py` - Main simulation entry point
-- Proper Python environment with all dependencies installed
+### Notes
+- Tests are intentionally lightweight to remain portable without pytest/unittest harness overhead.
+- Randomness: where determinism is required, scripts set fixed seeds; otherwise statistical expectations are checked with tolerance.
 
-## Recent Additions
-
-- **Efficiency Optimization Tests**: Comprehensive testing of the `ignore_initial_route_discovery` feature
-- **Protocol Efficiency Analysis**: Tests verifying protocol efficiency calculations and optimizations
+End of test documentation.
