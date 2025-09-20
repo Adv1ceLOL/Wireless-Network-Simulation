@@ -2,37 +2,92 @@ PROTOCOL EVALUATION REPORT
 ======================================================================
 
 Evaluation Parameters:
-  Number of topologies: 1
-  Iterations per topology: 5
+  Number of topologies: 2
+  Iterations per topology: 10
   Maximum probability value: 0.3
   Fixed p_request value: 0.3
-  Nodes per topology: 3
+  Nodes per topology: 8
 
 Detailed Results:
 Topology   Iteration  p_request  p_fail     p_new      Efficiency Links Removed   Links Added     Data Messages   Reconnects
 ------------------------------------------------------------------------------------------------------------------------
-1          1          0.300      0.259      0.196      0.0357     0               0               1               0         
-1          2          0.300      0.028      0.229      0.0400     0               0               1               0         
-1          3          0.300      0.246      0.043      0.1053     1               0               2               0         
-1          4          0.300      0.135      0.159      0.0000     1               0               0               0         
-1          5          0.300      0.071      0.197      0.0000     0               0               0               0         
+1          1          0.300      0.014      0.147      0.0196     0               0               2               0         
+1          2          0.300      0.295      0.203      0.0062     1               1               1               0         
+1          3          0.300      0.013      0.275      0.0068     0               1               1               0         
+1          4          0.300      0.032      0.180      0.0000     0               0               0               0         
+1          5          0.300      0.134      0.286      0.0174     0               0               2               0         
+1          6          0.300      0.259      0.202      0.0088     0               0               1               0         
+1          7          0.300      0.244      0.038      0.0174     0               0               2               0         
+1          8          0.300      0.087      0.125      0.0259     0               0               3               0         
+1          9          0.300      0.126      0.101      0.0174     0               0               2               0         
+1          10         0.300      0.107      0.280      0.0088     0               0               1               0         
+2          1          0.300      0.293      0.108      0.0091     0               0               1               0         
+2          2          0.300      0.179      0.013      0.0000     0               0               0               0         
+2          3          0.300      0.132      0.072      0.0268     0               0               3               0         
+2          4          0.300      0.292      0.239      0.0079     1               0               1               0         
+2          5          0.300      0.084      0.283      0.0103     0               0               1               0         
+2          6          0.300      0.164      0.298      0.0204     0               0               2               0         
+2          7          0.300      0.233      0.169      0.0204     0               0               2               0         
+2          8          0.300      0.139      0.140      0.0103     0               0               1               0         
+2          9          0.300      0.023      0.140      0.0103     0               0               1               0         
+2          10         0.300      0.215      0.114      0.0303     0               0               3               0         
 
 SUMMARY TABLE (TRANSPOSED - TOPOLOGY AS COLUMNS):
 ----------------------------------------------------------------------
-Metric | Topology 1
--------------------
-Mean Efficiency      |       0.0362
-Mean p_request       |       0.3000
-Mean p_fail          |       0.1477
-Mean p_new           |       0.1648
-Mean Reconnections   |         0.00
-Links Removed        |            2
-Links Added          |            0
-Total Data Messages  |            4
-Avg Hops/Message     |         1.00
-Avg Delay/Message    |       0.3721
+Metric | Topology 1 | Topology 2
+--------------------------------
+Mean Efficiency      |       0.0128 |       0.0146
+Mean p_request       |       0.3000 |       0.3000
+Mean p_fail          |       0.1310 |       0.1755
+Mean p_new           |       0.1837 |       0.1575
+Mean Reconnections   |         0.00 |         0.00
+Links Removed        |            1 |            1
+Links Added          |            2 |            0
+Total Data Messages  |           15 |           15
+Avg Hops/Message     |         2.20 |         2.27
+Avg Delay/Message    |       1.1794 |       1.2787
 
-Overall average efficiency: 0.0362
+Overall average efficiency: 0.0137
+
+TOPOLOGY RANKING (higher score is better):
+----------------------------------------------------------------------
+Rank 1: Topology 1 - Score: 0.4761
+Rank 2: Topology 2 - Score: 0.4749
+
+Best topology: Topology 1 with score 0.4761
+
+Comprehensive Scoring Formula:
+  Score = (0.25 * Efficiency) + (0.20 * Resilience) + (0.15 * Overhead) + 
+          (0.20 * Routing Quality) + (0.10 * Delay Factor) + (0.10 * Traffic Balance)
+  where:
+  - Efficiency: Ratio of data packets to total packets
+  - Resilience: Network ability to handle topology changes and maintain connectivity
+  - Overhead: Efficiency of control message usage
+  - Routing Quality: Quality of routing paths based on average hop count (fewer is better)
+  - Delay Factor: Quality of paths based on link weights/delays (lower is better)
+  - Traffic Balance: Balance between data volume and network capacity
+
+Detailed Scoring Components for Best Topology:
+  - Efficiency:        0.0128 (weight: 0.25)
+  - Resilience:        0.9653 (weight: 0.20)
+  - Overhead:          0.0362 (weight: 0.15)
+  - Routing Quality:   0.8429 (weight: 0.20)
+  - Delay Factor:      0.7641 (weight: 0.10)
+  - Traffic Balance:   0.2940 (weight: 0.10)
+
+Additional Network Metrics for Best Topology:
+  - Link Stability:      0.6667 (ratio of stable links)
+  - Messages per Link:   5.00 (data msgs per link event)
+  - Network Efficiency:  0.0128 (data/total msgs ratio)
+  - Link Changes:        3 (total topology changes)
+
+Cross-Topology Metric Comparison:
+----------------------------------------------------------------------
+Metric               Best Value   Worst Value  Range        Topology ID 
+Efficiency           0.0146       0.0128       0.0018       2           
+Link Stability       0.6667       0.0000       0.6667       1           
+Messages/Link        15.0000      5.0000       10.0000      2           
+Reconnections        0.0000       0.0000       0.0000       1           
 
 Note on network reconnections:
   The 'Reconnects' column shows how many times the network needed to be

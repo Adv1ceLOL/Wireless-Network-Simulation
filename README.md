@@ -5,6 +5,14 @@
 
 ---
 
+<div align="center">
+
+##  **[→ View Efficiency Analysis & Experimental Results ](considerations.md)**
+
+
+</div>
+
+
 ## 1. Assignment Statement (Summary)
 We implement a wireless sensor network with N nodes. Links are weighted with delays in [0,1]. A proactive distance‑vector routing protocol establishes and maintains routing tables. At each discrete time step t:
 1. With probability p_request a data transmission request (s → d) is generated.
