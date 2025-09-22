@@ -68,34 +68,10 @@ if __name__ == "__main__":
         "--seed", type=int, default=None, help="Random seed for reproducibility"
     )
     parser.add_argument(
-        "--time-steps",
+        "--iterations",
         type=int,
-        default=100,
-        help="Number of time steps for dynamic simulation (default: 100)",
-    )
-    parser.add_argument(
-        "--p-request",
-        type=float,
-        default=0.3,
-        help="Probability of packet request per time step (default: 0.3)",
-    )
-    parser.add_argument(
-        "--p-fail",
-        type=float,
-        default=0.1,
-        help="Probability of link failure per time step (default: 0.1)",
-    )
-    parser.add_argument(
-        "--p-new",
-        type=float,
-        default=0.1,
-        help="Probability of new link per time step (default: 0.1)",
-    )
-    parser.add_argument(
-        "--hello-interval",
-        type=int,
-        default=1,
-        help="Hello message interval in time steps (default: 1 = every step)",
+        default=10,
+        help="Number of transmission tests (default: 10)",
     )
     parser.add_argument(
         "--delay",
@@ -111,46 +87,19 @@ if __name__ == "__main__":
     parser.add_argument(
         "--verbose", action="store_true", help="Enable verbose logging"
     )
-    parser.add_argument(
-        "--evaluation", action="store_true", help="Run comprehensive evaluation mode instead of single simulation"
-    )
-    parser.add_argument(
-        "--eval-topologies", type=int, default=3, help="Number of topologies to evaluate (default: 3)"
-    )
-    parser.add_argument(
-        "--eval-iterations", type=int, default=50, help="Number of iterations per topology (default: 50)"
-    )
 
     args = parser.parse_args()
 
-    # Check if evaluation mode is requested
-    if args.evaluation:
-        print("Running comprehensive evaluation mode...")
-        evaluation_results = run_evaluation(
-            n_topologies=args.eval_topologies,
-            iterations_per_topology=args.eval_iterations,
-            max_probability=max(args.p_fail, args.p_new, 0.3),
-            n_nodes=args.nodes,
-            fixed_p_request=args.p_request,
-            fixed_p_fail=args.p_fail if args.p_fail != 0.1 else None,  # Use default if not changed
-            fixed_p_new=args.p_new if args.p_new != 0.1 else None  # Use default if not changed
-        )
-        print("\nEvaluation complete! Results saved in output/reports/evaluation_report.txt")
-    else:
-        # Call the main simulation function
-        network = scenario_main(
-            n_nodes=args.nodes,
-            interactive=not args.no_interactive,
-            random_seed=args.seed,
-            delay_between_steps=args.delay,
-            verbose=args.verbose,
-            time_steps=args.time_steps,
-            p_request=args.p_request,
-            p_fail=args.p_fail,
-            p_new=args.p_new,
-            hello_interval=args.hello_interval,
-        )
-        
-        print("\nSimulation complete!")
-        print("Network report is saved in the output/reports directory.")
-        print("Visualization files are saved in the output/visualizations directory.")
+    # Call the main simulation function
+    network = scenario_main(
+        n_nodes=args.nodes,
+        transmission_tests=args.iterations,
+        interactive=not args.no_interactive,
+        random_seed=args.seed,
+        delay_between_steps=args.delay,
+        verbose=args.verbose,
+    )
+    
+    print("\nSimulation complete!")
+    print("Network report is saved in the output/reports directory.")
+    print("Visualization files are saved in the output/visualizations directory.")

@@ -1,0 +1,24 @@
+Simulate a wireless sensor network with N nodes. Generate weighted links randomly with
+weights representing the delay (random between 0 and 1).
+The wireless network implements a proactive routing protocol. Initially, nodes exchange messages
+to perform network discovery (you can use and modify this code, which performs distance vector
+topology discovery and routing table generation
+https://github.com/WukoSiric/Distance-Vector-Networking.git. You can search for other
+programs online for link state routing, or write it on your own - not suggested)
+Simulate a dynamic scenario where at each time step t, with probability p, a request for a
+packet send between a source node s and a destination node d arrives. At each time step, with
+probability pf , a random link disappears, and with probability pn, a new link between two random end
+points appears.
+Node s forwards the packet to d. Furthermore, at every time step, nodes exchange hello messages
+with their neighbours. As soon as a new link appears, it introduces itself to its neighbours. This
+information is propagated throughout the network, and nodes update their routing tables. The new
+node fills out its own routing table, which says what is the next hop for each possible destination. A
+similar procedure is implemented when a link disappears. You can assume that packet transmission from
+s to d as well as these updates are performed within a single time step.
+Throughout the entire procedure, you must maintain a counter that counts the number of
+message exchanges, including the ones for topology discovery, hello messages, route discovery (control
+packets), in addition to the data packet forwards.
+Play with the parameters p, pf and pn and see how the number of total messages changes
+accordingly, and evaluate the efficiency of the protocol as number of data packets exchanged
+total number of packets exchanged . In general, keep
+pn and pf low (≤ 0.3 or even less).

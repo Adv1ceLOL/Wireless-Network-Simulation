@@ -1,11 +1,10 @@
 import math
-import random
 import copy
 
 class SensorNode:
     """A node in a wireless sensor network with position and connection capabilities."""
     
-    _all_nodes = []  # Keep track of all nodes in the network
+    _all_nodes = []
     
     def __init__(self, node_id, x=0, y=0, transmission_range=1.0):
         """Initialize a sensor node.
@@ -19,18 +18,17 @@ class SensorNode:
         self.x = x
         self.y = y
         self.transmission_range = transmission_range
-        self.connections = {}  # {neighbor_node_id: delay}
-        self.routing_table = {}  # {destination: (next_hop, cost)}
-        self.distance_vector = {}  # {destination: cost}
-        self.neighbor_vectors = {}  # {neighbor_id: their distance vector}
-        self.updates_to_process = []  # [(from_node_id, distance_vector), ...]
-        self.update_needed = False  # Flag to indicate if this node needs to send updates
+        self.connections = {}
+        self.routing_table = {}
+        self.distance_vector = {}
+        self.neighbor_vectors = {}
+        self.updates_to_process = []
+        self.update_needed = False
         
-        # Message counters
-        self.hello_msg_count = 0  # Count of hello messages
-        self.topology_msg_count = 0  # Count of topology discovery messages
-        self.route_discovery_msg_count = 0  # Count of control packets for route discovery
-        self.data_packet_count = 0  # Count of data packets forwarded
+        self.hello_msg_count = 0
+        self.topology_msg_count = 0
+        self.route_discovery_msg_count = 0
+        self.data_packet_count = 0
         
         SensorNode._all_nodes.append(self)
         
@@ -65,13 +63,11 @@ class SensorNode:
         """Initialize the distance vector for this node."""
         n_nodes = len(network.nodes)
         self.distance_vector = {i: float('inf') for i in range(n_nodes)}
-        self.distance_vector[self.node_id] = 0  # Distance to self is 0
+        self.distance_vector[self.node_id] = 0
         
-        # Distance to direct neighbors is the connection delay
         for neighbor_id, delay in self.connections.items():
             self.distance_vector[neighbor_id] = delay
             
-        # Initialize routing table
         self.routing_table = {}
         for dest_id in range(n_nodes):
             if dest_id == self.node_id:
@@ -84,15 +80,43 @@ class SensorNode:
         self.update_needed = True
         
     def send_distance_vector(self, network):
-        """Send this node's distance vector to all neighbors if updates are needed."""
+        """Send this node's distance vector to neighbors only if significant updates are needed."""
         if self.update_needed:
+            meaningful_updates = 0
             for neighbor_id in self.get_neighbors():
                 neighbor = network.get_node_by_id(neighbor_id)
-                neighbor.receive_distance_vector(self.node_id, copy.deepcopy(self.distance_vector))
-                # Increment route discovery message count
+                # Only send if we have meaningful routing information to share
+                if self._has_meaningful_updates_for_neighbor(neighbor_id):
+                    neighbor.receive_distance_vector(self.node_id, copy.deepcopy(self.distance_vector))
+                    meaningful_updates += 1
+            
+            if meaningful_updates > 0:
                 self.route_discovery_msg_count += 1
-            self.update_needed = False
+                self.update_needed = False
+                return True
+            else:
+                self.update_needed = False
+                return False
+        return False
+    
+    def _has_meaningful_updates_for_neighbor(self, neighbor_id: int) -> bool:
+        """Check if we have meaningful routing updates for a specific neighbor."""
+        if not hasattr(self, '_last_sent_vectors'):
+            self._last_sent_vectors = {}
             return True
+            
+        last_vector = self._last_sent_vectors.get(neighbor_id, {})
+        
+        for dest, distance in self.distance_vector.items():
+            if dest == neighbor_id:
+                continue
+                
+            last_distance = last_vector.get(dest, float('inf'))
+            # Consider it meaningful if distance changed significantly or route became available/unavailable
+            if abs(distance - last_distance) > 0.01 or (distance == float('inf')) != (last_distance == float('inf')):
+                self._last_sent_vectors[neighbor_id] = self.distance_vector.copy()
+                return True
+                
         return False
 
     def receive_distance_vector(self, from_node_id, vector):

@@ -1,0 +1,19 @@
+{
+  "scenario_id": "medium_activity",
+  "approach_name": "External_Example_Implementation",
+  "total_packets": 238,
+  "hello_messages": 222,
+  "topology_messages": 0,
+  "route_discovery_messages": 16,
+  "data_packets": 0,
+  "efficiency": 0.0,
+  "successful_transmissions": 0,
+  "failed_transmissions": 21,
+  "average_delay": 0.0,
+  "links_removed": 2,
+  "links_added": 1,
+  "reconvergence_iterations": 4,
+  "execution_time": 0.0001518726348876953,
+  "transmission_success_rate": 0.0,
+  "control_overhead": 1.0
+}

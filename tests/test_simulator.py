@@ -250,7 +250,7 @@ class SimulatorTestSuite:
                 return False
                 
             # Test message from node 0 to node 3 (should go through the whole network)
-            path, delay = self.network.simulate_message_transmission(0, 3, "Test message")
+            path, delay, _ = self.network.simulate_message_transmission(0, 3, "Test message")
             
             # Verify the path exists
             assert path is not None, "Message transmission failed, no path found"

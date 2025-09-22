@@ -171,7 +171,7 @@ class TestNetworkSimulation(unittest.TestCase):
         self.network.run_distance_vector_protocol()
         
         # Test path from node 0 to node 4
-        path, delay = self.network.simulate_message_transmission(0, 4, "Test message")
+        path, delay, _ = self.network.simulate_message_transmission(0, 4, "Test message")
         
         # Expected path: 0 -> 1 -> 2 -> 3 -> 4
         self.assertEqual(path, [0, 1, 2, 3, 4])

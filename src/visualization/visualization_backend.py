@@ -10,7 +10,6 @@ import sys
 import os
 import platform
 import importlib.util
-import subprocess
 import logging
 import warnings
 from contextlib import contextmanager
