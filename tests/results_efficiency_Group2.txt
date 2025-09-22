@@ -1,0 +1,1846 @@
+x(10, 30, 0.1, 0.1, 0.15),Total exchanged messages: 101
+N nodes: 10; Time steps: 30; p_request: 0.15; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.079
+
+Network statistics: {'links_removed': 2; 'links_added': 3; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.1, 0.1, 0.35),Total exchanged messages: 184
+N nodes: 10; Time steps: 30; p_request: 0.35; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.120
+
+Network statistics: {'links_removed': 3; 'links_added': 2; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.1, 0.1, 0.65),Total exchanged messages: 287
+N nodes: 10; Time steps: 30; p_request: 0.65; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.160
+
+Network statistics: {'links_removed': 2; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.1, 0.1, 0.85),Total exchanged messages: 276
+N nodes: 10; Time steps: 30; p_request: 0.85; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.264
+
+Network statistics: {'links_removed': 1; 'links_added': 3; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.1, 0.1, 1.0),Total exchanged messages: 323
+N nodes: 10; Time steps: 30; p_request: 1.0; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.257
+
+Network statistics: {'links_removed': 2; 'links_added': 2; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.1, 0.2, 0.15),Total exchanged messages: 133
+N nodes: 10; Time steps: 30; p_request: 0.15; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.090
+
+Network statistics: {'links_removed': 1; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.1, 0.2, 0.35),Total exchanged messages: 200
+N nodes: 10; Time steps: 30; p_request: 0.35; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.100
+
+Network statistics: {'links_removed': 3; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.1, 0.2, 0.65),Total exchanged messages: 263
+N nodes: 10; Time steps: 30; p_request: 0.65; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.156
+
+Network statistics: {'links_removed': 1; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.1, 0.2, 0.85),Total exchanged messages: 313
+N nodes: 10; Time steps: 30; p_request: 0.85; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.214
+
+Network statistics: {'links_removed': 0; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.1, 0.2, 1.0),Total exchanged messages: 365
+N nodes: 10; Time steps: 30; p_request: 1.0; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.216
+
+Network statistics: {'links_removed': 1; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.1, 0.3, 0.15),Total exchanged messages: 153
+N nodes: 10; Time steps: 30; p_request: 0.15; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.065
+
+Network statistics: {'links_removed': 1; 'links_added': 9; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.1, 0.3, 0.35),Total exchanged messages: 232
+N nodes: 10; Time steps: 30; p_request: 0.35; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.099
+
+Network statistics: {'links_removed': 3; 'links_added': 8; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.1, 0.3, 0.65),Total exchanged messages: 283
+N nodes: 10; Time steps: 30; p_request: 0.65; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.145
+
+Network statistics: {'links_removed': 2; 'links_added': 9; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.1, 0.3, 0.85),Total exchanged messages: 313
+N nodes: 10; Time steps: 30; p_request: 0.85; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.214
+
+Network statistics: {'links_removed': 0; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.1, 0.3, 1.0),Total exchanged messages: 381
+N nodes: 10; Time steps: 30; p_request: 1.0; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.205
+
+Network statistics: {'links_removed': 2; 'links_added': 6; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.2, 0.1, 0.15),Total exchanged messages: 100
+N nodes: 10; Time steps: 30; p_request: 0.15; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.060
+
+Network statistics: {'links_removed': 5; 'links_added': 4; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.2, 0.1, 0.35),Total exchanged messages: 190
+N nodes: 10; Time steps: 30; p_request: 0.35; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.147
+
+Network statistics: {'links_removed': 7; 'links_added': 1; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.2, 0.1, 0.65),Total exchanged messages: 271
+N nodes: 10; Time steps: 30; p_request: 0.65; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.221
+
+Network statistics: {'links_removed': 4; 'links_added': 2; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.2, 0.1, 0.85),Total exchanged messages: 313
+N nodes: 10; Time steps: 30; p_request: 0.85; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.265
+
+Network statistics: {'links_removed': 5; 'links_added': 3; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.2, 0.1, 1.0),Total exchanged messages: 329
+N nodes: 10; Time steps: 30; p_request: 1.0; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.246
+
+Network statistics: {'links_removed': 3; 'links_added': 1; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.2, 0.2, 0.15),Total exchanged messages: 135
+N nodes: 10; Time steps: 30; p_request: 0.15; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.059
+
+Network statistics: {'links_removed': 7; 'links_added': 6; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.2, 0.2, 0.35),Total exchanged messages: 200
+N nodes: 10; Time steps: 30; p_request: 0.35; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.080
+
+Network statistics: {'links_removed': 7; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.2, 0.2, 0.65),Total exchanged messages: 295
+N nodes: 10; Time steps: 30; p_request: 0.65; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.153
+
+Network statistics: {'links_removed': 4; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.2, 0.2, 0.85),Total exchanged messages: 233
+N nodes: 10; Time steps: 30; p_request: 0.85; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.305
+
+Network statistics: {'links_removed': 1; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.2, 0.2, 1.0),Total exchanged messages: 365
+N nodes: 10; Time steps: 30; p_request: 1.0; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.216
+
+Network statistics: {'links_removed': 1; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.2, 0.3, 0.15),Total exchanged messages: 159
+N nodes: 10; Time steps: 30; p_request: 0.15; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.044
+
+Network statistics: {'links_removed': 7; 'links_added': 12; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.2, 0.3, 0.35),Total exchanged messages: 277
+N nodes: 10; Time steps: 30; p_request: 0.35; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.079
+
+Network statistics: {'links_removed': 10; 'links_added': 8; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.2, 0.3, 0.65),Total exchanged messages: 317
+N nodes: 10; Time steps: 30; p_request: 0.65; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.161
+
+Network statistics: {'links_removed': 3; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.2, 0.3, 0.85),Total exchanged messages: 233
+N nodes: 10; Time steps: 30; p_request: 0.85; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.305
+
+Network statistics: {'links_removed': 1; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.2, 0.3, 1.0),Total exchanged messages: 381
+N nodes: 10; Time steps: 30; p_request: 1.0; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.205
+
+Network statistics: {'links_removed': 2; 'links_added': 6; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.3, 0.1, 0.15),Total exchanged messages: 76
+N nodes: 10; Time steps: 30; p_request: 0.15; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.145
+
+Network statistics: {'links_removed': 13; 'links_added': 2; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.3, 0.1, 0.35),Total exchanged messages: 156
+N nodes: 10; Time steps: 30; p_request: 0.35; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.154
+
+Network statistics: {'links_removed': 9; 'links_added': 2; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.3, 0.1, 0.65),Total exchanged messages: 300
+N nodes: 10; Time steps: 30; p_request: 0.65; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.180
+
+Network statistics: {'links_removed': 13; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.3, 0.1, 0.85),Total exchanged messages: 416
+N nodes: 10; Time steps: 30; p_request: 0.85; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.212
+
+Network statistics: {'links_removed': 8; 'links_added': 4; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.3, 0.1, 1.0),Total exchanged messages: 424
+N nodes: 10; Time steps: 30; p_request: 1.0; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.212
+
+Network statistics: {'links_removed': 8; 'links_added': 2; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.3, 0.2, 0.15),Total exchanged messages: 131
+N nodes: 10; Time steps: 30; p_request: 0.15; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.061
+
+Network statistics: {'links_removed': 10; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.3, 0.2, 0.35),Total exchanged messages: 263
+N nodes: 10; Time steps: 30; p_request: 0.35; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.087
+
+Network statistics: {'links_removed': 8; 'links_added': 9; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.3, 0.2, 0.65),Total exchanged messages: 255
+N nodes: 10; Time steps: 30; p_request: 0.65; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.176
+
+Network statistics: {'links_removed': 8; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.3, 0.2, 0.85),Total exchanged messages: 405
+N nodes: 10; Time steps: 30; p_request: 0.85; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.175
+
+Network statistics: {'links_removed': 10; 'links_added': 9; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.3, 0.2, 1.0),Total exchanged messages: 369
+N nodes: 10; Time steps: 30; p_request: 1.0; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.184
+
+Network statistics: {'links_removed': 7; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.3, 0.3, 0.15),Total exchanged messages: 157
+N nodes: 10; Time steps: 30; p_request: 0.15; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.051
+
+Network statistics: {'links_removed': 11; 'links_added': 11; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.3, 0.3, 0.35),Total exchanged messages: 281
+N nodes: 10; Time steps: 30; p_request: 0.35; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.071
+
+Network statistics: {'links_removed': 11; 'links_added': 6; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.3, 0.3, 0.65),Total exchanged messages: 228
+N nodes: 10; Time steps: 30; p_request: 0.65; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.184
+
+Network statistics: {'links_removed': 8; 'links_added': 8; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.3, 0.3, 0.85),Total exchanged messages: 324
+N nodes: 10; Time steps: 30; p_request: 0.85; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.198
+
+Network statistics: {'links_removed': 9; 'links_added': 10; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 30, 0.3, 0.3, 1.0),Total exchanged messages: 337
+N nodes: 10; Time steps: 30; p_request: 1.0; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.202
+
+Network statistics: {'links_removed': 8; 'links_added': 10; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.1, 0.1, 0.15),Total exchanged messages: 209
+N nodes: 10; Time steps: 60; p_request: 0.15; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.067
+
+Network statistics: {'links_removed': 4; 'links_added': 8; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.1, 0.1, 0.35),Total exchanged messages: 335
+N nodes: 10; Time steps: 60; p_request: 0.35; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.152
+
+Network statistics: {'links_removed': 6; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.1, 0.1, 0.65),Total exchanged messages: 652
+N nodes: 10; Time steps: 60; p_request: 0.65; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.146
+
+Network statistics: {'links_removed': 7; 'links_added': 8; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.1, 0.1, 0.85),Total exchanged messages: 641
+N nodes: 10; Time steps: 60; p_request: 0.85; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.222
+
+Network statistics: {'links_removed': 8; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.1, 0.1, 1.0),Total exchanged messages: 579
+N nodes: 10; Time steps: 60; p_request: 1.0; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.280
+
+Network statistics: {'links_removed': 5; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.1, 0.2, 0.15),Total exchanged messages: 163
+N nodes: 10; Time steps: 60; p_request: 0.15; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.110
+
+Network statistics: {'links_removed': 6; 'links_added': 12; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.1, 0.2, 0.35),Total exchanged messages: 338
+N nodes: 10; Time steps: 60; p_request: 0.35; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.127
+
+Network statistics: {'links_removed': 7; 'links_added': 12; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.1, 0.2, 0.65),Total exchanged messages: 511
+N nodes: 10; Time steps: 60; p_request: 0.65; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.147
+
+Network statistics: {'links_removed': 5; 'links_added': 8; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.1, 0.2, 0.85),Total exchanged messages: 697
+N nodes: 10; Time steps: 60; p_request: 0.85; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.168
+
+Network statistics: {'links_removed': 4; 'links_added': 11; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.1, 0.2, 1.0),Total exchanged messages: 635
+N nodes: 10; Time steps: 60; p_request: 1.0; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.222
+
+Network statistics: {'links_removed': 4; 'links_added': 10; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.1, 0.3, 0.15),Total exchanged messages: 201
+N nodes: 10; Time steps: 60; p_request: 0.15; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.114
+
+Network statistics: {'links_removed': 4; 'links_added': 13; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.1, 0.3, 0.35),Total exchanged messages: 343
+N nodes: 10; Time steps: 60; p_request: 0.35; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.152
+
+Network statistics: {'links_removed': 5; 'links_added': 14; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.1, 0.3, 0.65),Total exchanged messages: 400
+N nodes: 10; Time steps: 60; p_request: 0.65; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.188
+
+Network statistics: {'links_removed': 9; 'links_added': 16; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.1, 0.3, 0.85),Total exchanged messages: 700
+N nodes: 10; Time steps: 60; p_request: 0.85; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.159
+
+Network statistics: {'links_removed': 6; 'links_added': 14; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.1, 0.3, 1.0),Total exchanged messages: 533
+N nodes: 10; Time steps: 60; p_request: 1.0; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.257
+
+Network statistics: {'links_removed': 4; 'links_added': 12; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.2, 0.1, 0.15),Total exchanged messages: 152
+N nodes: 10; Time steps: 60; p_request: 0.15; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.059
+
+Network statistics: {'links_removed': 9; 'links_added': 9; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.2, 0.1, 0.35),Total exchanged messages: 372
+N nodes: 10; Time steps: 60; p_request: 0.35; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.167
+
+Network statistics: {'links_removed': 19; 'links_added': 2; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.2, 0.1, 0.65),Total exchanged messages: 527
+N nodes: 10; Time steps: 60; p_request: 0.65; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.216
+
+Network statistics: {'links_removed': 10; 'links_added': 6; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.2, 0.1, 0.85),Total exchanged messages: 689
+N nodes: 10; Time steps: 60; p_request: 0.85; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.218
+
+Network statistics: {'links_removed': 10; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.2, 0.1, 1.0),Total exchanged messages: 697
+N nodes: 10; Time steps: 60; p_request: 1.0; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.234
+
+Network statistics: {'links_removed': 10; 'links_added': 4; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.2, 0.2, 0.15),Total exchanged messages: 203
+N nodes: 10; Time steps: 60; p_request: 0.15; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.054
+
+Network statistics: {'links_removed': 14; 'links_added': 13; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.2, 0.2, 0.35),Total exchanged messages: 487
+N nodes: 10; Time steps: 60; p_request: 0.35; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.103
+
+Network statistics: {'links_removed': 14; 'links_added': 13; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.2, 0.2, 0.65),Total exchanged messages: 446
+N nodes: 10; Time steps: 60; p_request: 0.65; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.202
+
+Network statistics: {'links_removed': 12; 'links_added': 8; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.2, 0.2, 0.85),Total exchanged messages: 578
+N nodes: 10; Time steps: 60; p_request: 0.85; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.218
+
+Network statistics: {'links_removed': 7; 'links_added': 15; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.2, 0.2, 1.0),Total exchanged messages: 677
+N nodes: 10; Time steps: 60; p_request: 1.0; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.214
+
+Network statistics: {'links_removed': 7; 'links_added': 13; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.2, 0.3, 0.15),Total exchanged messages: 323
+N nodes: 10; Time steps: 60; p_request: 0.15; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.084
+
+Network statistics: {'links_removed': 14; 'links_added': 17; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.2, 0.3, 0.35),Total exchanged messages: 467
+N nodes: 10; Time steps: 60; p_request: 0.35; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.124
+
+Network statistics: {'links_removed': 21; 'links_added': 18; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.2, 0.3, 0.65),Total exchanged messages: 566
+N nodes: 10; Time steps: 60; p_request: 0.65; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.157
+
+Network statistics: {'links_removed': 12; 'links_added': 18; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.2, 0.3, 0.85),Total exchanged messages: 622
+N nodes: 10; Time steps: 60; p_request: 0.85; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.180
+
+Network statistics: {'links_removed': 7; 'links_added': 15; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.2, 0.3, 1.0),Total exchanged messages: 665
+N nodes: 10; Time steps: 60; p_request: 1.0; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.206
+
+Network statistics: {'links_removed': 9; 'links_added': 16; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.3, 0.1, 0.15),Total exchanged messages: 166
+N nodes: 10; Time steps: 60; p_request: 0.15; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.145
+
+Network statistics: {'links_removed': 20; 'links_added': 4; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.3, 0.1, 0.35),Total exchanged messages: 252
+N nodes: 10; Time steps: 60; p_request: 0.35; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.210
+
+Network statistics: {'links_removed': 18; 'links_added': 4; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.3, 0.1, 0.65),Total exchanged messages: 467
+N nodes: 10; Time steps: 60; p_request: 0.65; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.251
+
+Network statistics: {'links_removed': 22; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.3, 0.1, 0.85),Total exchanged messages: 763
+N nodes: 10; Time steps: 60; p_request: 0.85; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.204
+
+Network statistics: {'links_removed': 20; 'links_added': 8; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.3, 0.1, 1.0),Total exchanged messages: 804
+N nodes: 10; Time steps: 60; p_request: 1.0; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.211
+
+Network statistics: {'links_removed': 18; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.3, 0.2, 0.15),Total exchanged messages: 189
+N nodes: 10; Time steps: 60; p_request: 0.15; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.101
+
+Network statistics: {'links_removed': 17; 'links_added': 10; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.3, 0.2, 0.35),Total exchanged messages: 447
+N nodes: 10; Time steps: 60; p_request: 0.35; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.107
+
+Network statistics: {'links_removed': 19; 'links_added': 15; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.3, 0.2, 0.65),Total exchanged messages: 481
+N nodes: 10; Time steps: 60; p_request: 0.65; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.173
+
+Network statistics: {'links_removed': 17; 'links_added': 14; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.3, 0.2, 0.85),Total exchanged messages: 872
+N nodes: 10; Time steps: 60; p_request: 0.85; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.156
+
+Network statistics: {'links_removed': 20; 'links_added': 16; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.3, 0.2, 1.0),Total exchanged messages: 745
+N nodes: 10; Time steps: 60; p_request: 1.0; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.193
+
+Network statistics: {'links_removed': 21; 'links_added': 12; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.3, 0.3, 0.15),Total exchanged messages: 190
+N nodes: 10; Time steps: 60; p_request: 0.15; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.074
+
+Network statistics: {'links_removed': 24; 'links_added': 19; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.3, 0.3, 0.35),Total exchanged messages: 429
+N nodes: 10; Time steps: 60; p_request: 0.35; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.119
+
+Network statistics: {'links_removed': 25; 'links_added': 16; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.3, 0.3, 0.65),Total exchanged messages: 537
+N nodes: 10; Time steps: 60; p_request: 0.65; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.160
+
+Network statistics: {'links_removed': 18; 'links_added': 13; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.3, 0.3, 0.85),Total exchanged messages: 631
+N nodes: 10; Time steps: 60; p_request: 0.85; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.176
+
+Network statistics: {'links_removed': 18; 'links_added': 22; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 60, 0.3, 0.3, 1.0),Total exchanged messages: 717
+N nodes: 10; Time steps: 60; p_request: 1.0; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.202
+
+Network statistics: {'links_removed': 17; 'links_added': 23; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.1, 0.1, 0.15),Total exchanged messages: 293
+N nodes: 10; Time steps: 100; p_request: 0.15; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.106
+
+Network statistics: {'links_removed': 12; 'links_added': 10; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.1, 0.1, 0.35),Total exchanged messages: 520
+N nodes: 10; Time steps: 100; p_request: 0.35; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.150
+
+Network statistics: {'links_removed': 11; 'links_added': 10; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.1, 0.1, 0.65),Total exchanged messages: 789
+N nodes: 10; Time steps: 100; p_request: 0.65; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.185
+
+Network statistics: {'links_removed': 11; 'links_added': 14; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.1, 0.1, 0.85),Total exchanged messages: 972
+N nodes: 10; Time steps: 100; p_request: 0.85; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.224
+
+Network statistics: {'links_removed': 10; 'links_added': 10; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.1, 0.1, 1.0),Total exchanged messages: 991
+N nodes: 10; Time steps: 100; p_request: 1.0; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.272
+
+Network statistics: {'links_removed': 10; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.1, 0.2, 0.15),Total exchanged messages: 353
+N nodes: 10; Time steps: 100; p_request: 0.15; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.093
+
+Network statistics: {'links_removed': 12; 'links_added': 17; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.1, 0.2, 0.35),Total exchanged messages: 440
+N nodes: 10; Time steps: 100; p_request: 0.35; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.143
+
+Network statistics: {'links_removed': 10; 'links_added': 19; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.1, 0.2, 0.65),Total exchanged messages: 793
+N nodes: 10; Time steps: 100; p_request: 0.65; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.164
+
+Network statistics: {'links_removed': 10; 'links_added': 14; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.1, 0.2, 0.85),Total exchanged messages: 884
+N nodes: 10; Time steps: 100; p_request: 0.85; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.215
+
+Network statistics: {'links_removed': 7; 'links_added': 16; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.1, 0.2, 1.0),Total exchanged messages: 842
+N nodes: 10; Time steps: 100; p_request: 1.0; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.255
+
+Network statistics: {'links_removed': 5; 'links_added': 13; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.1, 0.3, 0.15),Total exchanged messages: 216
+N nodes: 10; Time steps: 100; p_request: 0.15; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.153
+
+Network statistics: {'links_removed': 9; 'links_added': 18; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.1, 0.3, 0.35),Total exchanged messages: 423
+N nodes: 10; Time steps: 100; p_request: 0.35; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.180
+
+Network statistics: {'links_removed': 10; 'links_added': 19; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.1, 0.3, 0.65),Total exchanged messages: 588
+N nodes: 10; Time steps: 100; p_request: 0.65; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.236
+
+Network statistics: {'links_removed': 12; 'links_added': 20; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.1, 0.3, 0.85),Total exchanged messages: 916
+N nodes: 10; Time steps: 100; p_request: 0.85; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.186
+
+Network statistics: {'links_removed': 9; 'links_added': 18; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.1, 0.3, 1.0),Total exchanged messages: 948
+N nodes: 10; Time steps: 100; p_request: 1.0; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.245
+
+Network statistics: {'links_removed': 7; 'links_added': 15; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.2, 0.1, 0.15),Total exchanged messages: 258
+N nodes: 10; Time steps: 100; p_request: 0.15; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.097
+
+Network statistics: {'links_removed': 19; 'links_added': 12; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.2, 0.1, 0.35),Total exchanged messages: 480
+N nodes: 10; Time steps: 100; p_request: 0.35; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.204
+
+Network statistics: {'links_removed': 26; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.2, 0.1, 0.65),Total exchanged messages: 858
+N nodes: 10; Time steps: 100; p_request: 0.65; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.207
+
+Network statistics: {'links_removed': 16; 'links_added': 12; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.2, 0.1, 0.85),Total exchanged messages: 984
+N nodes: 10; Time steps: 100; p_request: 0.85; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.226
+
+Network statistics: {'links_removed': 18; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.2, 0.1, 1.0),Total exchanged messages: 1188
+N nodes: 10; Time steps: 100; p_request: 1.0; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.227
+
+Network statistics: {'links_removed': 19; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.2, 0.2, 0.15),Total exchanged messages: 319
+N nodes: 10; Time steps: 100; p_request: 0.15; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.085
+
+Network statistics: {'links_removed': 24; 'links_added': 17; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.2, 0.2, 0.35),Total exchanged messages: 584
+N nodes: 10; Time steps: 100; p_request: 0.35; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.134
+
+Network statistics: {'links_removed': 21; 'links_added': 20; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.2, 0.2, 0.65),Total exchanged messages: 801
+N nodes: 10; Time steps: 100; p_request: 0.65; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.166
+
+Network statistics: {'links_removed': 16; 'links_added': 19; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.2, 0.2, 0.85),Total exchanged messages: 757
+N nodes: 10; Time steps: 100; p_request: 0.85; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.256
+
+Network statistics: {'links_removed': 13; 'links_added': 21; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.2, 0.2, 1.0),Total exchanged messages: 908
+N nodes: 10; Time steps: 100; p_request: 1.0; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.250
+
+Network statistics: {'links_removed': 13; 'links_added': 18; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.2, 0.3, 0.15),Total exchanged messages: 330
+N nodes: 10; Time steps: 100; p_request: 0.15; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.091
+
+Network statistics: {'links_removed': 22; 'links_added': 27; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.2, 0.3, 0.35),Total exchanged messages: 546
+N nodes: 10; Time steps: 100; p_request: 0.35; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.143
+
+Network statistics: {'links_removed': 27; 'links_added': 30; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.2, 0.3, 0.65),Total exchanged messages: 826
+N nodes: 10; Time steps: 100; p_request: 0.65; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.172
+
+Network statistics: {'links_removed': 17; 'links_added': 24; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.2, 0.3, 0.85),Total exchanged messages: 815
+N nodes: 10; Time steps: 100; p_request: 0.85; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.205
+
+Network statistics: {'links_removed': 13; 'links_added': 20; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.2, 0.3, 1.0),Total exchanged messages: 1026
+N nodes: 10; Time steps: 100; p_request: 1.0; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.210
+
+Network statistics: {'links_removed': 16; 'links_added': 23; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.3, 0.1, 0.15),Total exchanged messages: 251
+N nodes: 10; Time steps: 100; p_request: 0.15; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.179
+
+Network statistics: {'links_removed': 33; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.3, 0.1, 0.35),Total exchanged messages: 529
+N nodes: 10; Time steps: 100; p_request: 0.35; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.183
+
+Network statistics: {'links_removed': 28; 'links_added': 10; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.3, 0.1, 0.65),Total exchanged messages: 836
+N nodes: 10; Time steps: 100; p_request: 0.65; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.244
+
+Network statistics: {'links_removed': 32; 'links_added': 11; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.3, 0.1, 0.85),Total exchanged messages: 1082
+N nodes: 10; Time steps: 100; p_request: 0.85; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.223
+
+Network statistics: {'links_removed': 29; 'links_added': 10; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.3, 0.1, 1.0),Total exchanged messages: 1187
+N nodes: 10; Time steps: 100; p_request: 1.0; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.239
+
+Network statistics: {'links_removed': 31; 'links_added': 8; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.3, 0.2, 0.15),Total exchanged messages: 258
+N nodes: 10; Time steps: 100; p_request: 0.15; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.105
+
+Network statistics: {'links_removed': 30; 'links_added': 16; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.3, 0.2, 0.35),Total exchanged messages: 617
+N nodes: 10; Time steps: 100; p_request: 0.35; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.125
+
+Network statistics: {'links_removed': 28; 'links_added': 22; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.3, 0.2, 0.65),Total exchanged messages: 834
+N nodes: 10; Time steps: 100; p_request: 0.65; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.171
+
+Network statistics: {'links_removed': 27; 'links_added': 21; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.3, 0.2, 0.85),Total exchanged messages: 1161
+N nodes: 10; Time steps: 100; p_request: 0.85; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.171
+
+Network statistics: {'links_removed': 28; 'links_added': 22; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.3, 0.2, 1.0),Total exchanged messages: 1078
+N nodes: 10; Time steps: 100; p_request: 1.0; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.232
+
+Network statistics: {'links_removed': 32; 'links_added': 14; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.3, 0.3, 0.15),Total exchanged messages: 334
+N nodes: 10; Time steps: 100; p_request: 0.15; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.084
+
+Network statistics: {'links_removed': 35; 'links_added': 29; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.3, 0.3, 0.35),Total exchanged messages: 550
+N nodes: 10; Time steps: 100; p_request: 0.35; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.145
+
+Network statistics: {'links_removed': 34; 'links_added': 29; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.3, 0.3, 0.65),Total exchanged messages: 838
+N nodes: 10; Time steps: 100; p_request: 0.65; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.174
+
+Network statistics: {'links_removed': 30; 'links_added': 24; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.3, 0.3, 0.85),Total exchanged messages: 978
+N nodes: 10; Time steps: 100; p_request: 0.85; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.171
+
+Network statistics: {'links_removed': 29; 'links_added': 33; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 100, 0.3, 0.3, 1.0),Total exchanged messages: 988
+N nodes: 10; Time steps: 100; p_request: 1.0; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.240
+
+Network statistics: {'links_removed': 27; 'links_added': 34; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.1, 0.1, 0.15),Total exchanged messages: 2305
+N nodes: 10; Time steps: 1000; p_request: 0.15; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.142
+
+Network statistics: {'links_removed': 114; 'links_added': 94; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.1, 0.1, 0.35),Total exchanged messages: 3329
+N nodes: 10; Time steps: 1000; p_request: 0.35; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.214
+
+Network statistics: {'links_removed': 89; 'links_added': 89; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.1, 0.1, 0.65),Total exchanged messages: 5456
+N nodes: 10; Time steps: 1000; p_request: 0.65; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.255
+
+Network statistics: {'links_removed': 103; 'links_added': 99; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.1, 0.1, 0.85),Total exchanged messages: 7032
+N nodes: 10; Time steps: 1000; p_request: 0.85; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.267
+
+Network statistics: {'links_removed': 95; 'links_added': 84; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.1, 0.1, 1.0),Total exchanged messages: 8102
+N nodes: 10; Time steps: 1000; p_request: 1.0; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.274
+
+Network statistics: {'links_removed': 102; 'links_added': 88; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.1, 0.2, 0.15),Total exchanged messages: 1293
+N nodes: 10; Time steps: 1000; p_request: 0.15; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.192
+
+Network statistics: {'links_removed': 106; 'links_added': 113; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.1, 0.2, 0.35),Total exchanged messages: 2348
+N nodes: 10; Time steps: 1000; p_request: 0.35; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.277
+
+Network statistics: {'links_removed': 88; 'links_added': 97; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.1, 0.2, 0.65),Total exchanged messages: 4546
+N nodes: 10; Time steps: 1000; p_request: 0.65; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.270
+
+Network statistics: {'links_removed': 100; 'links_added': 105; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.1, 0.2, 0.85),Total exchanged messages: 5190
+N nodes: 10; Time steps: 1000; p_request: 0.85; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.310
+
+Network statistics: {'links_removed': 98; 'links_added': 105; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.1, 0.2, 1.0),Total exchanged messages: 6305
+N nodes: 10; Time steps: 1000; p_request: 1.0; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.308
+
+Network statistics: {'links_removed': 98; 'links_added': 103; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.1, 0.3, 0.15),Total exchanged messages: 1100
+N nodes: 10; Time steps: 1000; p_request: 0.15; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.251
+
+Network statistics: {'links_removed': 98; 'links_added': 107; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.1, 0.3, 0.35),Total exchanged messages: 2072
+N nodes: 10; Time steps: 1000; p_request: 0.35; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.350
+
+Network statistics: {'links_removed': 83; 'links_added': 92; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.1, 0.3, 0.65),Total exchanged messages: 3697
+N nodes: 10; Time steps: 1000; p_request: 0.65; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.339
+
+Network statistics: {'links_removed': 97; 'links_added': 105; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.1, 0.3, 0.85),Total exchanged messages: 4922
+N nodes: 10; Time steps: 1000; p_request: 0.85; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.319
+
+Network statistics: {'links_removed': 93; 'links_added': 98; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.1, 0.3, 1.0),Total exchanged messages: 5180
+N nodes: 10; Time steps: 1000; p_request: 1.0; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.371
+
+Network statistics: {'links_removed': 98; 'links_added': 104; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.2, 0.1, 0.15),Total exchanged messages: 2366
+N nodes: 10; Time steps: 1000; p_request: 0.15; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.157
+
+Network statistics: {'links_removed': 200; 'links_added': 119; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.2, 0.1, 0.35),Total exchanged messages: 4630
+N nodes: 10; Time steps: 1000; p_request: 0.35; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.222
+
+Network statistics: {'links_removed': 223; 'links_added': 86; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.2, 0.1, 0.65),Total exchanged messages: 7432
+N nodes: 10; Time steps: 1000; p_request: 0.65; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.244
+
+Network statistics: {'links_removed': 183; 'links_added': 94; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.2, 0.1, 0.85),Total exchanged messages: 9112
+N nodes: 10; Time steps: 1000; p_request: 0.85; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.254
+
+Network statistics: {'links_removed': 203; 'links_added': 90; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.2, 0.1, 1.0),Total exchanged messages: 9982
+N nodes: 10; Time steps: 1000; p_request: 1.0; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.272
+
+Network statistics: {'links_removed': 201; 'links_added': 78; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.2, 0.2, 0.15),Total exchanged messages: 1988
+N nodes: 10; Time steps: 1000; p_request: 0.15; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.160
+
+Network statistics: {'links_removed': 204; 'links_added': 178; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.2, 0.2, 0.35),Total exchanged messages: 3947
+N nodes: 10; Time steps: 1000; p_request: 0.35; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.189
+
+Network statistics: {'links_removed': 187; 'links_added': 173; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.2, 0.2, 0.65),Total exchanged messages: 6361
+N nodes: 10; Time steps: 1000; p_request: 0.65; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.215
+
+Network statistics: {'links_removed': 187; 'links_added': 166; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.2, 0.2, 0.85),Total exchanged messages: 7606
+N nodes: 10; Time steps: 1000; p_request: 0.85; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.241
+
+Network statistics: {'links_removed': 195; 'links_added': 182; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.2, 0.2, 1.0),Total exchanged messages: 8664
+N nodes: 10; Time steps: 1000; p_request: 1.0; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.245
+
+Network statistics: {'links_removed': 191; 'links_added': 181; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.2, 0.3, 0.15),Total exchanged messages: 1269
+N nodes: 10; Time steps: 1000; p_request: 0.15; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.236
+
+Network statistics: {'links_removed': 205; 'links_added': 207; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.2, 0.3, 0.35),Total exchanged messages: 2591
+N nodes: 10; Time steps: 1000; p_request: 0.35; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.270
+
+Network statistics: {'links_removed': 196; 'links_added': 194; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.2, 0.3, 0.65),Total exchanged messages: 3938
+N nodes: 10; Time steps: 1000; p_request: 0.65; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.308
+
+Network statistics: {'links_removed': 183; 'links_added': 187; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.2, 0.3, 0.85),Total exchanged messages: 6332
+N nodes: 10; Time steps: 1000; p_request: 0.85; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.257
+
+Network statistics: {'links_removed': 183; 'links_added': 189; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.2, 0.3, 1.0),Total exchanged messages: 7470
+N nodes: 10; Time steps: 1000; p_request: 1.0; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.257
+
+Network statistics: {'links_removed': 206; 'links_added': 206; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.3, 0.1, 0.15),Total exchanged messages: 2539
+N nodes: 10; Time steps: 1000; p_request: 0.15; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.190
+
+Network statistics: {'links_removed': 309; 'links_added': 89; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.3, 0.1, 0.35),Total exchanged messages: 4340
+N nodes: 10; Time steps: 1000; p_request: 0.35; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.214
+
+Network statistics: {'links_removed': 310; 'links_added': 108; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.3, 0.1, 0.65),Total exchanged messages: 7009
+N nodes: 10; Time steps: 1000; p_request: 0.65; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.267
+
+Network statistics: {'links_removed': 313; 'links_added': 86; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.3, 0.1, 0.85),Total exchanged messages: 8265
+N nodes: 10; Time steps: 1000; p_request: 0.85; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.283
+
+Network statistics: {'links_removed': 292; 'links_added': 101; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.3, 0.1, 1.0),Total exchanged messages: 9650
+N nodes: 10; Time steps: 1000; p_request: 1.0; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.285
+
+Network statistics: {'links_removed': 310; 'links_added': 87; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.3, 0.2, 0.15),Total exchanged messages: 2321
+N nodes: 10; Time steps: 1000; p_request: 0.15; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.145
+
+Network statistics: {'links_removed': 309; 'links_added': 198; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.3, 0.2, 0.35),Total exchanged messages: 4902
+N nodes: 10; Time steps: 1000; p_request: 0.35; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.175
+
+Network statistics: {'links_removed': 305; 'links_added': 197; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.3, 0.2, 0.65),Total exchanged messages: 7861
+N nodes: 10; Time steps: 1000; p_request: 0.65; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.201
+
+Network statistics: {'links_removed': 293; 'links_added': 207; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.3, 0.2, 0.85),Total exchanged messages: 9717
+N nodes: 10; Time steps: 1000; p_request: 0.85; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.211
+
+Network statistics: {'links_removed': 308; 'links_added': 195; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.3, 0.2, 1.0),Total exchanged messages: 10615
+N nodes: 10; Time steps: 1000; p_request: 1.0; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.229
+
+Network statistics: {'links_removed': 294; 'links_added': 200; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.3, 0.3, 0.15),Total exchanged messages: 2107
+N nodes: 10; Time steps: 1000; p_request: 0.15; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.141
+
+Network statistics: {'links_removed': 300; 'links_added': 286; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.3, 0.3, 0.35),Total exchanged messages: 2697
+N nodes: 10; Time steps: 1000; p_request: 0.35; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.252
+
+Network statistics: {'links_removed': 263; 'links_added': 251; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.3, 0.3, 0.65),Total exchanged messages: 6082
+N nodes: 10; Time steps: 1000; p_request: 0.65; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.215
+
+Network statistics: {'links_removed': 282; 'links_added': 256; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.3, 0.3, 0.85),Total exchanged messages: 9187
+N nodes: 10; Time steps: 1000; p_request: 0.85; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.189
+
+Network statistics: {'links_removed': 311; 'links_added': 275; 'nodes_added': 0; 'nodes_removed': 0}
+(10, 1000, 0.3, 0.3, 1.0),Total exchanged messages: 9881
+N nodes: 10; Time steps: 1000; p_request: 1.0; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.226
+
+Network statistics: {'links_removed': 319; 'links_added': 269; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.1, 0.1, 0.15),Total exchanged messages: 268
+N nodes: 30; Time steps: 30; p_request: 0.15; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.034
+
+Network statistics: {'links_removed': 2; 'links_added': 3; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.1, 0.1, 0.35),Total exchanged messages: 930
+N nodes: 30; Time steps: 30; p_request: 0.35; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.053
+
+Network statistics: {'links_removed': 2; 'links_added': 6; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.1, 0.1, 0.65),Total exchanged messages: 1137
+N nodes: 30; Time steps: 30; p_request: 0.65; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.069
+
+Network statistics: {'links_removed': 4; 'links_added': 3; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.1, 0.1, 0.85),Total exchanged messages: 1326
+N nodes: 30; Time steps: 30; p_request: 0.85; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.062
+
+Network statistics: {'links_removed': 2; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.1, 0.1, 1.0),Total exchanged messages: 1248
+N nodes: 30; Time steps: 30; p_request: 1.0; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.076
+
+Network statistics: {'links_removed': 5; 'links_added': 2; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.1, 0.2, 0.15),Total exchanged messages: 286
+N nodes: 30; Time steps: 30; p_request: 0.15; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.049
+
+Network statistics: {'links_removed': 3; 'links_added': 4; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.1, 0.2, 0.35),Total exchanged messages: 858
+N nodes: 30; Time steps: 30; p_request: 0.35; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.063
+
+Network statistics: {'links_removed': 3; 'links_added': 6; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.1, 0.2, 0.65),Total exchanged messages: 1061
+N nodes: 30; Time steps: 30; p_request: 0.65; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.068
+
+Network statistics: {'links_removed': 4; 'links_added': 3; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.1, 0.2, 0.85),Total exchanged messages: 1233
+N nodes: 30; Time steps: 30; p_request: 0.85; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.075
+
+Network statistics: {'links_removed': 3; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.1, 0.2, 1.0),Total exchanged messages: 1333
+N nodes: 30; Time steps: 30; p_request: 1.0; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.083
+
+Network statistics: {'links_removed': 4; 'links_added': 6; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.1, 0.3, 0.15),Total exchanged messages: 438
+N nodes: 30; Time steps: 30; p_request: 0.15; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.043
+
+Network statistics: {'links_removed': 2; 'links_added': 6; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.1, 0.3, 0.35),Total exchanged messages: 573
+N nodes: 30; Time steps: 30; p_request: 0.35; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.061
+
+Network statistics: {'links_removed': 4; 'links_added': 6; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.1, 0.3, 0.65),Total exchanged messages: 1157
+N nodes: 30; Time steps: 30; p_request: 0.65; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.054
+
+Network statistics: {'links_removed': 2; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.1, 0.3, 0.85),Total exchanged messages: 1155
+N nodes: 30; Time steps: 30; p_request: 0.85; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.081
+
+Network statistics: {'links_removed': 1; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.1, 0.3, 1.0),Total exchanged messages: 1383
+N nodes: 30; Time steps: 30; p_request: 1.0; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.080
+
+Network statistics: {'links_removed': 3; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.2, 0.1, 0.15),Total exchanged messages: 283
+N nodes: 30; Time steps: 30; p_request: 0.15; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.032
+
+Network statistics: {'links_removed': 6; 'links_added': 4; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.2, 0.1, 0.35),Total exchanged messages: 799
+N nodes: 30; Time steps: 30; p_request: 0.35; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.058
+
+Network statistics: {'links_removed': 7; 'links_added': 3; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.2, 0.1, 0.65),Total exchanged messages: 928
+N nodes: 30; Time steps: 30; p_request: 0.65; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.077
+
+Network statistics: {'links_removed': 7; 'links_added': 1; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.2, 0.1, 0.85),Total exchanged messages: 1364
+N nodes: 30; Time steps: 30; p_request: 0.85; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.066
+
+Network statistics: {'links_removed': 4; 'links_added': 4; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.2, 0.1, 1.0),Total exchanged messages: 1288
+N nodes: 30; Time steps: 30; p_request: 1.0; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.077
+
+Network statistics: {'links_removed': 6; 'links_added': 2; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.2, 0.2, 0.15),Total exchanged messages: 58
+N nodes: 30; Time steps: 30; p_request: 0.15; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.000
+
+Network statistics: {'links_removed': 7; 'links_added': 6; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.2, 0.2, 0.35),Total exchanged messages: 703
+N nodes: 30; Time steps: 30; p_request: 0.35; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.050
+
+Network statistics: {'links_removed': 5; 'links_added': 8; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.2, 0.2, 0.65),Total exchanged messages: 981
+N nodes: 30; Time steps: 30; p_request: 0.65; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.068
+
+Network statistics: {'links_removed': 6; 'links_added': 3; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.2, 0.2, 0.85),Total exchanged messages: 1140
+N nodes: 30; Time steps: 30; p_request: 0.85; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.086
+
+Network statistics: {'links_removed': 4; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.2, 0.2, 1.0),Total exchanged messages: 1440
+N nodes: 30; Time steps: 30; p_request: 1.0; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.078
+
+Network statistics: {'links_removed': 4; 'links_added': 6; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.2, 0.3, 0.15),Total exchanged messages: 417
+N nodes: 30; Time steps: 30; p_request: 0.15; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.026
+
+Network statistics: {'links_removed': 7; 'links_added': 10; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.2, 0.3, 0.35),Total exchanged messages: 836
+N nodes: 30; Time steps: 30; p_request: 0.35; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.059
+
+Network statistics: {'links_removed': 8; 'links_added': 10; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.2, 0.3, 0.65),Total exchanged messages: 902
+N nodes: 30; Time steps: 30; p_request: 0.65; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.072
+
+Network statistics: {'links_removed': 6; 'links_added': 8; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.2, 0.3, 0.85),Total exchanged messages: 1140
+N nodes: 30; Time steps: 30; p_request: 0.85; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.091
+
+Network statistics: {'links_removed': 5; 'links_added': 8; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.2, 0.3, 1.0),Total exchanged messages: 1337
+N nodes: 30; Time steps: 30; p_request: 1.0; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.076
+
+Network statistics: {'links_removed': 6; 'links_added': 10; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.3, 0.1, 0.15),Total exchanged messages: 190
+N nodes: 30; Time steps: 30; p_request: 0.15; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.026
+
+Network statistics: {'links_removed': 9; 'links_added': 3; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.3, 0.1, 0.35),Total exchanged messages: 723
+N nodes: 30; Time steps: 30; p_request: 0.35; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.061
+
+Network statistics: {'links_removed': 10; 'links_added': 3; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.3, 0.1, 0.65),Total exchanged messages: 784
+N nodes: 30; Time steps: 30; p_request: 0.65; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.056
+
+Network statistics: {'links_removed': 11; 'links_added': 3; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.3, 0.1, 0.85),Total exchanged messages: 1214
+N nodes: 30; Time steps: 30; p_request: 0.85; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.069
+
+Network statistics: {'links_removed': 11; 'links_added': 4; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.3, 0.1, 1.0),Total exchanged messages: 1561
+N nodes: 30; Time steps: 30; p_request: 1.0; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.076
+
+Network statistics: {'links_removed': 13; 'links_added': 3; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.3, 0.2, 0.15),Total exchanged messages: 34
+N nodes: 30; Time steps: 30; p_request: 0.15; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.059
+
+Network statistics: {'links_removed': 11; 'links_added': 4; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.3, 0.2, 0.35),Total exchanged messages: 666
+N nodes: 30; Time steps: 30; p_request: 0.35; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.060
+
+Network statistics: {'links_removed': 9; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.3, 0.2, 0.65),Total exchanged messages: 858
+N nodes: 30; Time steps: 30; p_request: 0.65; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.058
+
+Network statistics: {'links_removed': 12; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.3, 0.2, 0.85),Total exchanged messages: 1222
+N nodes: 30; Time steps: 30; p_request: 0.85; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.070
+
+Network statistics: {'links_removed': 9; 'links_added': 3; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.3, 0.2, 1.0),Total exchanged messages: 1333
+N nodes: 30; Time steps: 30; p_request: 1.0; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.091
+
+Network statistics: {'links_removed': 9; 'links_added': 3; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.3, 0.3, 0.15),Total exchanged messages: 413
+N nodes: 30; Time steps: 30; p_request: 0.15; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.039
+
+Network statistics: {'links_removed': 8; 'links_added': 11; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.3, 0.3, 0.35),Total exchanged messages: 537
+N nodes: 30; Time steps: 30; p_request: 0.35; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.054
+
+Network statistics: {'links_removed': 14; 'links_added': 8; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.3, 0.3, 0.65),Total exchanged messages: 974
+N nodes: 30; Time steps: 30; p_request: 0.65; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.082
+
+Network statistics: {'links_removed': 8; 'links_added': 10; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.3, 0.3, 0.85),Total exchanged messages: 1191
+N nodes: 30; Time steps: 30; p_request: 0.85; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.090
+
+Network statistics: {'links_removed': 6; 'links_added': 10; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 30, 0.3, 0.3, 1.0),Total exchanged messages: 1556
+N nodes: 30; Time steps: 30; p_request: 1.0; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.071
+
+Network statistics: {'links_removed': 10; 'links_added': 9; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.1, 0.1, 0.15),Total exchanged messages: 554
+N nodes: 30; Time steps: 60; p_request: 0.15; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.060
+
+Network statistics: {'links_removed': 5; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.1, 0.1, 0.35),Total exchanged messages: 1415
+N nodes: 30; Time steps: 60; p_request: 0.35; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.074
+
+Network statistics: {'links_removed': 4; 'links_added': 8; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.1, 0.1, 0.65),Total exchanged messages: 1520
+N nodes: 30; Time steps: 60; p_request: 0.65; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.099
+
+Network statistics: {'links_removed': 7; 'links_added': 6; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.1, 0.1, 0.85),Total exchanged messages: 1904
+N nodes: 30; Time steps: 60; p_request: 0.85; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.090
+
+Network statistics: {'links_removed': 6; 'links_added': 9; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.1, 0.1, 1.0),Total exchanged messages: 1969
+N nodes: 30; Time steps: 60; p_request: 1.0; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.103
+
+Network statistics: {'links_removed': 9; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.1, 0.2, 0.15),Total exchanged messages: 538
+N nodes: 30; Time steps: 60; p_request: 0.15; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.054
+
+Network statistics: {'links_removed': 6; 'links_added': 8; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.1, 0.2, 0.35),Total exchanged messages: 1213
+N nodes: 30; Time steps: 60; p_request: 0.35; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.094
+
+Network statistics: {'links_removed': 5; 'links_added': 8; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.1, 0.2, 0.65),Total exchanged messages: 1751
+N nodes: 30; Time steps: 60; p_request: 0.65; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.083
+
+Network statistics: {'links_removed': 7; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.1, 0.2, 0.85),Total exchanged messages: 1847
+N nodes: 30; Time steps: 60; p_request: 0.85; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.103
+
+Network statistics: {'links_removed': 8; 'links_added': 10; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.1, 0.2, 1.0),Total exchanged messages: 2249
+N nodes: 30; Time steps: 60; p_request: 1.0; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.095
+
+Network statistics: {'links_removed': 8; 'links_added': 12; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.1, 0.3, 0.15),Total exchanged messages: 665
+N nodes: 30; Time steps: 60; p_request: 0.15; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.056
+
+Network statistics: {'links_removed': 5; 'links_added': 9; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.1, 0.3, 0.35),Total exchanged messages: 946
+N nodes: 30; Time steps: 60; p_request: 0.35; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.078
+
+Network statistics: {'links_removed': 5; 'links_added': 8; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.1, 0.3, 0.65),Total exchanged messages: 1609
+N nodes: 30; Time steps: 60; p_request: 0.65; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.081
+
+Network statistics: {'links_removed': 9; 'links_added': 11; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.1, 0.3, 0.85),Total exchanged messages: 1743
+N nodes: 30; Time steps: 60; p_request: 0.85; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.105
+
+Network statistics: {'links_removed': 5; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.1, 0.3, 1.0),Total exchanged messages: 2126
+N nodes: 30; Time steps: 60; p_request: 1.0; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.102
+
+Network statistics: {'links_removed': 7; 'links_added': 11; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.2, 0.1, 0.15),Total exchanged messages: 551
+N nodes: 30; Time steps: 60; p_request: 0.15; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.044
+
+Network statistics: {'links_removed': 15; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.2, 0.1, 0.35),Total exchanged messages: 1289
+N nodes: 30; Time steps: 60; p_request: 0.35; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.066
+
+Network statistics: {'links_removed': 13; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.2, 0.1, 0.65),Total exchanged messages: 1574
+N nodes: 30; Time steps: 60; p_request: 0.65; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.094
+
+Network statistics: {'links_removed': 13; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.2, 0.1, 0.85),Total exchanged messages: 1870
+N nodes: 30; Time steps: 60; p_request: 0.85; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.094
+
+Network statistics: {'links_removed': 13; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.2, 0.1, 1.0),Total exchanged messages: 2128
+N nodes: 30; Time steps: 60; p_request: 1.0; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.100
+
+Network statistics: {'links_removed': 11; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.2, 0.2, 0.15),Total exchanged messages: 484
+N nodes: 30; Time steps: 60; p_request: 0.15; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.039
+
+Network statistics: {'links_removed': 15; 'links_added': 11; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.2, 0.2, 0.35),Total exchanged messages: 1106
+N nodes: 30; Time steps: 60; p_request: 0.35; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.079
+
+Network statistics: {'links_removed': 11; 'links_added': 12; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.2, 0.2, 0.65),Total exchanged messages: 1586
+N nodes: 30; Time steps: 60; p_request: 0.65; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.092
+
+Network statistics: {'links_removed': 11; 'links_added': 9; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.2, 0.2, 0.85),Total exchanged messages: 2128
+N nodes: 30; Time steps: 60; p_request: 0.85; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.093
+
+Network statistics: {'links_removed': 9; 'links_added': 11; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.2, 0.2, 1.0),Total exchanged messages: 2016
+N nodes: 30; Time steps: 60; p_request: 1.0; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.112
+
+Network statistics: {'links_removed': 10; 'links_added': 11; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.2, 0.3, 0.15),Total exchanged messages: 707
+N nodes: 30; Time steps: 60; p_request: 0.15; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.037
+
+Network statistics: {'links_removed': 12; 'links_added': 16; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.2, 0.3, 0.35),Total exchanged messages: 1283
+N nodes: 30; Time steps: 60; p_request: 0.35; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.077
+
+Network statistics: {'links_removed': 13; 'links_added': 17; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.2, 0.3, 0.65),Total exchanged messages: 1517
+N nodes: 30; Time steps: 60; p_request: 0.65; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.090
+
+Network statistics: {'links_removed': 12; 'links_added': 15; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.2, 0.3, 0.85),Total exchanged messages: 1647
+N nodes: 30; Time steps: 60; p_request: 0.85; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.120
+
+Network statistics: {'links_removed': 12; 'links_added': 14; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.2, 0.3, 1.0),Total exchanged messages: 2063
+N nodes: 30; Time steps: 60; p_request: 1.0; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.107
+
+Network statistics: {'links_removed': 14; 'links_added': 15; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.3, 0.1, 0.15),Total exchanged messages: 459
+N nodes: 30; Time steps: 60; p_request: 0.15; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.046
+
+Network statistics: {'links_removed': 20; 'links_added': 6; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.3, 0.1, 0.35),Total exchanged messages: 1206
+N nodes: 30; Time steps: 60; p_request: 0.35; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.079
+
+Network statistics: {'links_removed': 21; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.3, 0.1, 0.65),Total exchanged messages: 1475
+N nodes: 30; Time steps: 60; p_request: 0.65; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.097
+
+Network statistics: {'links_removed': 22; 'links_added': 8; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.3, 0.1, 0.85),Total exchanged messages: 2125
+N nodes: 30; Time steps: 60; p_request: 0.85; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.093
+
+Network statistics: {'links_removed': 24; 'links_added': 4; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.3, 0.1, 1.0),Total exchanged messages: 2729
+N nodes: 30; Time steps: 60; p_request: 1.0; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.087
+
+Network statistics: {'links_removed': 24; 'links_added': 4; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.3, 0.2, 0.15),Total exchanged messages: 338
+N nodes: 30; Time steps: 60; p_request: 0.15; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.041
+
+Network statistics: {'links_removed': 23; 'links_added': 8; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.3, 0.2, 0.35),Total exchanged messages: 1249
+N nodes: 30; Time steps: 60; p_request: 0.35; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.080
+
+Network statistics: {'links_removed': 15; 'links_added': 11; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.3, 0.2, 0.65),Total exchanged messages: 1574
+N nodes: 30; Time steps: 60; p_request: 0.65; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.088
+
+Network statistics: {'links_removed': 21; 'links_added': 13; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.3, 0.2, 0.85),Total exchanged messages: 1939
+N nodes: 30; Time steps: 60; p_request: 0.85; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.090
+
+Network statistics: {'links_removed': 22; 'links_added': 9; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.3, 0.2, 1.0),Total exchanged messages: 1964
+N nodes: 30; Time steps: 60; p_request: 1.0; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.115
+
+Network statistics: {'links_removed': 22; 'links_added': 6; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.3, 0.3, 0.15),Total exchanged messages: 618
+N nodes: 30; Time steps: 60; p_request: 0.15; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.060
+
+Network statistics: {'links_removed': 15; 'links_added': 15; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.3, 0.3, 0.35),Total exchanged messages: 1151
+N nodes: 30; Time steps: 60; p_request: 0.35; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.074
+
+Network statistics: {'links_removed': 23; 'links_added': 14; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.3, 0.3, 0.65),Total exchanged messages: 1440
+N nodes: 30; Time steps: 60; p_request: 0.65; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.099
+
+Network statistics: {'links_removed': 17; 'links_added': 15; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.3, 0.3, 0.85),Total exchanged messages: 1725
+N nodes: 30; Time steps: 60; p_request: 0.85; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.111
+
+Network statistics: {'links_removed': 12; 'links_added': 17; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 60, 0.3, 0.3, 1.0),Total exchanged messages: 2700
+N nodes: 30; Time steps: 60; p_request: 1.0; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.083
+
+Network statistics: {'links_removed': 22; 'links_added': 16; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.1, 0.1, 0.15),Total exchanged messages: 872
+N nodes: 30; Time steps: 100; p_request: 0.15; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.062
+
+Network statistics: {'links_removed': 9; 'links_added': 11; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.1, 0.1, 0.35),Total exchanged messages: 1664
+N nodes: 30; Time steps: 100; p_request: 0.35; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.082
+
+Network statistics: {'links_removed': 5; 'links_added': 9; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.1, 0.1, 0.65),Total exchanged messages: 2010
+N nodes: 30; Time steps: 100; p_request: 0.65; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.119
+
+Network statistics: {'links_removed': 11; 'links_added': 9; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.1, 0.1, 0.85),Total exchanged messages: 2612
+N nodes: 30; Time steps: 100; p_request: 0.85; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.110
+
+Network statistics: {'links_removed': 7; 'links_added': 11; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.1, 0.1, 1.0),Total exchanged messages: 2808
+N nodes: 30; Time steps: 100; p_request: 1.0; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.125
+
+Network statistics: {'links_removed': 15; 'links_added': 8; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.1, 0.2, 0.15),Total exchanged messages: 790
+N nodes: 30; Time steps: 100; p_request: 0.15; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.071
+
+Network statistics: {'links_removed': 10; 'links_added': 13; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.1, 0.2, 0.35),Total exchanged messages: 1477
+N nodes: 30; Time steps: 100; p_request: 0.35; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.099
+
+Network statistics: {'links_removed': 6; 'links_added': 9; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.1, 0.2, 0.65),Total exchanged messages: 2077
+N nodes: 30; Time steps: 100; p_request: 0.65; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.111
+
+Network statistics: {'links_removed': 10; 'links_added': 13; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.1, 0.2, 0.85),Total exchanged messages: 2286
+N nodes: 30; Time steps: 100; p_request: 0.85; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.132
+
+Network statistics: {'links_removed': 9; 'links_added': 12; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.1, 0.2, 1.0),Total exchanged messages: 2885
+N nodes: 30; Time steps: 100; p_request: 1.0; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.128
+
+Network statistics: {'links_removed': 12; 'links_added': 15; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.1, 0.3, 0.15),Total exchanged messages: 863
+N nodes: 30; Time steps: 100; p_request: 0.15; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.078
+
+Network statistics: {'links_removed': 7; 'links_added': 11; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.1, 0.3, 0.35),Total exchanged messages: 1209
+N nodes: 30; Time steps: 100; p_request: 0.35; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.091
+
+Network statistics: {'links_removed': 6; 'links_added': 9; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.1, 0.3, 0.65),Total exchanged messages: 2083
+N nodes: 30; Time steps: 100; p_request: 0.65; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.097
+
+Network statistics: {'links_removed': 11; 'links_added': 14; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.1, 0.3, 0.85),Total exchanged messages: 2504
+N nodes: 30; Time steps: 100; p_request: 0.85; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.125
+
+Network statistics: {'links_removed': 6; 'links_added': 10; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.1, 0.3, 1.0),Total exchanged messages: 2715
+N nodes: 30; Time steps: 100; p_request: 1.0; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.137
+
+Network statistics: {'links_removed': 9; 'links_added': 13; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.2, 0.1, 0.15),Total exchanged messages: 767
+N nodes: 30; Time steps: 100; p_request: 0.15; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.052
+
+Network statistics: {'links_removed': 26; 'links_added': 10; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.2, 0.1, 0.35),Total exchanged messages: 1499
+N nodes: 30; Time steps: 100; p_request: 0.35; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.081
+
+Network statistics: {'links_removed': 19; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.2, 0.1, 0.65),Total exchanged messages: 2358
+N nodes: 30; Time steps: 100; p_request: 0.65; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.105
+
+Network statistics: {'links_removed': 19; 'links_added': 8; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.2, 0.1, 0.85),Total exchanged messages: 2951
+N nodes: 30; Time steps: 100; p_request: 0.85; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.117
+
+Network statistics: {'links_removed': 17; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.2, 0.1, 1.0),Total exchanged messages: 3017
+N nodes: 30; Time steps: 100; p_request: 1.0; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.127
+
+Network statistics: {'links_removed': 12; 'links_added': 9; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.2, 0.2, 0.15),Total exchanged messages: 705
+N nodes: 30; Time steps: 100; p_request: 0.15; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.047
+
+Network statistics: {'links_removed': 23; 'links_added': 17; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.2, 0.2, 0.35),Total exchanged messages: 1439
+N nodes: 30; Time steps: 100; p_request: 0.35; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.092
+
+Network statistics: {'links_removed': 14; 'links_added': 17; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.2, 0.2, 0.65),Total exchanged messages: 2327
+N nodes: 30; Time steps: 100; p_request: 0.65; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.108
+
+Network statistics: {'links_removed': 15; 'links_added': 18; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.2, 0.2, 0.85),Total exchanged messages: 2743
+N nodes: 30; Time steps: 100; p_request: 0.85; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.121
+
+Network statistics: {'links_removed': 14; 'links_added': 15; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.2, 0.2, 1.0),Total exchanged messages: 2717
+N nodes: 30; Time steps: 100; p_request: 1.0; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.138
+
+Network statistics: {'links_removed': 16; 'links_added': 15; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.2, 0.3, 0.15),Total exchanged messages: 881
+N nodes: 30; Time steps: 100; p_request: 0.15; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.052
+
+Network statistics: {'links_removed': 19; 'links_added': 21; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.2, 0.3, 0.35),Total exchanged messages: 1615
+N nodes: 30; Time steps: 100; p_request: 0.35; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.092
+
+Network statistics: {'links_removed': 14; 'links_added': 18; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.2, 0.3, 0.65),Total exchanged messages: 2153
+N nodes: 30; Time steps: 100; p_request: 0.65; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.113
+
+Network statistics: {'links_removed': 19; 'links_added': 22; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.2, 0.3, 0.85),Total exchanged messages: 2805
+N nodes: 30; Time steps: 100; p_request: 0.85; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.121
+
+Network statistics: {'links_removed': 18; 'links_added': 20; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.2, 0.3, 1.0),Total exchanged messages: 3210
+N nodes: 30; Time steps: 100; p_request: 1.0; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.121
+
+Network statistics: {'links_removed': 22; 'links_added': 23; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.3, 0.1, 0.15),Total exchanged messages: 698
+N nodes: 30; Time steps: 100; p_request: 0.15; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.059
+
+Network statistics: {'links_removed': 32; 'links_added': 9; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.3, 0.1, 0.35),Total exchanged messages: 1601
+N nodes: 30; Time steps: 100; p_request: 0.35; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.086
+
+Network statistics: {'links_removed': 33; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.3, 0.1, 0.65),Total exchanged messages: 2037
+N nodes: 30; Time steps: 100; p_request: 0.65; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.116
+
+Network statistics: {'links_removed': 27; 'links_added': 10; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.3, 0.1, 0.85),Total exchanged messages: 3137
+N nodes: 30; Time steps: 100; p_request: 0.85; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.119
+
+Network statistics: {'links_removed': 34; 'links_added': 5; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.3, 0.1, 1.0),Total exchanged messages: 3665
+N nodes: 30; Time steps: 100; p_request: 1.0; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.112
+
+Network statistics: {'links_removed': 29; 'links_added': 7; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.3, 0.2, 0.15),Total exchanged messages: 555
+N nodes: 30; Time steps: 100; p_request: 0.15; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.068
+
+Network statistics: {'links_removed': 37; 'links_added': 10; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.3, 0.2, 0.35),Total exchanged messages: 1596
+N nodes: 30; Time steps: 100; p_request: 0.35; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.090
+
+Network statistics: {'links_removed': 24; 'links_added': 20; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.3, 0.2, 0.65),Total exchanged messages: 2462
+N nodes: 30; Time steps: 100; p_request: 0.65; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.100
+
+Network statistics: {'links_removed': 24; 'links_added': 20; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.3, 0.2, 0.85),Total exchanged messages: 3065
+N nodes: 30; Time steps: 100; p_request: 0.85; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.108
+
+Network statistics: {'links_removed': 27; 'links_added': 15; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.3, 0.2, 1.0),Total exchanged messages: 3173
+N nodes: 30; Time steps: 100; p_request: 1.0; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.129
+
+Network statistics: {'links_removed': 29; 'links_added': 12; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.3, 0.3, 0.15),Total exchanged messages: 813
+N nodes: 30; Time steps: 100; p_request: 0.15; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.060
+
+Network statistics: {'links_removed': 27; 'links_added': 23; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.3, 0.3, 0.35),Total exchanged messages: 1624
+N nodes: 30; Time steps: 100; p_request: 0.35; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.084
+
+Network statistics: {'links_removed': 34; 'links_added': 20; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.3, 0.3, 0.65),Total exchanged messages: 2210
+N nodes: 30; Time steps: 100; p_request: 0.65; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.106
+
+Network statistics: {'links_removed': 22; 'links_added': 24; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.3, 0.3, 0.85),Total exchanged messages: 2576
+N nodes: 30; Time steps: 100; p_request: 0.85; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.129
+
+Network statistics: {'links_removed': 19; 'links_added': 23; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 100, 0.3, 0.3, 1.0),Total exchanged messages: 4150
+N nodes: 30; Time steps: 100; p_request: 1.0; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.095
+
+Network statistics: {'links_removed': 32; 'links_added': 25; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.1, 0.1, 0.15),Total exchanged messages: 3731
+N nodes: 30; Time steps: 1000; p_request: 0.15; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.170
+
+Network statistics: {'links_removed': 93; 'links_added': 83; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.1, 0.1, 0.35),Total exchanged messages: 9765
+N nodes: 30; Time steps: 1000; p_request: 0.35; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.149
+
+Network statistics: {'links_removed': 83; 'links_added': 85; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.1, 0.1, 0.65),Total exchanged messages: 12894
+N nodes: 30; Time steps: 1000; p_request: 0.65; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.199
+
+Network statistics: {'links_removed': 97; 'links_added': 94; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.1, 0.1, 0.85),Total exchanged messages: 18846
+N nodes: 30; Time steps: 1000; p_request: 0.85; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.178
+
+Network statistics: {'links_removed': 100; 'links_added': 91; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.1, 0.1, 1.0),Total exchanged messages: 20986
+N nodes: 30; Time steps: 1000; p_request: 1.0; p_fail: 0.1; p_new: 0.1
+Efficiency (useful / total): 0.190
+
+Network statistics: {'links_removed': 104; 'links_added': 89; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.1, 0.2, 0.15),Total exchanged messages: 3195
+N nodes: 30; Time steps: 1000; p_request: 0.15; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.165
+
+Network statistics: {'links_removed': 98; 'links_added': 98; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.1, 0.2, 0.35),Total exchanged messages: 6628
+N nodes: 30; Time steps: 1000; p_request: 0.35; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.217
+
+Network statistics: {'links_removed': 93; 'links_added': 93; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.1, 0.2, 0.65),Total exchanged messages: 8750
+N nodes: 30; Time steps: 1000; p_request: 0.65; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.287
+
+Network statistics: {'links_removed': 100; 'links_added': 99; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.1, 0.2, 0.85),Total exchanged messages: 11316
+N nodes: 30; Time steps: 1000; p_request: 0.85; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.284
+
+Network statistics: {'links_removed': 98; 'links_added': 97; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.1, 0.2, 1.0),Total exchanged messages: 17684
+N nodes: 30; Time steps: 1000; p_request: 1.0; p_fail: 0.1; p_new: 0.2
+Efficiency (useful / total): 0.223
+
+Network statistics: {'links_removed': 95; 'links_added': 96; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.1, 0.3, 0.15),Total exchanged messages: 3271
+N nodes: 30; Time steps: 1000; p_request: 0.15; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.187
+
+Network statistics: {'links_removed': 86; 'links_added': 90; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.1, 0.3, 0.35),Total exchanged messages: 5217
+N nodes: 30; Time steps: 1000; p_request: 0.35; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.260
+
+Network statistics: {'links_removed': 87; 'links_added': 88; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.1, 0.3, 0.65),Total exchanged messages: 8080
+N nodes: 30; Time steps: 1000; p_request: 0.65; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.288
+
+Network statistics: {'links_removed': 105; 'links_added': 101; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.1, 0.3, 0.85),Total exchanged messages: 11977
+N nodes: 30; Time steps: 1000; p_request: 0.85; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.264
+
+Network statistics: {'links_removed': 84; 'links_added': 86; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.1, 0.3, 1.0),Total exchanged messages: 12734
+N nodes: 30; Time steps: 1000; p_request: 1.0; p_fail: 0.1; p_new: 0.3
+Efficiency (useful / total): 0.299
+
+Network statistics: {'links_removed': 103; 'links_added': 102; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.2, 0.1, 0.15),Total exchanged messages: 5806
+N nodes: 30; Time steps: 1000; p_request: 0.15; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.130
+
+Network statistics: {'links_removed': 210; 'links_added': 105; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.2, 0.1, 0.35),Total exchanged messages: 11034
+N nodes: 30; Time steps: 1000; p_request: 0.35; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.158
+
+Network statistics: {'links_removed': 183; 'links_added': 96; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.2, 0.1, 0.65),Total exchanged messages: 19284
+N nodes: 30; Time steps: 1000; p_request: 0.65; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.157
+
+Network statistics: {'links_removed': 210; 'links_added': 86; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.2, 0.1, 0.85),Total exchanged messages: 24639
+N nodes: 30; Time steps: 1000; p_request: 0.85; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.176
+
+Network statistics: {'links_removed': 204; 'links_added': 88; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.2, 0.1, 1.0),Total exchanged messages: 28152
+N nodes: 30; Time steps: 1000; p_request: 1.0; p_fail: 0.2; p_new: 0.1
+Efficiency (useful / total): 0.176
+
+Network statistics: {'links_removed': 184; 'links_added': 91; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.2, 0.2, 0.15),Total exchanged messages: 4128
+N nodes: 30; Time steps: 1000; p_request: 0.15; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.133
+
+Network statistics: {'links_removed': 198; 'links_added': 187; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.2, 0.2, 0.35),Total exchanged messages: 10604
+N nodes: 30; Time steps: 1000; p_request: 0.35; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.133
+
+Network statistics: {'links_removed': 194; 'links_added': 185; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.2, 0.2, 0.65),Total exchanged messages: 15963
+N nodes: 30; Time steps: 1000; p_request: 0.65; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.163
+
+Network statistics: {'links_removed': 211; 'links_added': 192; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.2, 0.2, 0.85),Total exchanged messages: 21723
+N nodes: 30; Time steps: 1000; p_request: 0.85; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.158
+
+Network statistics: {'links_removed': 201; 'links_added': 165; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.2, 0.2, 1.0),Total exchanged messages: 22979
+N nodes: 30; Time steps: 1000; p_request: 1.0; p_fail: 0.2; p_new: 0.2
+Efficiency (useful / total): 0.176
+
+Network statistics: {'links_removed': 199; 'links_added': 191; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.2, 0.3, 0.15),Total exchanged messages: 3217
+N nodes: 30; Time steps: 1000; p_request: 0.15; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.164
+
+Network statistics: {'links_removed': 180; 'links_added': 181; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.2, 0.3, 0.35),Total exchanged messages: 7410
+N nodes: 30; Time steps: 1000; p_request: 0.35; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.191
+
+Network statistics: {'links_removed': 175; 'links_added': 172; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.2, 0.3, 0.65),Total exchanged messages: 12370
+N nodes: 30; Time steps: 1000; p_request: 0.65; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.201
+
+Network statistics: {'links_removed': 186; 'links_added': 185; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.2, 0.3, 0.85),Total exchanged messages: 17666
+N nodes: 30; Time steps: 1000; p_request: 0.85; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.189
+
+Network statistics: {'links_removed': 199; 'links_added': 196; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.2, 0.3, 1.0),Total exchanged messages: 18332
+N nodes: 30; Time steps: 1000; p_request: 1.0; p_fail: 0.2; p_new: 0.3
+Efficiency (useful / total): 0.208
+
+Network statistics: {'links_removed': 196; 'links_added': 194; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.3, 0.1, 0.15),Total exchanged messages: 5001
+N nodes: 30; Time steps: 1000; p_request: 0.15; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.146
+
+Network statistics: {'links_removed': 309; 'links_added': 96; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.3, 0.1, 0.35),Total exchanged messages: 12767
+N nodes: 30; Time steps: 1000; p_request: 0.35; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.139
+
+Network statistics: {'links_removed': 282; 'links_added': 94; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.3, 0.1, 0.65),Total exchanged messages: 19313
+N nodes: 30; Time steps: 1000; p_request: 0.65; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.176
+
+Network statistics: {'links_removed': 286; 'links_added': 93; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.3, 0.1, 0.85),Total exchanged messages: 26494
+N nodes: 30; Time steps: 1000; p_request: 0.85; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.175
+
+Network statistics: {'links_removed': 318; 'links_added': 103; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.3, 0.1, 1.0),Total exchanged messages: 32201
+N nodes: 30; Time steps: 1000; p_request: 1.0; p_fail: 0.3; p_new: 0.1
+Efficiency (useful / total): 0.171
+
+Network statistics: {'links_removed': 290; 'links_added': 99; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.3, 0.2, 0.15),Total exchanged messages: 5817
+N nodes: 30; Time steps: 1000; p_request: 0.15; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.124
+
+Network statistics: {'links_removed': 317; 'links_added': 183; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.3, 0.2, 0.35),Total exchanged messages: 12049
+N nodes: 30; Time steps: 1000; p_request: 0.35; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.124
+
+Network statistics: {'links_removed': 309; 'links_added': 198; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.3, 0.2, 0.65),Total exchanged messages: 20445
+N nodes: 30; Time steps: 1000; p_request: 0.65; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.149
+
+Network statistics: {'links_removed': 297; 'links_added': 195; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.3, 0.2, 0.85),Total exchanged messages: 28021
+N nodes: 30; Time steps: 1000; p_request: 0.85; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.146
+
+Network statistics: {'links_removed': 289; 'links_added': 195; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.3, 0.2, 1.0),Total exchanged messages: 30208
+N nodes: 30; Time steps: 1000; p_request: 1.0; p_fail: 0.3; p_new: 0.2
+Efficiency (useful / total): 0.166
+
+Network statistics: {'links_removed': 299; 'links_added': 181; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.3, 0.3, 0.15),Total exchanged messages: 5739
+N nodes: 30; Time steps: 1000; p_request: 0.15; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.110
+
+Network statistics: {'links_removed': 288; 'links_added': 273; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.3, 0.3, 0.35),Total exchanged messages: 10732
+N nodes: 30; Time steps: 1000; p_request: 0.35; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.129
+
+Network statistics: {'links_removed': 293; 'links_added': 275; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.3, 0.3, 0.65),Total exchanged messages: 15483
+N nodes: 30; Time steps: 1000; p_request: 0.65; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.159
+
+Network statistics: {'links_removed': 285; 'links_added': 267; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.3, 0.3, 0.85),Total exchanged messages: 19379
+N nodes: 30; Time steps: 1000; p_request: 0.85; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.177
+
+Network statistics: {'links_removed': 267; 'links_added': 262; 'nodes_added': 0; 'nodes_removed': 0}
+(30, 1000, 0.3, 0.3, 1.0),Total exchanged messages: 28881
+N nodes: 30; Time steps: 1000; p_request: 1.0; p_fail: 0.3; p_new: 0.3
+Efficiency (useful / total): 0.147
+
+Network statistics: {'links_removed': 313; 'links_added': 284; 'nodes_added': 0; 'nodes_removed': 0}
+
+------------------------------------------------------------------------------------------------------------------------
+Some random arbitrary cases
+
+
+Total exchanged messages: 47233
+N nodes: 50, Time steps: 1000, p_request: 1.0, p_fail: 0.3, p_new: 0.3
+Efficiency: 0.089 (8.87%)
+
+Network statistics: {'links_removed': 299, 'links_added': 295, 'nodes_added': 0, 'nodes_removed': 0}
+
+Total exchanged messages: 9650
+N nodes: 10, Time steps: 1000, p_request: 1.0, p_fail: 0.3, p_new: 0.1
+Efficiency: 0.285 (28.49%)
+
+Network statistics: {'links_removed': 310, 'links_added': 87, 'nodes_added': 0, 'nodes_removed': 0}
+
+Total exchanged messages: 7207
+N nodes: 50, Time steps: 100, p_request: 1.0, p_fail: 0.3, p_new: 0.1
+Efficiency: 0.059 (5.91%)
+
+Network statistics: {'links_removed': 37, 'links_added': 11, 'nodes_added': 0, 'nodes_removed': 0}
+
+Total exchanged messages: 988
+N nodes: 10, Time steps: 100, p_request: 1.0, p_fail: 0.3, p_new: 0.3
+Efficiency: 0.240 (23.99%)
+
+Network statistics: {'links_removed': 27, 'links_added': 34, 'nodes_added': 0, 'nodes_removed': 0}
+
+Total exchanged messages: 137295
+N nodes: 150, Time steps: 1000, p_request: 1.0, p_fail: 0.3, p_new: 0.1
+Efficiency: 0.022 (2.24%)
+
+Network statistics: {'links_removed': 308, 'links_added': 102, 'nodes_added': 0, 'nodes_removed': 0}
+
+Total exchanged messages: 98965
+N nodes: 150, Time steps: 1000, p_request: 1.0, p_fail: 0.1, p_new: 0.1
+Efficiency: 0.030 (2.97%)
+
+Network statistics: {'links_removed': 102, 'links_added': 102, 'nodes_added': 0, 'nodes_removed': 0}
+
+Total exchanged messages: 6100
+N nodes: 8, Time steps: 1000, p_request: 1.0, p_fail: 0.1, p_new: 0.1
+Efficiency: 0.346 (34.62%)
+
+Network statistics: {'links_removed': 101, 'links_added': 89, 'nodes_added': 0, 'nodes_removed': 0}
