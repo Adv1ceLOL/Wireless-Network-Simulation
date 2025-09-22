@@ -3,6 +3,7 @@
 <div align="center">
 
 ##  **[← Back to Main Documentation](README.md)**
+##  **[→ View Proactive vs Reactive Comparison](proactive_vs_reactive_analysis.md)**
 
 
 </div>

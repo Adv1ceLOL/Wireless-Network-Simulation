@@ -8,6 +8,7 @@
 <div align="center">
 
 ##  **[→ View Efficiency Analysis & Experimental Results ](considerations.md)**
+##  **[→ View Proactive vs Reactive Protocol Comparison ](proactive_vs_reactive_analysis.md)**
 
 
 </div>

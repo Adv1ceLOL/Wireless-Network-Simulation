@@ -1,13 +1,13 @@
 ================================================================================
-WIRELESS SENSOR NETWORK DETAILED REPORT - Generated: 2025-09-20 18:51:56
+WIRELESS SENSOR NETWORK DETAILED REPORT - Generated: 2025-09-22 11:30:17
 ================================================================================
 
 1. NETWORK OVERVIEW
 -------------------
-Number of nodes: 8
-Total connections: 12
-Average connections per node: 1.50
-Network density: 0.2143 (21.4%)
+Number of nodes: 10
+Total connections: 0
+Average connections per node: 0.00
+Network density: 0.0000 (0.0%)
 
 2. PROACTIVE DISTANCE VECTOR PROTOCOL
 -------------------------------------
@@ -27,8 +27,8 @@ Proactive Features:
 ---------------
 
   Node 0:
-    Position: (2.9403, 0.1458)
-    Transmission range: 7.7297
+    Position: (1.3436, 8.4743)
+    Transmission range: 4.5898
     Number of connections: 0
     Routing Table and Distance Vector:
       Dest | Next |     Cost     Dest |     Cost
@@ -41,69 +41,67 @@ Proactive Features:
          5 | ---  |        ∞        5 |        ∞
          6 | ---  |        ∞        6 |        ∞
          7 | ---  |        ∞        7 |        ∞
+         8 | ---  |        ∞        8 |        ∞
+         9 | ---  |        ∞        9 |        ∞
 
   Node 1:
-    Position: (1.9617, 5.6923)
-    Transmission range: 7.8014
-    Number of connections: 2
-    Connected to:
-      → Node 5: delay=0.0241, distance=3.8923
-      → Node 6: delay=0.2259, distance=8.1863
+    Position: (2.5507, 4.9544)
+    Transmission range: 5.9105
+    Number of connections: 0
     Routing Table and Distance Vector:
       Dest | Next |     Cost     Dest |     Cost
       -----|------|---------     -----|---------
          0 | ---  |        ∞        0 |        ∞
          1 |    1 |   0.0000        1 |   0.0000
-         2 |    6 |   1.6380        2 |   1.6380
-         3 |    6 |   1.3855        3 |   1.3855
+         2 | ---  |        ∞        2 |        ∞
+         3 | ---  |        ∞        3 |        ∞
          4 | ---  |        ∞        4 |        ∞
-         5 |    5 |   0.0241        5 |   0.0241
-         6 |    6 |   0.2259        6 |   0.2259
-         7 |    6 |   1.1652        7 |   1.1652
+         5 | ---  |        ∞        5 |        ∞
+         6 | ---  |        ∞        6 |        ∞
+         7 | ---  |        ∞        7 |        ∞
+         8 | ---  |        ∞        8 |        ∞
+         9 | ---  |        ∞        9 |        ∞
 
   Node 2:
-    Position: (2.0527, 9.4266)
-    Transmission range: 9.5841
-    Number of connections: 1
-    Connected to:
-      → Node 3: delay=0.2525, distance=8.7128
+    Position: (6.5159, 7.8872)
+    Transmission range: 5.4252
+    Number of connections: 0
     Routing Table and Distance Vector:
       Dest | Next |     Cost     Dest |     Cost
       -----|------|---------     -----|---------
          0 | ---  |        ∞        0 |        ∞
-         1 |    3 |   1.6380        1 |   1.6380
+         1 | ---  |        ∞        1 |        ∞
          2 |    2 |   0.0000        2 |   0.0000
-         3 |    3 |   0.2525        3 |   0.2525
+         3 | ---  |        ∞        3 |        ∞
          4 | ---  |        ∞        4 |        ∞
-         5 |    3 |   1.6620        5 |   1.6620
-         6 |    3 |   1.4121        6 |   1.4121
-         7 |    3 |   0.4728        7 |   0.4728
+         5 | ---  |        ∞        5 |        ∞
+         6 | ---  |        ∞        6 |        ∞
+         7 | ---  |        ∞        7 |        ∞
+         8 | ---  |        ∞        8 |        ∞
+         9 | ---  |        ∞        9 |        ∞
 
   Node 3:
-    Position: (8.8399, 3.9633)
-    Transmission range: 9.5841
-    Number of connections: 2
-    Connected to:
-      → Node 2: delay=0.2525, distance=8.7128
-      → Node 7: delay=0.2203, distance=5.8157
+    Position: (0.2835, 8.3577)
+    Transmission range: 1.8655
+    Number of connections: 0
     Routing Table and Distance Vector:
       Dest | Next |     Cost     Dest |     Cost
       -----|------|---------     -----|---------
          0 | ---  |        ∞        0 |        ∞
-         1 |    7 |   1.3855        1 |   1.3855
-         2 |    2 |   0.2525        2 |   0.2525
+         1 | ---  |        ∞        1 |        ∞
+         2 | ---  |        ∞        2 |        ∞
          3 |    3 |   0.0000        3 |   0.0000
          4 | ---  |        ∞        4 |        ∞
-         5 |    7 |   1.4096        5 |   1.4096
-         6 |    7 |   1.1596        6 |   1.1596
-         7 |    7 |   0.2203        7 |   0.2203
+         5 | ---  |        ∞        5 |        ∞
+         6 | ---  |        ∞        6 |        ∞
+         7 | ---  |        ∞        7 |        ∞
+         8 | ---  |        ∞        8 |        ∞
+         9 | ---  |        ∞        9 |        ∞
 
   Node 4:
-    Position: (5.5848, 7.2550)
-    Transmission range: 5.0923
-    Number of connections: 1
-    Connected to:
-      → Node 5: delay=0.1191, distance=6.8833
+    Position: (7.6228, 0.0211)
+    Transmission range: 7.5747
+    Number of connections: 0
     Routing Table and Distance Vector:
       Dest | Next |     Cost     Dest |     Cost
       -----|------|---------     -----|---------
@@ -115,140 +113,159 @@ Proactive Features:
          5 | ---  |        ∞        5 |        ∞
          6 | ---  |        ∞        6 |        ∞
          7 | ---  |        ∞        7 |        ∞
+         8 | ---  |        ∞        8 |        ∞
+         9 | ---  |        ∞        9 |        ∞
 
   Node 5:
-    Position: (1.3182, 1.8535)
-    Transmission range: 8.5932
-    Number of connections: 2
-    Connected to:
-      → Node 1: delay=0.0241, distance=3.8923
-      → Node 4: delay=0.1191, distance=6.8833
+    Position: (7.2154, 2.2876)
+    Transmission range: 5.9105
+    Number of connections: 0
     Routing Table and Distance Vector:
       Dest | Next |     Cost     Dest |     Cost
       -----|------|---------     -----|---------
          0 | ---  |        ∞        0 |        ∞
-         1 |    1 |   0.0241        1 |   0.0241
-         2 |    1 |   1.6620        2 |   1.6620
-         3 |    1 |   1.4096        3 |   1.4096
+         1 | ---  |        ∞        1 |        ∞
+         2 | ---  |        ∞        2 |        ∞
+         3 | ---  |        ∞        3 |        ∞
          4 | ---  |        ∞        4 |        ∞
          5 |    5 |   0.0000        5 |   0.0000
-         6 |    1 |   0.2500        6 |   0.2500
-         7 |    1 |   1.1892        7 |   1.1892
+         6 | ---  |        ∞        6 |        ∞
+         7 | ---  |        ∞        7 |        ∞
+         8 | ---  |        ∞        8 |        ∞
+         9 | ---  |        ∞        9 |        ∞
 
   Node 6:
-    Position: (9.9211, 3.7781)
-    Transmission range: 2.9927
-    Number of connections: 2
-    Connected to:
-      → Node 1: delay=0.2259, distance=8.1863
-      → Node 7: delay=0.9393, distance=6.4921
+    Position: (9.0143, 0.3059)
+    Transmission range: 8.6773
+    Number of connections: 0
     Routing Table and Distance Vector:
       Dest | Next |     Cost     Dest |     Cost
       -----|------|---------     -----|---------
          0 | ---  |        ∞        0 |        ∞
-         1 |    1 |   0.2259        1 |   0.2259
-         2 |    7 |   1.4121        2 |   1.4121
-         3 |    7 |   1.1596        3 |   1.1596
+         1 | ---  |        ∞        1 |        ∞
+         2 | ---  |        ∞        2 |        ∞
+         3 | ---  |        ∞        3 |        ∞
          4 | ---  |        ∞        4 |        ∞
-         5 |    1 |   0.2500        5 |   0.2500
+         5 | ---  |        ∞        5 |        ∞
          6 |    6 |   0.0000        6 |   0.0000
-         7 |    7 |   0.9393        7 |   0.9393
+         7 | ---  |        ∞        7 |        ∞
+         8 | ---  |        ∞        8 |        ∞
+         9 | ---  |        ∞        9 |        ∞
 
   Node 7:
-    Position: (6.4552, 9.2676)
-    Transmission range: 6.3973
-    Number of connections: 2
-    Connected to:
-      → Node 3: delay=0.2203, distance=5.8157
-      → Node 6: delay=0.9393, distance=6.4921
+    Position: (5.4141, 9.3915)
+    Transmission range: 4.5898
+    Number of connections: 0
     Routing Table and Distance Vector:
       Dest | Next |     Cost     Dest |     Cost
       -----|------|---------     -----|---------
          0 | ---  |        ∞        0 |        ∞
-         1 |    6 |   1.1652        1 |   1.1652
-         2 |    3 |   0.4728        2 |   0.4728
-         3 |    3 |   0.2203        3 |   0.2203
+         1 | ---  |        ∞        1 |        ∞
+         2 | ---  |        ∞        2 |        ∞
+         3 | ---  |        ∞        3 |        ∞
          4 | ---  |        ∞        4 |        ∞
-         5 |    6 |   1.1892        5 |   1.1892
-         6 |    6 |   0.9393        6 |   0.9393
+         5 | ---  |        ∞        5 |        ∞
+         6 | ---  |        ∞        6 |        ∞
          7 |    7 |   0.0000        7 |   0.0000
+         8 | ---  |        ∞        8 |        ∞
+         9 | ---  |        ∞        9 |        ∞
+
+  Node 8:
+    Position: (2.1660, 4.2212)
+    Transmission range: 8.6773
+    Number of connections: 0
+    Routing Table and Distance Vector:
+      Dest | Next |     Cost     Dest |     Cost
+      -----|------|---------     -----|---------
+         0 | ---  |        ∞        0 |        ∞
+         1 | ---  |        ∞        1 |        ∞
+         2 | ---  |        ∞        2 |        ∞
+         3 | ---  |        ∞        3 |        ∞
+         4 | ---  |        ∞        4 |        ∞
+         5 | ---  |        ∞        5 |        ∞
+         6 | ---  |        ∞        6 |        ∞
+         7 | ---  |        ∞        7 |        ∞
+         8 |    8 |   0.0000        8 |   0.0000
+         9 | ---  |        ∞        9 |        ∞
+
+  Node 9:
+    Position: (2.2169, 4.3789)
+    Transmission range: 1.9916
+    Number of connections: 0
+    Routing Table and Distance Vector:
+      Dest | Next |     Cost     Dest |     Cost
+      -----|------|---------     -----|---------
+         0 | ---  |        ∞        0 |        ∞
+         1 | ---  |        ∞        1 |        ∞
+         2 | ---  |        ∞        2 |        ∞
+         3 | ---  |        ∞        3 |        ∞
+         4 | ---  |        ∞        4 |        ∞
+         5 | ---  |        ∞        5 |        ∞
+         6 | ---  |        ∞        6 |        ∞
+         7 | ---  |        ∞        7 |        ∞
+         8 | ---  |        ∞        8 |        ∞
+         9 |    9 |   0.0000        9 |   0.0000
 
 4. ADJACENCY MATRIX (DELAY WEIGHTS)
 -----------------------------------
-           0     1     2     3     4     5     6     7
-    --------------------------------------------------
-   0 | 0.000     ∞     ∞     ∞     ∞     ∞     ∞     ∞
-   1 |     ∞ 0.000     ∞     ∞     ∞ 0.024 0.226     ∞
-   2 |     ∞     ∞ 0.000 0.252     ∞     ∞     ∞     ∞
-   3 |     ∞     ∞ 0.252 0.000     ∞     ∞     ∞ 0.220
-   4 |     ∞     ∞     ∞     ∞ 0.000 0.119     ∞     ∞
-   5 |     ∞ 0.024     ∞     ∞ 0.119 0.000     ∞     ∞
-   6 |     ∞ 0.226     ∞     ∞     ∞     ∞ 0.000 0.939
-   7 |     ∞     ∞     ∞ 0.220     ∞     ∞ 0.939 0.000
+           0     1     2     3     4     5     6     7     8     9
+    --------------------------------------------------------------
+   0 | 0.000     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞
+   1 |     ∞ 0.000     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞
+   2 |     ∞     ∞ 0.000     ∞     ∞     ∞     ∞     ∞     ∞     ∞
+   3 |     ∞     ∞     ∞ 0.000     ∞     ∞     ∞     ∞     ∞     ∞
+   4 |     ∞     ∞     ∞     ∞ 0.000     ∞     ∞     ∞     ∞     ∞
+   5 |     ∞     ∞     ∞     ∞     ∞ 0.000     ∞     ∞     ∞     ∞
+   6 |     ∞     ∞     ∞     ∞     ∞     ∞ 0.000     ∞     ∞     ∞
+   7 |     ∞     ∞     ∞     ∞     ∞     ∞     ∞ 0.000     ∞     ∞
+   8 |     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞ 0.000     ∞
+   9 |     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞     ∞ 0.000
 
 5. NETWORK STATISTICS
 ---------------------
-Delay statistics:
-  - Minimum: 0.0241
-  - Maximum: 0.9393
-  - Average: 0.2969
-  - Standard deviation: 0.2977
 
 Routing metrics:
-  - Reachability: 0.5357 (53.6%)
-  - Unreachable destinations: 26
-  - Average hops per path: 2.33
-  - Average path cost: 0.8937
+  - Reachability: 0.0000 (0.0%)
+  - Unreachable destinations: 90
 
 6. SAMPLE PATHS
 ----------------
 
 Sample shortest paths between random node pairs:
-  Path 3 → 6:
-    Nodes: 3 → 7 → 6
-    Total delay: 1.1596
+  Path 8 → 0:
+    Nodes: 0
+    Total delay: inf
 
-  Path 4 → 1:
-    Nodes: 4 → 5 → 1
-    Total delay: 0.1432
+  Path 4 → 0:
+    Nodes: 0
+    Total delay: inf
 
-  Path 7 → 5:
-    Nodes: 7 → 6 → 1 → 5
-    Total delay: 1.1892
-
-  Path 4 → 3:
-    Nodes: 4 → 5 → 1 → 6 → 7 → 3
-    Total delay: 1.5287
-
-  Path 5 → 3:
-    Nodes: 5 → 1 → 6 → 7 → 3
-    Total delay: 1.4096
+  Path 9 → 0:
+    Nodes: 0
+    Total delay: inf
 
 
 7. NETWORK LINK INFORMATION
 ---------------------------
 
-Most congested link: 6-7 (delay: 0.94)
-Fastest link: 1-5 (delay: 0.02)
-
 8. MESSAGE EXCHANGE ANALYSIS
 -----------------------------
-Hello Messages: 118
-Topology Discovery Messages: 160
-Route Discovery Control Packets: 368
-Data Packets Forwarded: 39
-Total Message Exchanges: 685
+Hello Messages: 714
+Topology Discovery Messages: 250
+Route Discovery Control Packets: 272
+Data Packets Forwarded: 67
+Total Message Exchanges: 1303
 
 9. PROTOCOL EFFICIENCY ANALYSIS
 --------------------------------------------------
 Metric                    | Count    | Percentage
 ------------------------- | -------- | ----------
-Hello Messages            | 118      | 17.23%
-Topology Messages         | 160      | 23.36%
-Route Discovery           | 368      | 53.72%
-Data Packets              | 39       | 5.69%
+Hello Messages            | 714      | 54.80%
+Topology Messages         | 250      | 19.19%
+Route Discovery           | 272      | 20.87%
+Data Packets              | 67       | 5.14%
 ------------------------- | -------- | ----------
-Total Packets             | 685      | 100.00%   
+Total Packets             | 1303     | 100.00%   
 
-Protocol Efficiency: 0.0569 (5.69%)
+Protocol Efficiency: 0.0514 (5.14%)
 (Efficiency = Data Packets / Total Packets)
